@@ -1,0 +1,19 @@
+{
+  "files.exclude": {
+    "readme.rst": true,
+    "license.txt": true,
+    "contributing.md": true,
+    "composer.json": true,
+    "**/.htaccess": true,
+    "**/.htaccess.*": true,
+    ".gitignore": true,
+    ".editorconfig": true,
+    "user_guide": true,
+    "application\\**/*.html": true,
+    "application\\index.html": true,
+    "application\\language\\english\\index.html": true,
+    "application\\views\\errors\\cli\\index.html": true,
+    "application\\views\\errors\\html\\index.html": true,
+    "application\\views\\errors\\index.html": true
+  }
+}

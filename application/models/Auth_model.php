@@ -8,16 +8,12 @@ class Auth_model extends CI_Model
         $this->form_validation->set_rules('userPassword', 'Password', 'required|trim');
 
         if ($this->form_validation->run() == true) {
-
             $userEmail = $this->input->post('userEmail');
             $userPassword = $this->input->post('userPassword');
             $user = $this->db->get_where('user', ['user_email' => $userEmail])->row_array();
 
-            // check user exist
             if ($user) {
-                // check user active
                 if ($user['user_active'] == 1) {
-                    // check user password
                     if (password_verify($userPassword, $user['user_password'])) {
                         $data = [
                             'userEmail' => $user['user_email'],
@@ -43,6 +39,13 @@ class Auth_model extends CI_Model
         }
     }
 
+    public function logout()
+    {
+        $this->session->unset_userdata('userEmail');
+        $this->session->unset_userdata('userRole');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Logout!</div>');
+    }
+
     public function register()
     {
         $this->form_validation->set_rules('userName', 'Name', 'required|trim');
@@ -56,7 +59,7 @@ class Auth_model extends CI_Model
                 'user_name' => htmlspecialchars($this->input->post('userName', true)),
                 'user_email' => htmlspecialchars($this->input->post('userEmail', true)),
                 'user_password' => password_hash($this->input->post('userPassword'), PASSWORD_DEFAULT),
-                'user_role' => 'User',
+                'user_role' => 'Mahasiswa',
                 'user_active' => '1'
             ];
             $this->db->insert('user', $data);

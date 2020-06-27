@@ -11,7 +11,23 @@ class Auth extends CI_Controller
 
     public function index()
     {
-        # auth check
+        if ($this->session->userdata('userEmail')) {
+            switch ($this->session->userdata('userRole')) {
+                case 'Admin':
+                    redirect('admin');
+                    break;
+                case 'Dosen':
+                    redirect('dosen');
+                    break;
+                case 'Mahasiswa':
+                    redirect('mahasiswa');
+                    break;
+                default:
+                    redirect('auth/login');
+            }
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function login()
@@ -19,10 +35,16 @@ class Auth extends CI_Controller
         $data['title'] = "Login Page";
 
         if ($this->auth_model->login() == true) {
-            redirect('auth/login');
+            redirect('auth');
         } else {
             $this->load->view('auth/login', $data);
         }
+    }
+
+    public function logout()
+    {
+        $this->auth_model->logout();
+        redirect('auth/login');
     }
 
     public function register()

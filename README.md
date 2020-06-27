@@ -1,0 +1,5 @@
+# SKRIPSI
+
+---
+
+Semangat Skripsi!

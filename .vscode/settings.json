@@ -1,6 +1,5 @@
 {
   "files.exclude": {
-    "readme.rst": true,
     "license.txt": true,
     "contributing.md": true,
     "composer.json": true,
@@ -14,6 +13,7 @@
     "application\\language\\english\\index.html": true,
     "application\\views\\errors\\cli\\index.html": true,
     "application\\views\\errors\\html\\index.html": true,
-    "application\\views\\errors\\index.html": true
+    "application\\views\\errors\\index.html": true,
+    "README.md": true
   }
 }

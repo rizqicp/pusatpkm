@@ -13,13 +13,13 @@ class Auth extends CI_Controller
     {
         if ($this->session->userdata('userEmail')) {
             switch ($this->session->userdata('userRole')) {
-                case 'Admin':
+                case 'admin':
                     redirect('admin');
                     break;
-                case 'Dosen':
+                case 'dosen':
                     redirect('dosen');
                     break;
-                case 'Mahasiswa':
+                case 'mahasiswa':
                     redirect('mahasiswa');
                     break;
                 default:

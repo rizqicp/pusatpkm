@@ -6,17 +6,32 @@ class Admin extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->load->model('user_model');
+        isloginhelper();
     }
 
     public function index()
     {
-        $data['title'] = "Dashboard";
-        if ($this->session->userdata('userEmail')) {
-            $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
-            $this->load->view('admin/dashboard', $data);
-        } else {
-            redirect('auth');
-        }
+        redirect('admin/pengajuan');
+    }
+
+    public function pengajuan()
+    {
+        $data['title'] = 'Pengajuan';
+        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
+        $this->load->view('user/pengajuan', $data);
+    }
+
+    public function profilsaya()
+    {
+        $data['title'] = 'Profil Saya';
+        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
+        $this->load->view('user/profilsaya', $data);
+    }
+
+    public function kelolapengguna()
+    {
+        $data['title'] = 'Kelola Pengguna';
+        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
+        $this->load->view('user/kelolapengguna', $data);
     }
 }

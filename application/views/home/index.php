@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <?php $this->load->view("templates/header.php") ?>
+    <?php $this->load->view("templates/meta.php") ?>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
     <a href="<?= base_url('auth/login'); ?>">Login</a>
     <a href="<?= base_url('auth/register'); ?>">Register</a>
 
-    <?php $this->load->view("templates/footer.php") ?>
+    <?php $this->load->view("templates/script.php") ?>
 
 </body>
 

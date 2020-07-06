@@ -28,6 +28,13 @@ class Admin extends CI_Controller
         $this->load->view('user/profilsaya', $data);
     }
 
+    public function historiproposal()
+    {
+        $data['title'] = 'historiproposal';
+        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
+        $this->load->view('user/profilsaya', $data);
+    }
+
     public function kelolapengguna()
     {
         $data['title'] = 'Kelola Pengguna';

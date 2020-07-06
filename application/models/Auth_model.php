@@ -59,8 +59,8 @@ class Auth_model extends CI_Model
                 'user_name' => htmlspecialchars($this->input->post('userName', true)),
                 'user_email' => htmlspecialchars($this->input->post('userEmail', true)),
                 'user_password' => password_hash($this->input->post('userPassword'), PASSWORD_DEFAULT),
-                'user_role' => 'Mahasiswa',
-                'user_active' => '1'
+                'user_role' => 'mahasiswa',
+                'user_active' => '0'
             ];
             $this->db->insert('user', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat!</div>');

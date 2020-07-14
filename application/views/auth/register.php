@@ -28,6 +28,45 @@
                                             <input type="text" class="form-control form-control-user" id="userName" name="userName" value="<?= set_value('userName'); ?>" placeholder="Nama Lengkap">
                                             <?= form_error('userName', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
+                                        <div class="form-group col-md-12">
+                                            <select class="custom-select" id="userProdi" name="userProdi">
+                                                <option selected disabled>Program Studi</option>
+                                                <?php foreach ($prodi as $prodi) : ?>
+                                                    <option value=<?= $prodi['id']; ?>><?= $prodi['nama']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <?= form_error('userProdi', '<small class="text-danger pl-3">', '</small>'); ?>
+                                        </div>
+                                        <script>
+                                            function roleCheck(role) {
+                                                if (role.value == "Mahasiswa") {
+                                                    document.getElementById("roleDosen").style.display = "none";
+                                                    document.getElementById("roleMahasiswa").style.display = "block";
+                                                } else if (role.value == "Dosen") {
+                                                    document.getElementById("roleMahasiswa").style.display = "none";
+                                                    document.getElementById("roleDosen").style.display = "block";
+                                                } else {
+                                                    document.getElementById("roleMahasiswa").style.display = "none";
+                                                    document.getElementById("roleDosen").style.display = "none";
+                                                }
+                                            }
+                                        </script>
+                                        <div class="form-group col-md-12">
+                                            <select class="custom-select" id="userRole" name="userRole" onchange="roleCheck(this);">
+                                                <option selected disabled>Apakah anda Mahasiswa atau Dosen?</option>
+                                                <option value="Mahasiswa">Mahasiswa</option>
+                                                <option value="Dosen">Dosen</option>
+                                            </select>
+                                            <?= form_error('userRole', '<small class="text-danger pl-3">', '</small>'); ?>
+                                            <?= form_error('userNpm', '<small class="text-danger pl-3">', '</small>'); ?>
+                                            <?= form_error('userNidn', '<small class="text-danger pl-3">', '</small>'); ?>
+                                        </div>
+                                        <div class="form-group col-md-12" id="roleMahasiswa" style="display: none;">
+                                            <input type="text" class="form-control form-control-user" id="userNpm" name="userNpm" value="<?= set_value('userNpm'); ?>" placeholder="NPM">
+                                        </div>
+                                        <div class="form-group col-md-12" id="roleDosen" style="display: none;">
+                                            <input type="text" class="form-control form-control-user" id="userNidn" name="userNidn" value="<?= set_value('userNidn'); ?>" placeholder="NIDN">
+                                        </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="userEmail" name="userEmail" value="<?= set_value('userEmail'); ?>" placeholder="Alamat Email">
                                             <?= form_error('userEmail', '<small class="text-danger pl-3">', '</small>'); ?>

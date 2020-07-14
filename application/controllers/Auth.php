@@ -50,7 +50,7 @@ class Auth extends CI_Controller
     public function register()
     {
         $data['title'] = "Register Page";
-
+        $data['prodi'] = $this->db->get('prodi')->result_array();
         if ($this->auth_model->register() == true) {
             redirect('auth/login');
         } else {

@@ -48,20 +48,49 @@ class Auth_model extends CI_Model
 
     public function register()
     {
-        $this->form_validation->set_rules('userNama', 'Nama', 'required|trim', ['required' => 'Nama harus diisi!']);
+        $this->form_validation->set_rules('userNama', 'Nama', 'required|trim', [
+            'required' => 'Nama harus diisi!'
+        ]);
         foreach ($this->db->get('prodi')->result_array() as $prodi) {
             $prodiId[] = $prodi['id'];
         }
-        $this->form_validation->set_rules('userProdi', 'Prodi', 'required|in_list[' . implode(',', $prodiId) . ']');
-        $this->form_validation->set_rules('userRole', 'Role', 'required|in_list[Mahasiswa,Dosen]');
+        $this->form_validation->set_rules('userProdi', 'Prodi', 'required|in_list[' . implode(',', $prodiId) . ']', [
+            'required' => 'Prodi harus diisi!',
+            'in_list' => 'Prodi tidak ada di dalam list!'
+        ]);
+        $this->form_validation->set_rules('userRole', 'Role', 'required|in_list[Mahasiswa,Dosen]', [
+            'required' => 'Peran harus diisi!',
+            'in_list' => 'Peran tidak ada di dalam list!'
+        ]);
         if ($this->input->post('userRole', true) == 'Mahasiswa') {
-            $this->form_validation->set_rules('userNpm', 'NPM', 'required|numeric|min_length[10]|max_length[11]|is_unique[mahasiswa.npm]');
+            $this->form_validation->set_rules('userNpm', 'NPM', 'required|numeric|min_length[10]|max_length[11]|is_unique[mahasiswa.npm]', [
+                'required' => 'NPM harus diisi!',
+                'numeric' => 'NPM hanya boleh mengandung angka!',
+                'min_length' => 'NPM minimal 10 digit!',
+                'max_length' => 'NPM maksimal 11 digit!',
+                'is_unique' => 'User dengan NPM tersebut sudah ada!'
+            ]);
         } elseif ($this->input->post('userRole', true) == 'Dosen') {
-            $this->form_validation->set_rules('userNidn', 'NIDN', 'required|numeric|exact_length[10]|is_unique[dosen.nidn]');
+            $this->form_validation->set_rules('userNidn', 'NIDN', 'required|numeric|exact_length[10]|is_unique[dosen.nidn]', [
+                'required' => 'NIDN harus diisi!',
+                'numeric' => 'NIDN hanya boleh mengandung angka!',
+                'exact_length' => 'NIDN harus 10 digit!',
+                'is_unique' => 'User dengan NIDN tersebut sudah ada!'
+            ]);
         }
-        $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'Email sudah terdaftar!']);
-        $this->form_validation->set_rules('userPassword', 'Password', 'required|trim|min_length[6]|matches[repeatPassword]', ['matches' => 'Password tidak cocok!', 'min_length' => 'Password terlalu pendek!']);
-        $this->form_validation->set_rules('repeatPassword', 'Repeat', 'required|trim|matches[userPassword]');
+        $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+            'required' => 'Email harus diisi!',
+            'valid_email' => 'Email tidak valid!',
+            'is_unique' => 'Email sudah terdaftar!'
+        ]);
+        $this->form_validation->set_rules('userPassword', 'Password', 'required|trim|min_length[6]|matches[repeatPassword]', [
+            'required' => 'Password harus diisi!',
+            'min_length' => 'Password terlalu pendek!',
+            'matches' => 'Password tidak cocok!'
+        ]);
+        $this->form_validation->set_rules('repeatPassword', 'Repeat', 'required|trim|matches[userPassword]', [
+            'required' => 'Ketik ulang Password!'
+        ]);
 
         function create($table, $data)
         {

@@ -17,14 +17,14 @@ class Mahasiswa extends CI_Controller
     public function pengajuan()
     {
         $data['title'] = 'Pengajuan';
-        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('userEmail')])->row_array();
         $this->load->view('user/pengajuan', $data);
     }
 
     public function profilsaya()
     {
         $data['title'] = 'Profil Saya';
-        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('userEmail')])->row_array();
         $this->load->view('user/profilsaya', $data);
     }
 }

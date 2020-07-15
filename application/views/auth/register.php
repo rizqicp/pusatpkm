@@ -54,8 +54,8 @@
                                         <div class="form-group col-md-12">
                                             <select class="custom-select" id="userRole" name="userRole" onchange="roleCheck(this);">
                                                 <option value="" disabled selected hidden>Apakah anda Mahasiswa atau Dosen?</option>
-                                                <option value="Mahasiswa">Mahasiswa</option>
-                                                <option value="Dosen">Dosen</option>
+                                                <option value="mahasiswa">Mahasiswa</option>
+                                                <option value="dosen">Dosen</option>
                                             </select>
                                             <?= form_error('userRole', '<small class="text-danger pl-3">', '</small>'); ?>
                                             <?= form_error('userNpm', '<small class="text-danger pl-3">', '</small>'); ?>

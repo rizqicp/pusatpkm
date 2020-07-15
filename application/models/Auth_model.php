@@ -10,28 +10,29 @@ class Auth_model extends CI_Model
         if ($this->form_validation->run() == true) {
             $userEmail = $this->input->post('userEmail');
             $userPassword = $this->input->post('userPassword');
-            $user = $this->db->get_where('user', ['user_email' => $userEmail])->row_array();
+            $user = $this->db->get_where('user', ['email' => $userEmail])->row_array();
 
             if ($user) {
-                if ($user['user_active'] == 1) {
-                    if (password_verify($userPassword, $user['user_password'])) {
+                if ($user['aktif'] == 'aktif') {
+                    if (password_verify($userPassword, $user['password'])) {
                         $data = [
-                            'userEmail' => $user['user_email'],
-                            'userRole' => $user['user_role']
+                            'userId' => $user['id'],
+                            'userEmail' => $user['email'],
+                            'userRole' => $user['role']
                         ];
                         $this->session->set_userdata($data);
-                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil login!</div>');
+                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Selamat Datang!</div>');
                         return true;
                     } else {
-                        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong password!</div>');
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password salah!</div>');
                         return false;
                     }
                 } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Email is not activated!</div>');
+                    $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Email belum diverifikasi!</div>');
                     return false;
                 }
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email is not registered!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum teregistrasi!</div>');
                 return false;
             }
         } else {
@@ -43,7 +44,7 @@ class Auth_model extends CI_Model
     {
         $this->session->unset_userdata('userEmail');
         $this->session->unset_userdata('userRole');
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Logout!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Keluar!</div>');
     }
 
     public function register()
@@ -58,7 +59,7 @@ class Auth_model extends CI_Model
             'required' => 'Prodi harus diisi!',
             'in_list' => 'Prodi tidak ada di dalam list!'
         ]);
-        $this->form_validation->set_rules('userRole', 'Role', 'required|in_list[Mahasiswa,Dosen]', [
+        $this->form_validation->set_rules('userRole', 'Role', 'required|in_list[mahasiswa,dosen]', [
             'required' => 'Peran harus diisi!',
             'in_list' => 'Peran tidak ada di dalam list!'
         ]);
@@ -110,7 +111,7 @@ class Auth_model extends CI_Model
             $userId = create('user', $userData);
             $mahasiswaData = [
                 'npm' => $this->input->post('userNpm'),
-                'nama' => htmlspecialchars($this->input->post('userNama', true)),
+                'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
                 'prodi_id' => $this->input->post('userProdi'),
                 'user_id' => $userId,
             ];
@@ -128,7 +129,7 @@ class Auth_model extends CI_Model
             $userId = create('user', $userData);
             $dosenData = [
                 'nidn' => $this->input->post('userNidn'),
-                'nama' => htmlspecialchars($this->input->post('userNama', true)),
+                'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
                 'prodi_id' => $this->input->post('userProdi'),
                 'user_id' => $userId,
             ];

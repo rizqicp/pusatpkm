@@ -25,12 +25,12 @@
                                     </div>
                                     <form class="user" action="<?= base_url('auth/register'); ?>" method="POST">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="userName" name="userName" value="<?= set_value('userName'); ?>" placeholder="Nama Lengkap">
-                                            <?= form_error('userName', '<small class="text-danger pl-3">', '</small>'); ?>
+                                            <input type="text" class="form-control form-control-user" id="userNama" name="userNama" value="<?= set_value('userNama'); ?>" placeholder="Nama Lengkap">
+                                            <?= form_error('userNama', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <select class="custom-select" id="userProdi" name="userProdi">
-                                                <option selected disabled>Program Studi</option>
+                                                <option value="" disabled selected hidden>Program Studi</option>
                                                 <?php foreach ($prodi as $prodi) : ?>
                                                     <option value=<?= $prodi['id']; ?>><?= $prodi['nama']; ?></option>
                                                 <?php endforeach; ?>
@@ -53,7 +53,7 @@
                                         </script>
                                         <div class="form-group col-md-12">
                                             <select class="custom-select" id="userRole" name="userRole" onchange="roleCheck(this);">
-                                                <option selected disabled>Apakah anda Mahasiswa atau Dosen?</option>
+                                                <option value="" disabled selected hidden>Apakah anda Mahasiswa atau Dosen?</option>
                                                 <option value="Mahasiswa">Mahasiswa</option>
                                                 <option value="Dosen">Dosen</option>
                                             </select>

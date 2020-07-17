@@ -14,13 +14,6 @@ class Dosen extends CI_Controller
         redirect('dosen/pengajuan');
     }
 
-    public function pengajuan()
-    {
-        $data['title'] = 'Pengajuan';
-        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
-        $this->load->view('user/pengajuan', $data);
-    }
-
     public function profilsaya()
     {
         $data['title'] = 'Profil Saya';

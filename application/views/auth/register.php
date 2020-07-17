@@ -39,10 +39,10 @@
                                         </div>
                                         <script>
                                             function roleCheck(role) {
-                                                if (role.value == "Mahasiswa") {
+                                                if (role.value == "mahasiswa") {
                                                     document.getElementById("roleDosen").style.display = "none";
                                                     document.getElementById("roleMahasiswa").style.display = "block";
-                                                } else if (role.value == "Dosen") {
+                                                } else if (role.value == "dosen") {
                                                     document.getElementById("roleMahasiswa").style.display = "none";
                                                     document.getElementById("roleDosen").style.display = "block";
                                                 } else {

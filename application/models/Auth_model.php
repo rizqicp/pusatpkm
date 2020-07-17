@@ -44,7 +44,7 @@ class Auth_model extends CI_Model
     {
         $this->session->unset_userdata('userEmail');
         $this->session->unset_userdata('userRole');
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Keluar!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anda telah mengakhiri sesi!</div>');
     }
 
     public function register()
@@ -100,7 +100,7 @@ class Auth_model extends CI_Model
             return $current->db->insert_id();
         }
 
-        if ($this->form_validation->run() == true && $this->input->post('userRole', true) == 'Mahasiswa') {
+        if ($this->form_validation->run() == true && $this->input->post('userRole', true) == 'mahasiswa') {
             $userData = [
                 'id' => null,
                 'email' => htmlspecialchars($this->input->post('userEmail', true)),
@@ -116,9 +116,9 @@ class Auth_model extends CI_Model
                 'user_id' => $userId,
             ];
             create('mahasiswa', $mahasiswaData);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat, silahkan cek email untuk Verifikasi!</div>');
             return true;
-        } elseif ($this->form_validation->run() == true && $this->input->post('userRole', true) == 'Dosen') {
+        } elseif ($this->form_validation->run() == true && $this->input->post('userRole', true) == 'dosen') {
             $userData = [
                 'id' => null,
                 'email' => htmlspecialchars($this->input->post('userEmail', true)),
@@ -134,7 +134,7 @@ class Auth_model extends CI_Model
                 'user_id' => $userId,
             ];
             create('dosen', $dosenData);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat, silahkan cek email untuk Verifikasi!</div>');
             return true;
         } else {
             return false;

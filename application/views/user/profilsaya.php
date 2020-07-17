@@ -30,6 +30,20 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+                    <p>id = <?= $user['id']; ?></p>
+                    <p>email = <?= $user['email']; ?></p>
+                    <p>password = <?= $user['password']; ?></p>
+                    <p>peran = <?= $user['role']; ?></p>
+                    <p>status = <?= $user['aktif']; ?></p>
+                    <p>nama = <?= $user['nama']; ?></p>
+                    <?php if ($user['role'] == 'mahasiswa') : ?>
+                        <p>npm = <?= $user['npm']; ?></p>
+                    <?php elseif ($user['role'] == 'mahasiswa') : ?>
+                        <p>nidn = <?= $user['nidn']; ?></p>
+                    <?php endif; ?>
+                    <p>prodi = <?= $user['prodi_id']; ?></p>
+
+
 
                 </div>
                 <!-- /.container-fluid -->

@@ -7,6 +7,7 @@ class Mahasiswa extends CI_Controller
     {
         parent::__construct();
         isloginhelper();
+        $this->load->model('pengajuan_model');
     }
 
     public function index()
@@ -17,14 +18,42 @@ class Mahasiswa extends CI_Controller
     public function pengajuan()
     {
         $data['title'] = 'Pengajuan';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('userEmail')])->row_array();
-        $this->load->view('user/pengajuan', $data);
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
+        $this->db->where('email', $this->session->userdata('userEmail'));
+        $data['user'] = $this->db->get()->row_array();
+
+        $this->load->view('user/mahasiswa/pengajuan', $data);
     }
 
-    public function profilsaya()
+    public function tambahPengajuan()
+    {
+        $data['title'] = 'Tambah Pengajuan';
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
+        $this->db->where('email', $this->session->userdata('userEmail'));
+        $data['user'] = $this->db->get()->row_array();
+
+        $data['periode'] = $this->db->get('periode')->result_array();
+        $data['kategori'] = $this->db->get('kategori')->result_array();
+
+        if ($this->pengajuan_model->tambahPengajuan() == true) {
+            redirect('user/mahasiswa');
+        } else {
+            $this->load->view('user/mahasiswa/tambahpengajuan', $data);
+        }
+    }
+
+    public function profilSaya()
     {
         $data['title'] = 'Profil Saya';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('userEmail')])->row_array();
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
+        $this->db->where('email', $this->session->userdata('userEmail'));
+        $data['user'] = $this->db->get()->row_array();
         $this->load->view('user/profilsaya', $data);
     }
 }

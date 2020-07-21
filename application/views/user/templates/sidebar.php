@@ -20,14 +20,16 @@
     <li class="nav-item">
         <a class="nav-link" href="<?= base_url($user['role'] . '/pengajuan'); ?>">
             <i class="fas fa-fw fa-file-alt"></i>
-            <span>Pengajuan</span></a>
+            <span>Pengajuan</span>
+        </a>
     </li>
 
     <!-- Nav Item - Profil Saya -->
     <li class="nav-item">
         <a class="nav-link" href="<?= base_url($user['role'] . '/profilsaya'); ?>">
             <i class=" fas fa-fw fa-user-circle"></i>
-            <span>Profil Saya</span></a>
+            <span>Profil Saya</span>
+        </a>
     </li>
 
     <?php if ($user['role'] == 'admin') : ?>
@@ -40,7 +42,8 @@
         <li class="nav-item">
             <a class="nav-link" href="<?= base_url($user['role'] . '/kelolapengguna'); ?>">
                 <i class=" fas fa-fw fa-user-edit"></i>
-                <span>Kelola Pengguna</span></a>
+                <span>Kelola Pengguna</span>
+            </a>
         </li>
     <?php endif; ?>
 

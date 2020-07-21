@@ -6,7 +6,7 @@ class Dosen extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        isloginhelper();
+        isLoginHelper();
     }
 
     public function index()

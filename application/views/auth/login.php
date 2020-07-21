@@ -3,6 +3,7 @@
 
 <head>
     <?php $this->load->view("templates/meta.php") ?>
+    <title>Halaman Masuk</title>
 </head>
 
 <body class="bg-gradient-primary">

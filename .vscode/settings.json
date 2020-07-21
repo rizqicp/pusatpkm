@@ -15,6 +15,7 @@
     "application\\views\\errors\\html\\index.html": true,
     "application\\views\\errors\\index.html": true,
     "README.md": true,
-    "LAPORAN": true
+    "LAPORAN": true,
+    "application\\views\\errors": true
   }
 }

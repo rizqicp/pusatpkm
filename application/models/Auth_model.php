@@ -2,26 +2,51 @@
 
 class Auth_model extends CI_Model
 {
+    /*
+    |--------------------------------------------------------------------------
+    | login model
+    |--------------------------------------------------------------------------
+    |
+    | method untuk verifikasi login user
+    |
+    | memvalidasi form input dari user
+    | mengambil data user dari database
+    | unset session lama
+    | set data user ke dalam session baru
+    |
+    */
     public function login()
     {
-        $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email');
-        $this->form_validation->set_rules('userPassword', 'Password', 'required|trim');
+        // validasi form
+        $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email', [
+            'required' => 'Silahkan masukkan Email!',
+            'valid_email' => 'Email tidak valid!'
+        ]);
+        $this->form_validation->set_rules('userPassword', 'Password', 'required|trim', [
+            'required' => 'Silahkan masukkan Password!'
+        ]);
 
+        // ambil data user
         if ($this->form_validation->run() == true) {
             $userEmail = $this->input->post('userEmail');
             $userPassword = $this->input->post('userPassword');
-            $user = $this->db->get_where('user', ['email' => $userEmail])->row_array();
+            $userRole = $this->db->get_where('user', ['email' => $userEmail])->row_array()['role'];
+            $this->db->select('*');
+            $this->db->from('user');
+            if ($userRole == 'mahasiswa') {
+                $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
+            } elseif ($userRole == 'dosen') {
+                $this->db->join('dosen', 'user.id = dosen.user_id');
+            }
+            $this->db->where('email', $userEmail);
+            $user = $this->db->get()->row_array();
 
+            // set session
             if ($user) {
                 if ($user['aktif'] == 'aktif') {
                     if (password_verify($userPassword, $user['password'])) {
-                        $data = [
-                            'userId' => $user['id'],
-                            'userEmail' => $user['email'],
-                            'userRole' => $user['role']
-                        ];
-                        $this->session->set_userdata($data);
-                        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Selamat Datang!</div>');
+                        unsetSessionHelper();
+                        $this->session->set_userdata($user);
                         return true;
                     } else {
                         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password salah!</div>');
@@ -40,15 +65,39 @@ class Auth_model extends CI_Model
         }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | logout model
+    |--------------------------------------------------------------------------
+    |
+    | method untuk mengakhiri sesi user
+    |
+    | panggil helper unsetSessionHelper()
+    | unset session user
+    | kirim pesan berhasil logout
+    |
+    */
     public function logout()
     {
-        $this->session->unset_userdata('userEmail');
-        $this->session->unset_userdata('userRole');
+        unsetSessionHelper();
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anda telah mengakhiri sesi!</div>');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | register model
+    |--------------------------------------------------------------------------
+    |
+    | method untuk menambahkan user ke database
+    |
+    | memvalidasi form input dari user
+    | menjalankan fungsi create() untuk mengembalikan nilai id terakhir
+    | gunakan id untuk foreign key mahasiswa/dosen
+    |
+    */
     public function register()
     {
+        // validasi form
         $this->form_validation->set_rules('userNama', 'Nama', 'required|trim', [
             'required' => 'Nama harus diisi!'
         ]);
@@ -93,6 +142,7 @@ class Auth_model extends CI_Model
             'required' => 'Ketik ulang Password!'
         ]);
 
+        // fungsi insert data ke tabel
         function create($table, $data)
         {
             $current = get_instance();
@@ -100,6 +150,7 @@ class Auth_model extends CI_Model
             return $current->db->insert_id();
         }
 
+        // insert data user ke database
         if ($this->form_validation->run() == true && $this->input->post('userRole', true) == 'mahasiswa') {
             $userData = [
                 'id' => null,

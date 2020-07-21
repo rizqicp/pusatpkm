@@ -4,6 +4,7 @@
 <head>
     <!-- Meta Data -->
     <?php $this->load->view("templates/meta.php") ?>
+    <title>Profil Saya</title>
 </head>
 
 <body id="page-top">
@@ -12,7 +13,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php $this->load->view("templates/sidebar.php") ?>
+        <?php $this->load->view("user/templates/sidebar.php") ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -22,28 +23,27 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <?php $this->load->view("templates/topbar.php") ?>
+                <?php $this->load->view("user/templates/topbar.php") ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+                    <h1 class="h3 mb-4 text-gray-800">Profil Saya</h1>
                     <p>id = <?= $user['id']; ?></p>
                     <p>email = <?= $user['email']; ?></p>
-                    <p>password = <?= $user['password']; ?></p>
                     <p>peran = <?= $user['role']; ?></p>
                     <p>status = <?= $user['aktif']; ?></p>
-                    <p>nama = <?= $user['nama']; ?></p>
                     <?php if ($user['role'] == 'mahasiswa') : ?>
+                        <p>nama = <?= $user['nama']; ?></p>
                         <p>npm = <?= $user['npm']; ?></p>
+                        <p>prodi = <?= $user['prodi_id']; ?></p>
                     <?php elseif ($user['role'] == 'mahasiswa') : ?>
+                        <p>nama = <?= $user['nama']; ?></p>
                         <p>nidn = <?= $user['nidn']; ?></p>
+                        <p>prodi = <?= $user['prodi_id']; ?></p>
                     <?php endif; ?>
-                    <p>prodi = <?= $user['prodi_id']; ?></p>
-
-
 
                 </div>
                 <!-- /.container-fluid -->
@@ -52,7 +52,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php $this->load->view("templates/footer.php") ?>
+            <?php $this->load->view("user/templates/footer.php") ?>
             <!-- End of Footer -->
 
         </div>
@@ -62,9 +62,9 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <?php $this->load->view("templates/scrollTop.php") ?>
+    <?php $this->load->view("user/templates/scrollTop.php") ?>
     <!-- Logout Modal-->
-    <?php $this->load->view("templates/logoutModal.php") ?>
+    <?php $this->load->view("user/templates/logoutModal.php") ?>
     <!-- Script -->
     <?php $this->load->view("templates/script.php") ?>
 

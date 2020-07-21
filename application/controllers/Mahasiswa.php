@@ -6,13 +6,13 @@ class Mahasiswa extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        isloginhelper();
+        isLoginHelper();
         $this->load->model('pengajuan_model');
     }
 
     public function index()
     {
-        redirect('mahasiswa/pengajuan');
+        redirect('mahasiswa/profilsaya');
     }
 
     public function pengajuan()
@@ -48,12 +48,7 @@ class Mahasiswa extends CI_Controller
 
     public function profilSaya()
     {
-        $data['title'] = 'Profil Saya';
-        $this->db->select('*');
-        $this->db->from('user');
-        $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
-        $this->db->where('email', $this->session->userdata('userEmail'));
-        $data['user'] = $this->db->get()->row_array();
+        $data['user'] = $this->session->userdata();
         $this->load->view('user/profilsaya', $data);
     }
 }

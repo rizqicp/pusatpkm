@@ -6,32 +6,29 @@ class Admin extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        isloginhelper();
+        isLoginHelper();
     }
 
     public function index()
     {
-        redirect('admin/pengajuan');
+        redirect('admin/profilsaya');
     }
 
     public function profilsaya()
     {
-        $data['title'] = 'Profil Saya';
-        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
+        $data['user'] = $this->session->userdata();
         $this->load->view('user/profilsaya', $data);
     }
 
     public function historiproposal()
     {
-        $data['title'] = 'historiproposal';
-        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
+        $data['user'] = $this->session->userdata();
         $this->load->view('user/profilsaya', $data);
     }
 
     public function kelolapengguna()
     {
-        $data['title'] = 'Kelola Pengguna';
-        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
-        $this->load->view('user/kelolapengguna', $data);
+        $data['user'] = $this->session->userdata();
+        $this->load->view('user/profilsaya', $data);
     }
 }

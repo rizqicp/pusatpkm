@@ -39,7 +39,7 @@
                         <p>nama = <?= $user['nama']; ?></p>
                         <p>npm = <?= $user['npm']; ?></p>
                         <p>prodi = <?= $user['prodi_id']; ?></p>
-                    <?php elseif ($user['role'] == 'mahasiswa') : ?>
+                    <?php elseif ($user['role'] == 'dosen') : ?>
                         <p>nama = <?= $user['nama']; ?></p>
                         <p>nidn = <?= $user['nidn']; ?></p>
                         <p>prodi = <?= $user['prodi_id']; ?></p>

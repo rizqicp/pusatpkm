@@ -16,14 +16,6 @@
         <?= $user['role']; ?>
     </div>
 
-    <!-- Nav Item - pengajuan -->
-    <li class="nav-item">
-        <a class="nav-link" href="<?= base_url($user['role'] . '/pengajuan'); ?>">
-            <i class="fas fa-fw fa-file-alt"></i>
-            <span>Pengajuan</span>
-        </a>
-    </li>
-
     <!-- Nav Item - Profil Saya -->
     <li class="nav-item">
         <a class="nav-link" href="<?= base_url($user['role'] . '/profilsaya'); ?>">
@@ -32,20 +24,37 @@
         </a>
     </li>
 
-    <?php if ($user['role'] == 'admin') : ?>
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-        <div class="sidebar-heading">
-            Pengelola
-        </div>
-        <!-- Nav Item - Kelola Pengguna -->
-        <li class="nav-item">
-            <a class="nav-link" href="<?= base_url($user['role'] . '/kelolapengguna'); ?>">
-                <i class=" fas fa-fw fa-user-edit"></i>
-                <span>Kelola Pengguna</span>
-            </a>
-        </li>
-    <?php endif; ?>
+    <?php switch ($user['role']):
+        case 'admin': ?>
+            <!-- Nav Item - Kelola Pengguna -->
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url($user['role'] . '/kelolapengguna'); ?>">
+                    <i class=" fas fa-fw fa-user-edit"></i>
+                    <span>Kelola Pengguna</span>
+                </a>
+            </li>
+            <?php break; ?>
+        <?php
+        case 'mahasiswa': ?>
+            <!-- Nav Item - pengajuan -->
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url($user['role'] . '/pengajuan'); ?>">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Pengajuan</span>
+                </a>
+            </li>
+            <?php break; ?>
+        <?php
+        case 'dosen': ?>
+            <!-- Nav Item - ulasan -->
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url($user['role'] . '/ulasan'); ?>">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Ulasan</span>
+                </a>
+            </li>
+            <?php break; ?>
+    <?php endswitch ?>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

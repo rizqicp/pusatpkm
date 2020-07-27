@@ -11,13 +11,12 @@ class Dosen extends CI_Controller
 
     public function index()
     {
-        redirect('dosen/pengajuan');
+        redirect('dosen/profilsaya');
     }
 
     public function profilsaya()
     {
-        $data['title'] = 'Profil Saya';
-        $data['user'] = $this->db->get_where('user', ['user_email' => $this->session->userdata('userEmail')])->row_array();
+        $data['user'] = $this->session->userdata();
         $this->load->view('user/profilsaya', $data);
     }
 }

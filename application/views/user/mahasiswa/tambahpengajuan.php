@@ -12,7 +12,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php $this->load->view("templates/sidebar.php") ?>
+        <?php $this->load->view("user/_partials/sidebar.php") ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -22,14 +22,14 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <?php $this->load->view("templates/topbar.php") ?>
+                <?php $this->load->view("user/_partials/topbar.php") ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+                    <h1 class="h3 mb-4 text-gray-800">Tambah Pengajuan</h1>
 
                     <form action="<?= base_url('mahasiswa/tambahpengajuan'); ?>" method="post" enctype="multipart/form-data">
                         <table border="1">
@@ -72,15 +72,30 @@
                             <tr>
                                 <td><label for="dana">Pengajuan Dana</label></td>
                                 <td>
-                                    <input type="number" name="dana" id="dana" value="<?= set_value('dana'); ?>" placeholder="0">
+                                    <input type="number" name="dana" id="dana" value="<?= set_value('dana'); ?>" min="0" max="999999999">
                                     <?= form_error('dana', '<small class="text-danger pl-3">', '</small>'); ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="dosenNidn">NIDN Dosen Pembimbing</label></td>
                                 <td>
-                                    <input type="text" name="dosenNidn" id="dosenNidn" value="<?= set_value('dosenNidn'); ?>">
+                                    <select name="dosenNidn" id="dosenNidn" value="<?= set_value('dosenNidn'); ?>">
+                                        <?php foreach ($dosen as $dosen) : ?>
+                                            <option value="<?= $dosen['nidn']; ?>"><?= $dosen['nama']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                     <?= form_error('dosenNidn', '<small class="text-danger pl-3">', '</small>'); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2"><label for="pengusul">Anggota Tim</label></td>
+                                <td>
+                                    <?= "Anggota 1 : " . $user['nama']; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <a href="#" class="badge badge-warning">Tambah Anggota</a> #dalam perbaikan
                                 </td>
                             </tr>
                             <tr>
@@ -124,7 +139,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php $this->load->view("templates/footer.php") ?>
+            <?php $this->load->view("user/_partials/footer.php") ?>
             <!-- End of Footer -->
 
         </div>
@@ -134,9 +149,9 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <?php $this->load->view("templates/scrollTop.php") ?>
+    <?php $this->load->view("user/_partials/scrollTop.php") ?>
     <!-- Logout Modal-->
-    <?php $this->load->view("templates/logoutModal.php") ?>
+    <?php $this->load->view("user/_partials/logoutModal.php") ?>
     <!-- Script -->
     <?php $this->load->view("templates/script.php") ?>
 

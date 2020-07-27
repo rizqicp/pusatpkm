@@ -3,7 +3,6 @@
 
 <head>
     <?php $this->load->view("templates/meta.php") ?>
-    <title>Pendaftaran Akun</title>
 </head>
 
 <body class="bg-gradient-primary">

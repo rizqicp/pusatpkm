@@ -17,7 +17,7 @@
     </div>
 
     <!-- Nav Item - Profil Saya -->
-    <li class="nav-item">
+    <li class="nav-item <?= $this->uri->segment(2) == 'profilsaya' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url($user['role'] . '/profilsaya'); ?>">
             <i class=" fas fa-fw fa-user-circle"></i>
             <span>Profil Saya</span>
@@ -27,7 +27,7 @@
     <?php switch ($user['role']):
         case 'admin': ?>
             <!-- Nav Item - Kelola Pengguna -->
-            <li class="nav-item">
+            <li class="nav-item <?= $this->uri->segment(2) == 'kelolapengguna' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= base_url($user['role'] . '/kelolapengguna'); ?>">
                     <i class=" fas fa-fw fa-user-edit"></i>
                     <span>Kelola Pengguna</span>
@@ -37,7 +37,7 @@
         <?php
         case 'mahasiswa': ?>
             <!-- Nav Item - pengajuan -->
-            <li class="nav-item">
+            <li class="nav-item <?= $this->uri->segment(2) == 'pengajuan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= base_url($user['role'] . '/pengajuan'); ?>">
                     <i class="fas fa-fw fa-file-alt"></i>
                     <span>Pengajuan</span>
@@ -47,7 +47,7 @@
         <?php
         case 'dosen': ?>
             <!-- Nav Item - ulasan -->
-            <li class="nav-item">
+            <li class="nav-item <?= $this->uri->segment(2) == 'ulasan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= base_url($user['role'] . '/ulasan'); ?>">
                     <i class="fas fa-fw fa-file-alt"></i>
                     <span>Ulasan</span>

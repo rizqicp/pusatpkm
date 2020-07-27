@@ -2,6 +2,15 @@
 
 class Pengajuan_model extends CI_Model
 {
+    public function lihatPengajuan($npm)
+    {
+        $this->db->select('*');
+        $this->db->from('pengusul');
+        $this->db->join('pengajuan', 'pengusul.pengajuan_id = pengajuan.id');
+        $this->db->where('mahasiswa_npm', $npm);
+        return $this->db->get()->result_array();
+    }
+
     public function tambahPengajuan()
     {
         foreach ($this->db->get('periode')->result_array() as $periode) {
@@ -46,4 +55,21 @@ class Pengajuan_model extends CI_Model
             die;
         }
     }
+
+    // private function _uploadFile()
+    // {
+    //     $config['upload_path']          = './upload/pengajuan/';
+    //     $config['allowed_types']        = 'doc|docx';
+    //     $config['file_name']            = $this->product_id;
+    //     $config['overwrite']            = true;
+    //     $config['max_size']             = 1024; // 1MB
+
+    //     $this->load->library('upload', $config);
+
+    //     if ($this->upload->do_upload('image')) {
+    //         return $this->upload->data("file_name");
+    //     }
+
+    //     return "default.jpg";
+    // }
 }

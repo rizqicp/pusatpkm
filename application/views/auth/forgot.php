@@ -3,7 +3,6 @@
 
 <head>
     <?php $this->load->view("templates/meta.php") ?>
-    <title>Lupa Kata Sandi</title>
 </head>
 
 <body class="bg-gradient-primary">

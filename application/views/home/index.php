@@ -3,7 +3,6 @@
 
 <head>
     <?php $this->load->view("templates/meta.php") ?>
-    <title>Home</title>
 </head>
 
 <body>

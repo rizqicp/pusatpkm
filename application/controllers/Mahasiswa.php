@@ -17,27 +17,18 @@ class Mahasiswa extends CI_Controller
 
     public function pengajuan()
     {
-        $data['title'] = 'Pengajuan';
-        $this->db->select('*');
-        $this->db->from('user');
-        $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
-        $this->db->where('email', $this->session->userdata('userEmail'));
-        $data['user'] = $this->db->get()->row_array();
-
+        $data['user'] = $this->session->userdata();
+        $data['pengajuan'] = $this->pengajuan_model->lihatPengajuan($data['user']['npm']);
         $this->load->view('user/mahasiswa/pengajuan', $data);
     }
 
     public function tambahPengajuan()
     {
-        $data['title'] = 'Tambah Pengajuan';
-        $this->db->select('*');
-        $this->db->from('user');
-        $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
-        $this->db->where('email', $this->session->userdata('userEmail'));
-        $data['user'] = $this->db->get()->row_array();
-
+        $data['user'] = $this->session->userdata();
         $data['periode'] = $this->db->get('periode')->result_array();
         $data['kategori'] = $this->db->get('kategori')->result_array();
+        $data['mahasiswa'] = $this->db->get('mahasiswa')->result_array();
+        $data['dosen'] = $this->db->get('dosen')->result_array();
 
         if ($this->pengajuan_model->tambahPengajuan() == true) {
             redirect('user/mahasiswa');

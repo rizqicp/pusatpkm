@@ -12,7 +12,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php $this->load->view("templates/sidebar.php") ?>
+        <?php $this->load->view("user/_partials/sidebar.php") ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -22,42 +22,49 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <?php $this->load->view("templates/topbar.php") ?>
+                <?php $this->load->view("user/_partials/topbar.php") ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+                    <h1 class="h3 mb-4 text-gray-800">Pengajuan</h1>
+
+                    <a href="<?= base_url($user['role'] . '/tambahpengajuan'); ?>" class="badge badge-primary mb-3">Tambah Pengajuan</a>
 
                     <table class="table">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col" colspan="2">First</th>
-                                <th scope="col">Search</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col">No</th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Periode</th>
+                                <th scope="col">Kategori</th>
+                                <th scope="col">Tahap</th>
+                                <th scope="col">Pembimbing</th>
+                                <th scope="col">Judul</th>
+                                <th scope="col">Abstraksi</th>
+                                <th scope="col">Dana</th>
+                                <th scope="col">File</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                            <?php $i = 1; ?>
+                            <?php foreach ($pengajuan as $pengajuan) : ?>
+                                <tr>
+                                    <th scope="row"><?= $i; ?></th>
+                                    <td><?= $pengajuan['id']; ?></td>
+                                    <td><?= $pengajuan['periode_id']; ?></td>
+                                    <td><?= $pengajuan['kategori_id']; ?></td>
+                                    <td><?= $pengajuan['tahap_id']; ?></td>
+                                    <td><?= $pengajuan['dosen_nidn']; ?></td>
+                                    <td><?= $pengajuan['judul']; ?></td>
+                                    <td><?= $pengajuan['abstraksi']; ?></td>
+                                    <td><?= $pengajuan['dana']; ?></td>
+                                    <td><?= $pengajuan['file']; ?></td>
+                                </tr>
+                                <?php $i++; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
 
@@ -68,7 +75,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php $this->load->view("templates/footer.php") ?>
+            <?php $this->load->view("user/_partials/footer.php") ?>
             <!-- End of Footer -->
 
         </div>
@@ -78,9 +85,9 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <?php $this->load->view("templates/scrollTop.php") ?>
+    <?php $this->load->view("user/_partials/scrollTop.php") ?>
     <!-- Logout Modal-->
-    <?php $this->load->view("templates/logoutModal.php") ?>
+    <?php $this->load->view("user/_partials/logoutModal.php") ?>
     <!-- Script -->
     <?php $this->load->view("templates/script.php") ?>
 

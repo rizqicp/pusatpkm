@@ -3,7 +3,7 @@
 
 <head>
     <!-- Meta Data -->
-    <?php $this->load->view("templates/meta.php") ?>
+    <?php $this->load->view("_partials/meta.php") ?>
 </head>
 
 <body id="page-top">
@@ -12,7 +12,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php $this->load->view("user/_partials/sidebar.php") ?>
+        <?php $this->load->view("_partials/sidebar.php") ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -22,7 +22,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <?php $this->load->view("user/_partials/topbar.php") ?>
+                <?php $this->load->view("_partials/topbar.php") ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -51,7 +51,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php $this->load->view("user/_partials/footer.php") ?>
+            <?php $this->load->view("_partials/footer.php") ?>
             <!-- End of Footer -->
 
         </div>
@@ -61,11 +61,11 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <?php $this->load->view("user/_partials/scrollTop.php") ?>
+    <?php $this->load->view("_partials/scrollTop.php") ?>
     <!-- Logout Modal-->
-    <?php $this->load->view("user/_partials/logoutModal.php") ?>
+    <?php $this->load->view("_partials/logoutModal.php") ?>
     <!-- Script -->
-    <?php $this->load->view("templates/script.php") ?>
+    <?php $this->load->view("_partials/script.php") ?>
 
 </body>
 

@@ -3,7 +3,7 @@
 
 <head>
     <!-- Meta Data -->
-    <?php $this->load->view("templates/meta.php") ?>
+    <?php $this->load->view("_partials/meta.php") ?>
 </head>
 
 <body id="page-top">
@@ -12,7 +12,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php $this->load->view("user/_partials/sidebar.php") ?>
+        <?php $this->load->view("_partials/sidebar.php") ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -22,7 +22,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <?php $this->load->view("user/_partials/topbar.php") ?>
+                <?php $this->load->view("_partials/topbar.php") ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -79,11 +79,7 @@
                             <tr>
                                 <td><label for="dosenNidn">NIDN Dosen Pembimbing</label></td>
                                 <td>
-                                    <select name="dosenNidn" id="dosenNidn" value="<?= set_value('dosenNidn'); ?>">
-                                        <?php foreach ($dosen as $dosen) : ?>
-                                            <option value="<?= $dosen['nidn']; ?>"><?= $dosen['nama']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                    <input name="dosenNidn" id="dosenNidn" value="<?= set_value('dosenNidn'); ?>">
                                     <?= form_error('dosenNidn', '<small class="text-danger pl-3">', '</small>'); ?>
                                 </td>
                             </tr>
@@ -95,7 +91,7 @@
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <a href="#" class="badge badge-warning">Tambah Anggota</a> #dalam perbaikan
+                                    <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#tambahAnggotaModal">Tambah Anggota</a> #dalam perbaikan
                                 </td>
                             </tr>
                             <tr>
@@ -139,7 +135,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php $this->load->view("user/_partials/footer.php") ?>
+            <?php $this->load->view("_partials/footer.php") ?>
             <!-- End of Footer -->
 
         </div>
@@ -148,12 +144,15 @@
     </div>
     <!-- End of Page Wrapper -->
 
+    <!-- input form Modal-->
+    <?php $this->load->view("_partials/tambahAnggotaModal.php") ?>
+
     <!-- Scroll to Top Button-->
-    <?php $this->load->view("user/_partials/scrollTop.php") ?>
+    <?php $this->load->view("_partials/scrollTop.php") ?>
     <!-- Logout Modal-->
-    <?php $this->load->view("user/_partials/logoutModal.php") ?>
+    <?php $this->load->view("_partials/logoutModal.php") ?>
     <!-- Script -->
-    <?php $this->load->view("templates/script.php") ?>
+    <?php $this->load->view("_partials/script.php") ?>
 
 </body>
 

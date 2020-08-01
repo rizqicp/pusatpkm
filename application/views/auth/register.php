@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <?php $this->load->view("templates/meta.php") ?>
+    <?php $this->load->view("_partials/meta.php") ?>
 </head>
 
 <body class="bg-gradient-primary">
@@ -101,7 +101,7 @@
 
     </div>
 
-    <?php $this->load->view("templates/script.php") ?>
+    <?php $this->load->view("_partials/script.php") ?>
 
 </body>
 

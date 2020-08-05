@@ -8,12 +8,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>cari berdasarkan nama</p>
-                <p>cari berdasarkan npm</p>
+                <p>Cari Mahasiswa</p>
+                <!-- Search form -->
+                <input id="" class="form-control" type="text" placeholder="Search" aria-label="Search">
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                <a class="btn btn-primary" href="#">Tambah</a>
+                <button class="btn btn-primary" type="button" data-dismiss="modal">Tambah</button>
             </div>
         </div>
     </div>

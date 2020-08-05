@@ -38,6 +38,8 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Id</th>
+                                <th scope="col">NPM</th>
+                                <th scope="col">Anggota</th>
                                 <th scope="col">Periode</th>
                                 <th scope="col">Kategori</th>
                                 <th scope="col">Tahap</th>
@@ -54,6 +56,8 @@
                                 <tr>
                                     <th scope="row"><?= $i; ?></th>
                                     <td><?= $pengajuan['id']; ?></td>
+                                    <td><?= $pengajuan['mahasiswa_npm']; ?></td>
+                                    <td><?= $pengajuan['anggota']; ?></td>
                                     <td><?= $pengajuan['periode_id']; ?></td>
                                     <td><?= $pengajuan['kategori_id']; ?></td>
                                     <td><?= $pengajuan['tahap_id']; ?></td>

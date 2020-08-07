@@ -13,22 +13,28 @@ class Pengajuan_model extends CI_Model
 
     public function tambahPengajuan()
     {
+        // validasi form
         foreach ($this->db->get('periode')->result_array() as $periode) {
             $periodeId[] = $periode['id'];
         }
-        $this->form_validation->set_rules('periode', 'Periode', 'required|in_list[' . implode(',', $periodeId) . ']');
         foreach ($this->db->get('kategori')->result_array() as $kategori) {
             $kategoriId[] = $kategori['id'];
         }
+        foreach ($this->db->get('mahasiswa')->result_array() as $mahasiswa) {
+            $mahasiswaNpm[] = $mahasiswa['npm'];
+        }
+        foreach ($this->db->get('dosen')->result_array() as $dosen) {
+            $dosenNidn[] = $dosen['nidn'];
+        }
+        $this->form_validation->set_rules('periode', 'Periode', 'required|in_list[' . implode(',', $periodeId) . ']');
         $this->form_validation->set_rules('kategori', 'Periode', 'required|in_list[' . implode(',', $kategoriId) . ']');
         $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
         $this->form_validation->set_rules('abstraksi', 'Abstraksi', 'trim');
         $this->form_validation->set_rules('dana', 'Dana', 'trim|numeric');
-        foreach ($this->db->get('dosen')->result_array() as $dosen) {
-            $dosenNidn[] = $dosen['nidn'];
-        }
         $this->form_validation->set_rules('dosenNidn', 'NIDN', 'required|numeric|exact_length[10]|in_list[' . implode(',', $dosenNidn) . ']');
+        $this->form_validation->set_rules('mahasiswaNpm', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']');
 
+        // fungsi insert, return id
         function create($table, $data)
         {
             $current = get_instance();
@@ -36,6 +42,28 @@ class Pengajuan_model extends CI_Model
             return $current->db->insert_id();
         }
 
+        // fungsi upload
+        function _uploadFile($id)
+        {
+            $current = get_instance();
+            $config['upload_path']          = './upload/pengajuan/';
+            $config['allowed_types']        = 'doc|docx';
+            $config['file_name']            = 'pengajuan_' . $id;
+            $config['overwrite']            = true;
+            $config['max_size']             = 2048; // 2MB
+
+            $current->load->library('upload', $config);
+
+            if ($current->upload->do_upload('userFile')) {
+                return $current->upload->data("file_name");
+            } else {
+                echo "error";
+                var_dump($_FILES);
+                die;
+            }
+        }
+
+        // simpan data pengajuan ke dalam variabel
         if ($this->form_validation->run() == true) {
             $dataPengajuan = [
                 'id' => null,
@@ -51,25 +79,30 @@ class Pengajuan_model extends CI_Model
                 'belmawa_password' => null,
                 'file_laporan' => null
             ];
-            var_dump($dataPengajuan);
-            die;
+            $pengajuanId = create('pengajuan', $dataPengajuan);
+
+            $this->db->set('file', _uploadFile($pengajuanId));
+            $this->db->where('id', $pengajuanId);
+            $this->db->update('pengajuan');
+
+            // data pengusul perlu diperbaiki
+            $dataPengusul = [
+                'id' => null,
+                'pengajuan_id' => $pengajuanId,
+                'mahasiswa_npm' => $this->input->post('mahasiswaNpm'),
+                'anggota' => 1
+            ];
+            create('pengusul', $dataPengusul);
+
+            $dataLog = [
+                'id' => null,
+                'pengajuan_id' => $pengajuanId,
+                'waktu' => null,
+                'berita' => 'pengajuan dibuat'
+            ];
+            create('log', $dataLog);
+
+            return true;
         }
     }
-
-    // private function _uploadFile()
-    // {
-    //     $config['upload_path']          = './upload/pengajuan/';
-    //     $config['allowed_types']        = 'doc|docx';
-    //     $config['file_name']            = $this->product_id;
-    //     $config['overwrite']            = true;
-    //     $config['max_size']             = 1024; // 1MB
-
-    //     $this->load->library('upload', $config);
-
-    //     if ($this->upload->do_upload('image')) {
-    //         return $this->upload->data("file_name");
-    //     }
-
-    //     return "default.jpg";
-    // }
 }

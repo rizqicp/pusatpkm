@@ -99,7 +99,7 @@
                             </div>
                             <input type="text" class="form-control" name="mahasiswaNpm" id="mahasiswaNpm" value="<?= set_value('mahasiswaNpm'); ?>">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-target="#tambahAnggotaModal">Tambah</button>
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-toggle="modal" data-target="#tambahAnggotaModal">Tambah</button>
                             </div>
                         </div>
 
@@ -108,8 +108,8 @@
                                 <span class="input-group-text">Upload</span>
                             </div>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="file" id="file">
-                                <label class="custom-file-label" for="file">Choose file</label>
+                                <input type="file" class="custom-file-input" name="userFile" id="userFile">
+                                <label class="custom-file-label" for="userFile">Choose file</label>
                             </div>
                         </div>
 

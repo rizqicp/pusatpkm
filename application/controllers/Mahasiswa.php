@@ -32,7 +32,7 @@ class Mahasiswa extends CI_Controller
         $data['dosen'] = $this->db->get('dosen')->result_array();
 
         if ($this->pengajuan_model->tambahPengajuan() == true) {
-            redirect('user/mahasiswa');
+            redirect('mahasiswa/pengajuan');
         } else {
             $this->load->view('user/mahasiswa/tambahpengajuan', $data);
         }

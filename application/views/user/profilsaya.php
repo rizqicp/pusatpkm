@@ -33,7 +33,7 @@
                     <p>id = <?= $user['id']; ?></p>
                     <p>email = <?= $user['email']; ?></p>
                     <p>peran = <?= $user['role']; ?></p>
-                    <p>status = <?= $user['aktif']; ?></p>
+                    <p>status = <?= $user['status']; ?></p>
                     <?php if ($user['role'] == 'mahasiswa') : ?>
                         <p>nama = <?= $user['nama']; ?></p>
                         <p>npm = <?= $user['npm']; ?></p>

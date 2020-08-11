@@ -39,7 +39,7 @@ function unsetSessionHelper()
     $current->session->unset_userdata('email');
     $current->session->unset_userdata('password');
     $current->session->unset_userdata('role');
-    $current->session->unset_userdata('aktif');
+    $current->session->unset_userdata('status');
     $current->session->unset_userdata('nama');
     $current->session->unset_userdata('npm');
     $current->session->unset_userdata('nidn');

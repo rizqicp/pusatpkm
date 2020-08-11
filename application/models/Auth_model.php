@@ -43,7 +43,7 @@ class Auth_model extends CI_Model
 
             // set session
             if ($user) {
-                if ($user['aktif'] == 'aktif') {
+                if ($user['status'] == 'aktif') {
                     if (password_verify($userPassword, $user['password'])) {
                         unsetSessionHelper();
                         $this->session->set_userdata($user);
@@ -157,7 +157,7 @@ class Auth_model extends CI_Model
                 'email' => htmlspecialchars($this->input->post('userEmail', true)),
                 'password' => password_hash($this->input->post('userPassword'), PASSWORD_DEFAULT),
                 'role' => $this->input->post('userRole', true),
-                'aktif' => 'Pasif'
+                'status' => 'Pasif'
             ];
             $userId = create('user', $userData);
             $mahasiswaData = [
@@ -175,7 +175,7 @@ class Auth_model extends CI_Model
                 'email' => htmlspecialchars($this->input->post('userEmail', true)),
                 'password' => password_hash($this->input->post('userPassword'), PASSWORD_DEFAULT),
                 'role' => $this->input->post('userRole', true),
-                'aktif' => 'Pasif'
+                'status' => 'Pasif'
             ];
             $userId = create('user', $userData);
             $dosenData = [

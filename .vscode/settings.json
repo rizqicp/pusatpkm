@@ -3,8 +3,6 @@
     "license.txt": true,
     "contributing.md": true,
     "composer.json": true,
-    "**/.htaccess": true,
-    "**/.htaccess.*": true,
     ".gitignore": true,
     ".editorconfig": true,
     "user_guide": true,
@@ -16,6 +14,8 @@
     "application\\views\\errors\\index.html": true,
     "README.md": true,
     "LAPORAN": true,
-    "application\\views\\errors": true
+    "application\\views\\errors": true,
+    "application\\.htaccess": true,
+    ".htaccess": true
   }
 }

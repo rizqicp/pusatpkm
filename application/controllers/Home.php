@@ -3,9 +3,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Home extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('home_model');
+    }
+
     public function index()
     {
-        $data['title'] = 'Home';
+        $data['pengumuman'] = $this->home_model->lihatPengumuman();
+        $data['page'] = $this->home_model->pagination();
+        // var_dump($data['pengumuman']);
+        // var_dump($data['page']);
+        // die;
         $this->load->view('home/index', $data);
     }
 }

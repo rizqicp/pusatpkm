@@ -1,131 +1,180 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <title>GreenLine</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link href="<?= base_url('assets/'); ?>css/home/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="<?= base_url('assets/'); ?>js/home/cufon-yui.js"></script>
-  <script type="text/javascript" src="<?= base_url('assets/'); ?>js/home/arial.js"></script>
-  <script type="text/javascript" src="<?= base_url('assets/'); ?>js/home/cuf_run.js"></script>
-  <script type="text/javascript" src="<?= base_url('assets/'); ?>js/home/jquery-1.3.2.min.js"></script>
-  <script type="text/javascript" src="<?= base_url('assets/'); ?>js/home/radius.js"></script>
+    <!-- Core Meta Data -->
+    <?php $this->load->view("_partials/meta.php") ?>
+
+    <!-- Custom styles for this template -->
+    <link href="<?= base_url('assets/'); ?>css/blog-home.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
-  <!-- START PAGE SOURCE -->
-  <div class="main">
-    <div class="header">
-      <div class="header_resize">
-        <div class="menu_nav">
-          <ul>
-            <li class="active"><a href="index.html">Beranda</a></li>
-            <li><a href="support.html">Support</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-          </ul>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" style="font-size: 1.5rem;" href="<?= base_url('home'); ?>"><i class="fas fa-user-graduate"></i> Pusat<span>PKM</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link mr-3 mt-1" href="<?= base_url('home'); ?>">Beranda
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mr-3 mt-1">
+                        <a class="nav-link" href="#">Panduan</a>
+                    </li>
+                    <li class="nav-item mr-3 mt-1">
+                        <a class="nav-link" href="#">Profil</a>
+                    </li>
+                    <li class="nav-item mt-1">
+                        <a class="nav-link btn btn-outline-secondary" href="<?= base_url('auth/login'); ?>">Masuk</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="logo">
-          <h1><a href="index.html">Pusat<span>PKM</span></a> <small>UPN "Veteran" Jawa Timur</small></h1>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
+
+                <h1 class="my-4">Pengumuman</h1>
+                <?php if ($pengumuman != null) : ?>
+                    <?php foreach ($pengumuman as $pengumuman) : ?>
+                        <!-- Blog Post -->
+                        <div class="card bg-light mb-4">
+                            <!-- <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap"> -->
+                            <?php if ($pengumuman['gambar']) : ?>
+                                <img class="card-img-top" src="<?= base_url('assets/'); ?>img/pengumuman/<?= $pengumuman['gambar']; ?>" alt="Gambar Pengumuman">
+                            <?php endif; ?>
+                            <div class="card-body">
+                                <h2 class="card-title"><?= $pengumuman['judul']; ?></h2>
+                                <p class="card-text"><?= $pengumuman['isi']; ?></p>
+                                <a href="#" class="btn btn-primary">Lebih Banyak &rarr;</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Ditulis <?= date("d-F-Y", strtotime($pengumuman['waktu'])); ?> oleh Admin
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <p>Data tidak ditemukan.</p>
+                <?php endif; ?>
+
+
+                <!-- Pagination -->
+                <ul class="pagination justify-content-center mb-4">
+                    <?php $activePage = isset($_GET['page']) ? $_GET['page'] : 1; ?>
+                    <?php
+                    if ($activePage < $page['count']) {
+                        $older = "";
+                    } else {
+                        $older = "disabled";
+                    }
+                    ?>
+                    <li class="page-item <?= $older; ?>">
+                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">&larr; Terdahulu</a>
+                    </li>
+                    <?php
+                    if ($activePage > 1) {
+                        $earlier = "";
+                    } else {
+                        $earlier = "disabled";
+                    }
+                    ?>
+                    <li class="page-item <?= $earlier; ?>">
+                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Terbaru &rarr;</a>
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
+
+                <!-- Search Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Cari Pengumuman</h5>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Kata kunci...">
+                            <span class="input-group-append">
+                                <button class="btn btn-secondary" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Categories</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="#">Web Design</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">HTML</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Freebies</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="#">JavaScript</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">CSS</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Tutorials</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Side Widget</h5>
+                    <div class="card-body">
+                        You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-        <div class="clr"></div>
-      </div>
+        <!-- /.row -->
+
     </div>
-    <div class="content">
-      <div class="content_resize">
-        <div class="mainbar">
-          <div class="article">
-            <h2><span>Template</span> License</h2>
-            <div class="clr"></div>
-            <p><span class="date">On 11 sep 2018</span> Posted by <a href="#">Owner</a> &nbsp;|&nbsp; Filed under <a href="#">templates</a>, <a href="#">internet</a></p>
-            <img src="<?= base_url('assets/'); ?>img/home/img1.jpg" width="625" height="205" alt="" />
-            <p>This is a free CSS website template by CoolWebTemplates.net. This work is distributed under the Creative Commons Attribution 3.0 License, which means that you are free to use it for any personal or commercial purpose provided you leave the credit links in the template footer intact.</p>
-            <p class="spec"><a href="#" class="rm">Read more &raquo;</a> <a href="#" class="com"><span>11</span> Comments</a></p>
-          </div>
-          <div class="article">
-            <h2><span>Future</span> technology</h2>
-            <div class="clr"></div>
-            <p><span class="date">On 29 aug 2010</span> Posted by <a href="#">Owner</a> &nbsp;|&nbsp; Filed under <a href="#">templates</a>, <a href="#">internet</a></p>
-            <img src="<?= base_url('assets/'); ?>img/home/img2.jpg" width="625" height="205" alt="" />
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. <a href="#">Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu posuere nunc justo tempus leo.</a> Donec mattis, purus nec placerat bibendum, dui pede condimentum odio, ac blandit ante orci ut diam. Cras fringilla magna. Phasellus suscipit, leo a pharetra condimentum, lorem tellus eleifend magna, eget fringilla velit magna id neque. Curabitur vel urna. In tristique orci porttitor ipsum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. Morbi tincidunt, orci ac convallis aliquam.</p>
-            <p class="spec"><a href="#" class="rm">Read more &raquo;</a> <a href="#" class="com"><span>7</span> Comments</a></p>
-          </div>
-          <p class="pages"><small>Page 1 of 2 &nbsp;&nbsp;&nbsp;</small> <span>1</span> <a href="#">2</a> <a href="#">&raquo;</a></p>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
         </div>
-        <div class="sidebar">
-          <div class="searchform">
-            <form id="formsearch" name="formsearch" method="post" action="#">
-              <span>
-                <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" value="Search our site:" type="text" />
-              </span>
-              <input name="button_search" src="<?= base_url('assets/'); ?>img/home/search_btn.gif" class="button_search" type="image" />
-            </form>
-          </div>
-          <div class="gadget">
-            <h2 class="star"><span>Menu</span> Akun</h2>
-            <div class="clr"></div>
-            <ul class="sb_menu">
-              <li><a href="<?= base_url('auth/login'); ?>">Masuk</a></li>
-              <li><a href="<?= base_url('auth/register'); ?>">Daftar Akun</a></li>
-              <li><a href="#">Style Demo</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Archives</a></li>
-            </ul>
-          </div>
-          <div class="gadget">
-            <h2 class="star"><span>Sponsors</span></h2>
-            <div class="clr"></div>
-            <ul class="ex_menu">
-              <li><a href="#">Lorem ipsum dolor</a><br />
-                Donec libero. Suspendisse bibendum</li>
-              <li><a href="#">Dui pede condimentum</a><br />
-                Phasellus suscipit, leo a pharetra</li>
-              <li><a href="#">Condimentum lorem</a><br />
-                Tellus eleifend magna eget</li>
-              <li><a href="#">Fringilla velit magna</a><br />
-                Curabitur vel urna in tristique</li>
-              <li><a href="#">Suspendisse bibendum</a><br />
-                Cras id urna orbi tincidunt orci ac</li>
-              <li><a href="#">Donec mattis</a><br />
-                purus nec placerat bibendum</li>
-            </ul>
-          </div>
-        </div>
-        <div class="clr"></div>
-      </div>
-    </div>
-    <div class="fbg">
-      <div class="fbg_resize">
-        <div class="col c1">
-          <h2><span>Image Gallery</span></h2>
-          <a href="#"><img src="<?= base_url('assets/'); ?>img/home/pix1.jpg" width="58" height="58" alt="" /></a> <a href="#"><img src="<?= base_url('assets/'); ?>img/home/pix2.jpg" width="58" height="58" alt="" /></a> <a href="#"><img src="<?= base_url('assets/'); ?>img/home/pix3.jpg" width="58" height="58" alt="" /></a> <a href="#"><img src="<?= base_url('assets/'); ?>img/home/pix4.jpg" width="58" height="58" alt="" /></a> <a href="#"><img src="<?= base_url('assets/'); ?>img/home/pix5.jpg" width="58" height="58" alt="" /></a> <a href="#"><img src="<?= base_url('assets/'); ?>img/home/pix6.jpg" width="58" height="58" alt="" /></a>
-        </div>
-        <div class="col c2">
-          <h2><span>Lorem Ipsum</span></h2>
-          <p>Lorem ipsum dolor<br />
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. <a href="#">Morbi tincidunt, orci ac convallis aliquam</a>, lectus turpis varius lorem, eu posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum odio, ac blandit ante orci ut diam.</p>
-        </div>
-        <div class="col c3">
-          <h2><span>Contact</span></h2>
-          <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue.</p>
-          <p><a href="#">support@yoursite.com</a></p>
-          <p>+1 (123) 444-5677<br />
-            +1 (123) 444-5678</p>
-          <p>Address: 123 TemplateAccess Rd1</p>
-        </div>
-        <div class="clr"></div>
-      </div>
-    </div>
-    <div class="footer">
-      <div class="footer_resize">
-        <p class="lf">Copyright &copy; 2010 <a href="#">SiteName</a> - All Rights Reserved</p>
-        <p class="rf">Design by <a href="http://www.coolwebtemplates.net/">Cool Website Templates</a></p>
-        <div class="clr"></div>
-      </div>
-    </div>
-  </div>
-  <!-- END PAGE SOURCE -->
+        <!-- /.container -->
+    </footer>
+
+    <!-- Core Script Data -->
+    <?php $this->load->view("_partials/script.php") ?>
 </body>
 
 </html>

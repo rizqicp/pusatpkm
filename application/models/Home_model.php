@@ -2,27 +2,13 @@
 
 class Home_model extends CI_Model
 {
-    public function pagination()
-    {
-        $max = 2;
-        $dataCount = count($this->db->get('pengumuman')->result_array());
-        $pageCount = ceil($dataCount / $max);
-        $activePage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $from = ($max * $activePage) - $max;
-
-        return [
-            'max' => $max,
-            'from' => $from,
-            'count' => $pageCount
-        ];
-    }
-
     public function lihatPengumuman()
     {
         $max = 2;
         $dataCount = count($this->db->get('pengumuman')->result_array());
         $pageCount = ceil($dataCount / $max);
-        $activePage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $activePage = is_numeric(isset($_GET['page'])) ? $_GET['page'] : 1;
+        // $activePage = is_numeric($activePage) ? $activePage : 1;
         $from = ($max * $activePage) - $max;
 
         if ($activePage <= $pageCount && $activePage >= 1) {
@@ -35,5 +21,21 @@ class Home_model extends CI_Model
         } else {
             return null;
         }
+    }
+
+    public function pagination()
+    {
+        $max = 2;
+        $dataCount = count($this->db->get('pengumuman')->result_array());
+        $pageCount = ceil($dataCount / $max);
+        $activePage = is_numeric(isset($_GET['page'])) ? $_GET['page'] : 1;
+        // $activePage = is_numeric($activePage) ? $activePage : 1;
+        $from = ($max * $activePage) - $max;
+
+        return [
+            'max' => $max,
+            'from' => $from,
+            'count' => $pageCount
+        ];
     }
 }

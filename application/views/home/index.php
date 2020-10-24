@@ -73,7 +73,7 @@
 
                 <!-- Pagination -->
                 <ul class="pagination justify-content-center mb-4">
-                    <?php $activePage = isset($_GET['page']) ? $_GET['page'] : 1; ?>
+                    <?php $activePage = is_numeric(isset($_GET['page'])) ? $_GET['page'] : 1; ?>
                     <?php
                     if ($activePage < $page['count']) {
                         $older = "";

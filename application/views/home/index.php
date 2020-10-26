@@ -73,25 +73,26 @@
 
                 <!-- Pagination -->
                 <ul class="pagination justify-content-center mb-4">
+                    <?php $activePage = is_numeric(isset($_GET['page'])) ? $_GET['page'] : 1; ?>
                     <?php
-                    if ($page['active'] < $page['count']) {
+                    if ($activePage < $page['count']) {
                         $older = "";
                     } else {
                         $older = "disabled";
                     }
                     ?>
                     <li class="page-item <?= $older; ?>">
-                        <a class="page-link" href="?page=<?= $page['active'] + 1; ?>">&larr; Terdahulu</a>
+                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">&larr; Terdahulu</a>
                     </li>
                     <?php
-                    if ($page['active'] > 1) {
+                    if ($activePage > 1) {
                         $earlier = "";
                     } else {
                         $earlier = "disabled";
                     }
                     ?>
                     <li class="page-item <?= $earlier; ?>">
-                        <a class="page-link" href="?page=<?= $page['active'] - 1; ?>">Terbaru &rarr;</a>
+                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Terbaru &rarr;</a>
                     </li>
                 </ul>
 
@@ -104,14 +105,12 @@
                 <div class="card my-4">
                     <h5 class="card-header">Cari Pengumuman</h5>
                     <div class="card-body">
-                        <form action="<?= base_url('home/index'); ?>" method="GET">
-                            <div class="input-group">
-                                <input type="text" name="pencarian" id="pencarian" class="form-control" placeholder="Kata kunci...">
-                                <span class="input-group-append">
-                                    <button class="btn btn-secondary" type="button">Go!</button>
-                                </span>
-                            </div>
-                        </form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Kata kunci...">
+                            <span class="input-group-append">
+                                <button class="btn btn-secondary" type="button">Go!</button>
+                            </span>
+                        </div>
                     </div>
                 </div>
 

@@ -13,9 +13,7 @@ class Home extends CI_Controller
     {
         $data['pengumuman'] = $this->home_model->lihatPengumuman();
         $data['page'] = $this->home_model->pagination();
-        // var_dump($data['pengumuman']);
-        // var_dump($data['page']);
-        // die;
+
         $this->load->view('home/index', $data);
     }
 }

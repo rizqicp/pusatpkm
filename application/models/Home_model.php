@@ -4,18 +4,17 @@ class Home_model extends CI_Model
 {
     public function lihatPengumuman()
     {
-        $max = 2;
+        $maxData = 2;
         $dataCount = count($this->db->get('pengumuman')->result_array());
-        $pageCount = ceil($dataCount / $max);
-        $activePage = is_numeric(isset($_GET['page'])) ? $_GET['page'] : 1;
-        // $activePage = is_numeric($activePage) ? $activePage : 1;
-        $from = ($max * $activePage) - $max;
+        $pageCount = ceil($dataCount / $maxData);
+        $activePage = max(isset($_GET['page']) ? (int)$_GET['page'] : 1, 0);
+        $startFrom = ($maxData * $activePage) - $maxData;
 
         if ($activePage <= $pageCount && $activePage >= 1) {
             $this->db->select('id, judul, isi, gambar, waktu, status');
             $this->db->from('pengumuman');
             $this->db->where('status', 'aktif');
-            $this->db->limit($max, $from);
+            $this->db->limit($maxData, $startFrom);
             $this->db->order_by('waktu', 'DESC');
             return $this->db->get()->result_array();
         } else {
@@ -25,17 +24,17 @@ class Home_model extends CI_Model
 
     public function pagination()
     {
-        $max = 2;
+        $maxData = 2;
         $dataCount = count($this->db->get('pengumuman')->result_array());
-        $pageCount = ceil($dataCount / $max);
-        $activePage = is_numeric(isset($_GET['page'])) ? $_GET['page'] : 1;
-        // $activePage = is_numeric($activePage) ? $activePage : 1;
-        $from = ($max * $activePage) - $max;
+        $pageCount = ceil($dataCount / $maxData);
+        $activePage = max(isset($_GET['page']) ? (int)$_GET['page'] : 1, 0);
+        $startFrom = ($maxData * $activePage) - $maxData;
 
         return [
-            'max' => $max,
-            'from' => $from,
-            'count' => $pageCount
+            'max' => $maxData,
+            'from' => $startFrom,
+            'count' => $pageCount,
+            'activePage' => $activePage
         ];
     }
 }

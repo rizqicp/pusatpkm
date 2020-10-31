@@ -73,26 +73,25 @@
 
                 <!-- Pagination -->
                 <ul class="pagination justify-content-center mb-4">
-                    <?php $activePage = is_numeric(isset($_GET['page'])) ? $_GET['page'] : 1; ?>
                     <?php
-                    if ($activePage < $page['count']) {
+                    if ($page['activePage'] < $page['count']) {
                         $older = "";
                     } else {
                         $older = "disabled";
                     }
                     ?>
                     <li class="page-item <?= $older; ?>">
-                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">&larr; Terdahulu</a>
+                        <a class="page-link" href="?page=<?= $page['activePage'] + 1; ?>">&larr; Terdahulu</a>
                     </li>
                     <?php
-                    if ($activePage > 1) {
+                    if ($page['activePage'] > 1) {
                         $earlier = "";
                     } else {
                         $earlier = "disabled";
                     }
                     ?>
                     <li class="page-item <?= $earlier; ?>">
-                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Terbaru &rarr;</a>
+                        <a class="page-link" href="?page=<?= $page['activePage'] - 1; ?>">Terbaru &rarr;</a>
                     </li>
                 </ul>
 

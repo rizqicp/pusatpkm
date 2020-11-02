@@ -2,10 +2,13 @@
 <html lang="en">
 
 <head>
-    <?php $this->load->view("_partials/meta.php") ?>
+    <!-- Core Meta Data -->
+    <?php $this->load->view("partial/_meta.php") ?>
+    <!-- Custom styles for sb-admin -->
+    <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-dark">
 
     <div class="container">
 
@@ -39,6 +42,9 @@
                                     <div class="text-center mt-2">
                                         <a class="small" href="<?= base_url('auth/login'); ?>">Sudah Punya Akun? Masuk!</a>
                                     </div>
+                                    <div class="text-center mt-2">
+                                        <a class="small" href="<?= base_url('home/index'); ?>">&larr; Beranda</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +57,10 @@
 
     </div>
 
-    <?php $this->load->view("_partials/script.php") ?>
+    <!-- Core Script Data -->
+    <?php $this->load->view("partial/_script.php") ?>
+    <!-- Custom scripts for sb-admin -->
+    <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
 </body>
 

@@ -4,7 +4,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title><?php echo SITE_NAME . ": " . ucfirst($this->uri->segment(1)) . " - " . ucfirst($this->uri->segment(2)) ?></title>
+<title><?php echo SITE_NAME . ": " . ucfirst($this->uri->segment(1)) . (ucfirst($this->uri->segment(2)) ? " - " . ucfirst($this->uri->segment(2)) : '') ?></title>
 
 <!-- Bootstrap core CSS -->
 <link href="<?= base_url('assets/'); ?>vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">

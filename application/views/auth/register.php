@@ -2,10 +2,13 @@
 <html lang="en">
 
 <head>
-    <?php $this->load->view("_partials/meta.php") ?>
+    <!-- Core Meta Data -->
+    <?php $this->load->view("partial/_meta.php") ?>
+    <!-- Custom styles for sb-admin -->
+    <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-dark">
 
     <div class="container">
 
@@ -37,20 +40,6 @@
                                             </select>
                                             <?= form_error('userProdi', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
-                                        <script>
-                                            function roleCheck(role) {
-                                                if (role.value == "mahasiswa") {
-                                                    document.getElementById("roleDosen").style.display = "none";
-                                                    document.getElementById("roleMahasiswa").style.display = "block";
-                                                } else if (role.value == "dosen") {
-                                                    document.getElementById("roleMahasiswa").style.display = "none";
-                                                    document.getElementById("roleDosen").style.display = "block";
-                                                } else {
-                                                    document.getElementById("roleMahasiswa").style.display = "none";
-                                                    document.getElementById("roleDosen").style.display = "none";
-                                                }
-                                            }
-                                        </script>
                                         <div class="form-group col-md-12">
                                             <select class="custom-select" id="userRole" name="userRole" onchange="roleCheck(this);">
                                                 <option value="" disabled selected hidden>Apakah anda Mahasiswa atau Dosen?</option>
@@ -91,6 +80,9 @@
                                     <div class="text-center mt-2">
                                         <a class="small" href="<?= base_url('auth/login'); ?>">Sudah Punya Akun? Masuk!</a>
                                     </div>
+                                    <div class="text-center mt-2">
+                                        <a class="small" href="<?= base_url('home/index'); ?>">&larr; Beranda</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +93,25 @@
 
     </div>
 
-    <?php $this->load->view("_partials/script.php") ?>
+    <script>
+        function roleCheck(role) {
+            if (role.value == "mahasiswa") {
+                document.getElementById("roleDosen").style.display = "none";
+                document.getElementById("roleMahasiswa").style.display = "block";
+            } else if (role.value == "dosen") {
+                document.getElementById("roleMahasiswa").style.display = "none";
+                document.getElementById("roleDosen").style.display = "block";
+            } else {
+                document.getElementById("roleMahasiswa").style.display = "none";
+                document.getElementById("roleDosen").style.display = "none";
+            }
+        }
+    </script>
+
+    <!-- Core Script Data -->
+    <?php $this->load->view("partial/_script.php") ?>
+    <!-- Custom scripts for sb-admin -->
+    <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
 </body>
 

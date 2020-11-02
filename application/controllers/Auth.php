@@ -56,6 +56,15 @@ class Auth extends CI_Controller
         }
     }
 
+    public function loginBarcode()
+    {
+        if ($this->auth_model->loginBarcode() == true) {
+            redirect('auth');
+        } else {
+            $this->load->view('auth/login');
+        }
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Auth Logout

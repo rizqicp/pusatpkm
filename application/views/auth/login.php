@@ -42,6 +42,7 @@
                                     <div class="text-center mt-2">
                                         <button id="scanbarcode" type="button" class="btn btn-outline-dark btn-lg" href="#" data-toggle="modal" data-target="#barcodeModal"><i class="fas fa-barcode fa-3x"></i></button>
                                     </div>
+                                    <?= form_error('userBarcode', '<div class="text-center mt-2 text-danger pl-3 small">', '</div>'); ?>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="<?= base_url('auth/forgot'); ?>">Lupa Kata Sandi?</a>
@@ -89,9 +90,10 @@
                             display: none;
                         }
                     </style>
-                    <form id="barcodeform" class="user" action="<?= base_url('auth/login'); ?>" method="POST">
-                        <input type="hidden" name="barcode" id="barcode" />
+                    <form id="barcodeform" class="user" action="<?= base_url('auth/loginBarcode'); ?>" method="POST">
+                        <input type="hidden" name="userBarcode" id="userBarcode" />
                     </form>
+                    <small>* Scanner mungkin tidak bekerja untuk kamera resolusi rendah</small>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal" onClick="window.location.reload();">Batal</button>
@@ -217,7 +219,7 @@
                 Quagga.stop();
                 _scannerIsRunning = false;
             } else {
-                startScanner('#barcodeform', '#barcode');
+                startScanner('#barcodeform', '#userBarcode');
             }
         }, false);
     </script>

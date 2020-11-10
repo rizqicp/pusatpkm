@@ -15,6 +15,12 @@ class Mahasiswa extends CI_Controller
         redirect('mahasiswa/profilsaya');
     }
 
+    public function profilSaya()
+    {
+        $data['user'] = $this->session->userdata();
+        $this->load->view('user/profilsaya', $data);
+    }
+
     public function pengajuan()
     {
         $data['user'] = $this->session->userdata();
@@ -36,11 +42,5 @@ class Mahasiswa extends CI_Controller
         } else {
             $this->load->view('user/mahasiswa/tambahpengajuan', $data);
         }
-    }
-
-    public function profilSaya()
-    {
-        $data['user'] = $this->session->userdata();
-        $this->load->view('user/profilsaya', $data);
     }
 }

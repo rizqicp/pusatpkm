@@ -19,7 +19,7 @@ class PHPMailer_Lib
         require_once APPPATH . 'third_party/PHPMailer/SMTP.php';
 
         $mail = new PHPMailer(true);
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $mail->SMTPDebug = 0; //SMTP::DEBUG_SERVER
         $mail->isSMTP();
         $mail->Host       = 'smtp.googlemail.com';
         $mail->SMTPAuth   = true;

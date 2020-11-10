@@ -29,12 +29,12 @@
                                     <?= $this->session->flashdata('message'); ?>
                                     <form class="user" action="<?= base_url('auth/login'); ?>" method="POST">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="userEmail" name="userEmail" value="<?= set_value('userEmail'); ?>" placeholder="Alamat Email">
-                                            <?= form_error('userEmail', '<small class="text-danger pl-3">', '</small>'); ?>
+                                            <input type="text" class="form-control form-control-user" id="userEmail" name="userEmail" value="<?= set_value('userEmail'); ?>" placeholder="Alamat Email" onchange="hideError('userEmailError');">
+                                            <?= form_error('userEmail', '<small id="userEmailError" class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="userPassword" name="userPassword" placeholder="Kata Sandi">
-                                            <?= form_error('userPassword', '<small class="text-danger pl-3">', '</small>'); ?>
+                                            <input type="password" class="form-control form-control-user" id="userPassword" name="userPassword" placeholder="Kata Sandi" onchange="hideError('userPasswordError');">
+                                            <?= form_error('userPassword', '<small id="userPasswordError" class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Masuk</button>
                                     </form>
@@ -64,6 +64,11 @@
         </div>
 
     </div>
+    <script>
+        function hideError(error) {
+            document.getElementById(error).style.display = "none";
+        }
+    </script>
 
     <!-- Barcode Modal -->
     <?php $this->load->view("auth/_barcodeModal.php") ?>

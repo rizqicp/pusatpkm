@@ -7,6 +7,7 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         isLoginHelper();
+        $this->load->model('user_model');
     }
 
     public function index()
@@ -14,21 +15,14 @@ class Admin extends CI_Controller
         redirect('admin/profilsaya');
     }
 
-    public function profilsaya()
+    public function profilSaya()
     {
         $data['user'] = $this->session->userdata();
         $this->load->view('user/profilsaya', $data);
     }
 
-    public function historiproposal()
+    public function kelolaUser()
     {
-        $data['user'] = $this->session->userdata();
-        $this->load->view('user/profilsaya', $data);
-    }
-
-    public function kelolauser()
-    {
-        $this->load->model('user_model');
         $data['user'] = $this->session->userdata();
         $data['pengguna'] = $this->user_model->getalluser();
         $this->load->view('user/admin/kelolauser', $data);

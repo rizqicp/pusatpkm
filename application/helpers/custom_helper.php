@@ -1,14 +1,5 @@
 <?php
-/*
-|--------------------------------------------------------------------------
-| isloginhelper
-|--------------------------------------------------------------------------
-|
-| untuk menghindari user mengakses controller lain
-| akan mengecek apakah session sudah di set
-| lalu redirect user ke controller sesuai role
-|
-*/
+
 function isLoginHelper()
 {
     $current = get_instance();
@@ -23,15 +14,6 @@ function isLoginHelper()
     }
 }
 
-/*
-|--------------------------------------------------------------------------
-| unsetSessionHelper
-|--------------------------------------------------------------------------
-|
-| untuk mengunset data user dari session
-| digunakan di login dan logout
-|
-*/
 function unsetSessionHelper()
 {
     $current = get_instance();

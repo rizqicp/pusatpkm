@@ -2,19 +2,6 @@
 
 class Auth_model extends CI_Model
 {
-    /*
-    |--------------------------------------------------------------------------
-    | login model
-    |--------------------------------------------------------------------------
-    |
-    | method untuk verifikasi login user
-    |
-    | memvalidasi form input dari user
-    | mengambil data user dari database
-    | unset session lama
-    | set data user ke dalam session baru
-    |
-    */
     public function login()
     {
         // validasi form
@@ -30,10 +17,8 @@ class Auth_model extends CI_Model
         if ($this->form_validation->run() == true) {
             $userEmail = $this->input->post('userEmail');
             $userPassword = $this->input->post('userPassword');
-            $userRole = $this->db->get_where('user', ['email' => $userEmail])->row_array();
-            if ($userRole) {
-                $userRole = $userRole['role'];
-            }
+            $userExist = $this->db->get_where('user', ['email' => $userEmail])->row_array();
+            $userRole = ($userExist) ? $userExist['role'] : null;
 
             $this->db->select('*');
             $this->db->from('user');
@@ -87,8 +72,6 @@ class Auth_model extends CI_Model
             $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
             $this->db->where('npm', $this->input->post('userBarcode'));
             $user = $this->db->get()->row_array();
-            // var_dump($user);
-            // die;
 
             // set session
             if ($user) {
@@ -108,36 +91,12 @@ class Auth_model extends CI_Model
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | logout model
-    |--------------------------------------------------------------------------
-    |
-    | method untuk mengakhiri sesi user
-    |
-    | panggil helper unsetSessionHelper()
-    | unset session user
-    | kirim pesan berhasil logout
-    |
-    */
     public function logout()
     {
         unsetSessionHelper();
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anda telah mengakhiri sesi!</div>');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | register model
-    |--------------------------------------------------------------------------
-    |
-    | method untuk menambahkan user ke database
-    |
-    | memvalidasi form input dari user
-    | menjalankan fungsi create() untuk mengembalikan nilai id terakhir
-    | gunakan id untuk foreign key mahasiswa/dosen
-    |
-    */
     public function register()
     {
         // validasi form
@@ -155,7 +114,7 @@ class Auth_model extends CI_Model
             'required' => 'Peran harus diisi!',
             'in_list' => 'Peran tidak ada di dalam list!'
         ]);
-        if ($this->input->post('userRole', true) == 'Mahasiswa') {
+        if ($this->input->post('userRole', true) == 'mahasiswa') {
             $this->form_validation->set_rules('userNpm', 'NPM', 'required|numeric|min_length[10]|max_length[11]|is_unique[mahasiswa.npm]', [
                 'required' => 'NPM harus diisi!',
                 'numeric' => 'NPM hanya boleh mengandung angka!',
@@ -163,7 +122,7 @@ class Auth_model extends CI_Model
                 'max_length' => 'NPM maksimal 11 digit!',
                 'is_unique' => 'User dengan NPM tersebut sudah ada!'
             ]);
-        } elseif ($this->input->post('userRole', true) == 'Dosen') {
+        } elseif ($this->input->post('userRole', true) == 'dosen') {
             $this->form_validation->set_rules('userNidn', 'NIDN', 'required|numeric|exact_length[10]|is_unique[dosen.nidn]', [
                 'required' => 'NIDN harus diisi!',
                 'numeric' => 'NIDN hanya boleh mengandung angka!',
@@ -194,7 +153,7 @@ class Auth_model extends CI_Model
         }
 
         // insert data user ke database
-        if ($this->form_validation->run() == true && $this->input->post('userRole', true) == 'mahasiswa') {
+        if ($this->form_validation->run() == true) {
             $userData = [
                 'id' => null,
                 'email' => htmlspecialchars($this->input->post('userEmail', true)),
@@ -202,34 +161,61 @@ class Auth_model extends CI_Model
                 'role' => $this->input->post('userRole', true),
                 'status' => 'Pasif'
             ];
-            $userId = create('user', $userData);
-            $mahasiswaData = [
-                'npm' => $this->input->post('userNpm'),
-                'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
-                'prodi_id' => $this->input->post('userProdi'),
-                'user_id' => $userId,
-            ];
-            create('mahasiswa', $mahasiswaData);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat, silahkan cek email untuk Verifikasi!</div>');
-            return true;
-        } elseif ($this->form_validation->run() == true && $this->input->post('userRole', true) == 'dosen') {
-            $userData = [
-                'id' => null,
-                'email' => htmlspecialchars($this->input->post('userEmail', true)),
-                'password' => password_hash($this->input->post('userPassword'), PASSWORD_DEFAULT),
-                'role' => $this->input->post('userRole', true),
-                'status' => 'Pasif'
-            ];
-            $userId = create('user', $userData);
-            $dosenData = [
-                'nidn' => $this->input->post('userNidn'),
-                'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
-                'prodi_id' => $this->input->post('userProdi'),
-                'user_id' => $userId,
-            ];
-            create('dosen', $dosenData);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat, silahkan cek email untuk Verifikasi!</div>');
-            return true;
+            // $userId = create('user', $userData);
+            // switch ($this->input->post('userRole', true)) {
+            //     case 'mahasiswa':
+            //         $mahasiswaData = [
+            //             'npm' => $this->input->post('userNpm'),
+            //             'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
+            //             'prodi_id' => $this->input->post('userProdi'),
+            //             'user_id' => $userId,
+            //         ];
+            //         create('mahasiswa', $mahasiswaData);
+            //         break;
+
+            //     case 'dosen':
+            //         $dosenData = [
+            //             'nidn' => $this->input->post('userNidn'),
+            //             'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
+            //             'prodi_id' => $this->input->post('userProdi'),
+            //             'user_id' => $userId,
+            //         ];
+            //         create('dosen', $dosenData);
+            //         break;
+
+            //     default:
+            //         return false;
+            //         break;
+            // }
+
+            // send email
+            $this->load->library('phpmailer_lib');
+            $mail = $this->phpmailer_lib->load();
+            $mail->setFrom('1634010056@student.upnjatim.ac.id', 'Pusat PKM');
+            $mail->addAddress($userData['email']);
+            $mail->Subject = 'Signup | Verification';
+            $mail->isHTML(true);
+            $mailContent = "
+            <h4>Terima kasih sudah mendaftar di Pusat PKM!</h4>
+            <p>Akun anda telah berhasil dibuat, berikut informasi akun anda dan dapat digunakan setelah mengaktifkan akun menggunakan link dibawah.</p>
+            <p>    
+            ----------------------------------<br>
+            Email       : " . $userData['email'] . "<br>
+            Password    : " . str_repeat('*', strlen($this->input->post('userPassword')) - 4) . substr($this->input->post('userPassword'), -4) . "<br>
+            ----------------------------------
+            </p>
+            <p>Please click this link to activate your account: <br>
+            http://localhost/skripsi/verifikasi.php?email=" . $userData['email'] . "&password=" . $userData['password'] . "</p>
+            ";
+            $mail->Body = $mailContent;
+            try {
+                $mail->send();
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat, silahkan cek email untuk Verifikasi!</div>');
+                return true;
+            } catch (Exception $e) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email verifikasi gagal dikirim!</div>');
+                return false;
+            }
         } else {
             return false;
         }

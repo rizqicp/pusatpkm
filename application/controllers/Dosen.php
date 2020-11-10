@@ -14,7 +14,7 @@ class Dosen extends CI_Controller
         redirect('dosen/profilsaya');
     }
 
-    public function profilsaya()
+    public function profilSaya()
     {
         $data['user'] = $this->session->userdata();
         $this->load->view('user/profilsaya', $data);

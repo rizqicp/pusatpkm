@@ -30,24 +30,33 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <div class="card bg-light mb-3" style="max-width: 18rem;">
-                        <div class="card-header">Profil Saya</div>
-                        <div class="card-body">
-                            <h5 class="card-title"><?= $user['role']; ?></h5>
-                            <p class="card-text">Id = <?= $user['id']; ?></p>
-                            <p class="card-text">Email = <?= $user['email']; ?></p>
-                            <p class="card-text">Status = <?= $user['status']; ?></p>
-                            <?php if ($user['role'] == 'mahasiswa') : ?>
-                                <p class="card-text">Nama = <?= $user['nama']; ?></p>
-                                <p class="card-text">NPM = <?= $user['npm']; ?></p>
-                                <p class="card-text">Prodi = <?= $user['prodi_id']; ?></p>
-                            <?php elseif ($user['role'] == 'dosen') : ?>
-                                <p class="card-text">Nama = <?= $user['nama']; ?></p>
-                                <p class="card-text">NIDN = <?= $user['nidn']; ?></p>
-                                <p class="card-text">Prodi = <?= $user['prodi_id']; ?></p>
-                            <?php endif; ?>
-                        </div>
-                    </div>
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Kelola Pengguna</h1>
+
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Peran</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1; ?>
+                            <?php foreach ($pengguna as $pengguna) : ?>
+                                <tr>
+                                    <th scope="row"><?= $i; ?></th>
+                                    <td><?= $pengguna['id']; ?></td>
+                                    <td><?= $pengguna['email']; ?></td>
+                                    <td><?= $pengguna['role']; ?></td>
+                                    <td><?= $pengguna['status']; ?></td>
+                                </tr>
+                                <?php $i++; ?>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
 
                 </div>
                 <!-- /.container-fluid -->

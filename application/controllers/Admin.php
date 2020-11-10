@@ -26,9 +26,11 @@ class Admin extends CI_Controller
         $this->load->view('user/profilsaya', $data);
     }
 
-    public function kelolapengguna()
+    public function kelolauser()
     {
+        $this->load->model('user_model');
         $data['user'] = $this->session->userdata();
-        $this->load->view('user/profilsaya', $data);
+        $data['pengguna'] = $this->user_model->getalluser();
+        $this->load->view('user/admin/kelolauser', $data);
     }
 }

@@ -16,7 +16,11 @@
                     <a class="nav-link" href="<?= base_url('home/profil'); ?>">Profil</a>
                 </li>
                 <li class="nav-item mt-1">
-                    <a class="nav-link btn btn-outline-secondary" href="<?= base_url('auth/login'); ?>">Masuk</a>
+                    <?php if (isset($user['role'])) : ?>
+                        <a class="nav-link btn btn-outline-secondary" href="<?= base_url('auth/index'); ?>">Dasbor</a>
+                    <?php else : ?>
+                        <a class="nav-link btn btn-outline-secondary" href="<?= base_url('auth/login'); ?>">Masuk</a>
+                    <?php endif; ?>
                 </li>
             </ul>
         </div>

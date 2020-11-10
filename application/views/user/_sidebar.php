@@ -27,10 +27,10 @@
     <?php switch ($user['role']):
         case 'admin': ?>
             <!-- Nav Item - Kelola Pengguna -->
-            <li class="nav-item <?= $this->uri->segment(2) == 'kelolapengguna' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= base_url($user['role'] . '/kelolapengguna'); ?>">
+            <li class="nav-item <?= $this->uri->segment(2) == 'kelolauser' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url($user['role'] . '/kelolauser'); ?>">
                     <i class=" fas fa-fw fa-user-edit"></i>
-                    <span>Kelola Pengguna</span>
+                    <span>Kelola Users</span>
                 </a>
             </li>
             <?php break; ?>

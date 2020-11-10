@@ -8,17 +8,20 @@ class Home extends CI_Controller
         $this->load->model('home_model');
         $data['pengumuman'] = $this->home_model->lihatPengumuman();
         $data['page'] = $this->home_model->pagination();
+        $data['user'] = $this->session->userdata();
 
         $this->load->view('home/index', $data);
     }
 
     public function panduan()
     {
-        $this->load->view('home/panduan');
+        $data['user'] = $this->session->userdata();
+        $this->load->view('home/panduan', $data);
     }
 
     public function profil()
     {
-        $this->load->view('home/profil');
+        $data['user'] = $this->session->userdata();
+        $this->load->view('home/profil', $data);
     }
 }

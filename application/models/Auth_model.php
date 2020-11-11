@@ -159,34 +159,34 @@ class Auth_model extends CI_Model
                 'email' => htmlspecialchars($this->input->post('userEmail', true)),
                 'password' => password_hash($this->input->post('userPassword'), PASSWORD_DEFAULT),
                 'role' => $this->input->post('userRole', true),
-                'status' => 'Pasif'
+                'status' => 'pasif'
             ];
-            // $userId = create('user', $userData);
-            // switch ($this->input->post('userRole', true)) {
-            //     case 'mahasiswa':
-            //         $mahasiswaData = [
-            //             'npm' => $this->input->post('userNpm'),
-            //             'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
-            //             'prodi_id' => $this->input->post('userProdi'),
-            //             'user_id' => $userId,
-            //         ];
-            //         create('mahasiswa', $mahasiswaData);
-            //         break;
+            $userId = create('user', $userData);
+            switch ($this->input->post('userRole', true)) {
+                case 'mahasiswa':
+                    $mahasiswaData = [
+                        'npm' => $this->input->post('userNpm'),
+                        'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
+                        'prodi_id' => $this->input->post('userProdi'),
+                        'user_id' => $userId,
+                    ];
+                    create('mahasiswa', $mahasiswaData);
+                    break;
 
-            //     case 'dosen':
-            //         $dosenData = [
-            //             'nidn' => $this->input->post('userNidn'),
-            //             'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
-            //             'prodi_id' => $this->input->post('userProdi'),
-            //             'user_id' => $userId,
-            //         ];
-            //         create('dosen', $dosenData);
-            //         break;
+                case 'dosen':
+                    $dosenData = [
+                        'nidn' => $this->input->post('userNidn'),
+                        'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
+                        'prodi_id' => $this->input->post('userProdi'),
+                        'user_id' => $userId,
+                    ];
+                    create('dosen', $dosenData);
+                    break;
 
-            //     default:
-            //         return false;
-            //         break;
-            // }
+                default:
+                    return false;
+                    break;
+            }
 
             // send email
             $this->load->library('phpmailer_lib');
@@ -204,8 +204,8 @@ class Auth_model extends CI_Model
             Password    : " . str_repeat('*', strlen($this->input->post('userPassword')) - 4) . substr($this->input->post('userPassword'), -4) . "<br>
             ----------------------------------
             </p>
-            <p>Please click this link to activate your account: <br>
-            http://localhost/skripsi/verifikasi.php?email=" . $userData['email'] . "&password=" . $userData['password'] . "</p>
+            <p>Silahkan klik link dibawah untuk verifikasi akun: <br>
+            " . base_url('auth/verifikasi') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . "</p>
             ";
             $mail->Body = $mailContent;
             try {
@@ -217,6 +217,27 @@ class Auth_model extends CI_Model
                 return false;
             }
         } else {
+            return false;
+        }
+    }
+
+    public function verifikasi()
+    {
+        $userEmail = $this->input->get('email');
+        $userHash = $this->input->get('hash');
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->where('email', $userEmail);
+        $user = $this->db->get()->row_array();
+
+        if ($user['password'] == $userHash) {
+            $this->db->set('status', 'aktif');
+            $this->db->where('email', $userEmail);
+            $this->db->update('user');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Email berhasil diverifikasi, silahkan login!</div>');
+            return true;
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Verifikasi email!</div>');
             return false;
         }
     }

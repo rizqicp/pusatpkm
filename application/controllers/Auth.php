@@ -50,6 +50,15 @@ class Auth extends CI_Controller
         }
     }
 
+    public function verifikasi()
+    {
+        if ($this->auth_model->verifikasi() == true) {
+            redirect('auth/login');
+        } else {
+            $this->load->view('auth/register');
+        }
+    }
+
     public function forgot()
     {
         $this->load->view('auth/forgot');

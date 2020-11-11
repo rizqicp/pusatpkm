@@ -24,14 +24,18 @@
                             <div class="col-lg">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">Lupa Kata Sandi?</h1>
-                                        <p class="mb-4">Masukkan alamat Emailmu di bawah dan kami akan kirim sebuah link untuk mengatur ulang kata sandi!</p>
+                                        <h1 class="h4 text-gray-900 mb-2">Atur Ulang Kata Sandi</h1>
+                                        <p class="mb-4">Masukkan kata sandi baru untuk <b><?= $user['recoverEmail']; ?></b> !</p>
                                     </div>
                                     <?= $this->session->flashdata('message'); ?>
-                                    <form class="user" action="<?= base_url('auth/forgot'); ?>" method="POST">
+                                    <form class="user" action="<?= base_url('auth/recovery'); ?>" method="POST">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="userEmail" name="userEmail" value="<?= set_value('userEmail'); ?>" placeholder="Alamat Email" onchange="hideError('userEmailError');">
-                                            <?= form_error('userEmail', '<small id="userEmailError" class="text-danger pl-3">', '</small>'); ?>
+                                            <input type="password" class="form-control form-control-user" id="userPassword" name="userPassword" placeholder="Kata Sandi Baru" onchange="hideError('userPasswordError');">
+                                            <?= form_error('userPassword', '<small id="userPasswordError" class="text-danger pl-4">', '</small>'); ?>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user" id="repeatPassword" name="repeatPassword" placeholder="Ulangi Kata Sandi Baru" onchange="hideError('repeatPasswordError');">
+                                            <?= form_error('repeatPassword', '<small id="repeatPasswordError" class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Atur Ulang Kata Sandi

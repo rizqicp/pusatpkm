@@ -61,6 +61,30 @@ class Auth extends CI_Controller
 
     public function forgot()
     {
-        $this->load->view('auth/forgot');
+        if ($this->auth_model->forgot() == true) {
+            redirect('auth/forgot');
+        } else {
+            $this->load->view('auth/forgot');
+        }
+    }
+
+    public function recovery()
+    {
+        if (($this->input->get('email')) != null) {
+            $this->session->set_userdata([
+                'recoverEmail' => $this->input->get('email'),
+                'recoverHash' => $this->input->get('hash')
+            ]);
+        }
+
+        $data['user'] = $this->session->userdata();
+
+        if ($this->auth_model->recovery() == true) {
+            redirect('auth/login');
+        } elseif (!$this->session->userdata('recoverEmail')) {
+            show_404();
+        } else {
+            $this->load->view('auth/recovery', $data);
+        }
     }
 }

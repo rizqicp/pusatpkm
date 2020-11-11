@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <input type="password" class="form-control form-control-user" id="userPassword" name="userPassword" placeholder="Kata Sandi">
+                                                <input type="password" class="form-control form-control-user" id="userPassword" name="userPassword" placeholder="Kata Sandi" onchange="hideError('userPasswordError');">
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="password" class="form-control form-control-user" id="repeatPassword" name="repeatPassword" placeholder="Ulangi Kata Sandi" onchange="hideError('userPasswordError');">

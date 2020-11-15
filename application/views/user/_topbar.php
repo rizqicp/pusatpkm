@@ -55,7 +55,7 @@
                     }
                     ?>
                 </span>
-                <img class="img-profile rounded-circle" src="<?= base_url('assets/img/profile/defaultProfile.png'); ?>">
+                <img class="img-profile rounded-circle border" src="<?= base_url('assets/img/profile/defaultProfile.png'); ?>">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

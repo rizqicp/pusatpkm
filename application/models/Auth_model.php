@@ -313,4 +313,10 @@ class Auth_model extends CI_Model
             return false;
         }
     }
+
+    public function editProfil()
+    {
+        // make edit profile function
+
+    }
 }

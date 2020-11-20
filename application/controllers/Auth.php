@@ -87,4 +87,11 @@ class Auth extends CI_Controller
             $this->load->view('auth/recovery', $data);
         }
     }
+
+    public function editProfil()
+    {
+        var_dump($this->session->userdata());
+        var_dump($_POST);
+        die;
+    }
 }

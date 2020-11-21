@@ -90,8 +90,11 @@ class Auth extends CI_Controller
 
     public function editProfil()
     {
-        var_dump($this->session->userdata());
-        var_dump($_POST);
-        die;
+        $data['user'] = $this->session->userdata();
+        if ($this->auth_model->changePassword() == true) {
+            $this->load->view('user/profilsaya', $data);
+        } else {
+            $this->load->view('user/profilsaya', $data);
+        }
     }
 }

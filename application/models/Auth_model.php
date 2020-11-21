@@ -314,9 +314,26 @@ class Auth_model extends CI_Model
         }
     }
 
-    public function editProfil()
+    public function changePassword()
     {
-        // make edit profile function
+        $this->form_validation->set_rules('newPassword', 'Password', 'required|trim|min_length[6]|matches[repeatPassword]', [
+            'required' => 'Password baru harus diisi!',
+            'min_length' => 'Password terlalu pendek!',
+            'matches' => ''
+        ]);
+        $this->form_validation->set_rules('repeatPassword', 'Repeat', 'required|trim|matches[newPassword]', [
+            'required' => 'Ketik ulang Password!',
+            'matches' => 'Password tidak cocok!'
+        ]);
 
+        if ($this->form_validation->run() == true) {
+            $this->db->set('password', password_hash($this->input->post('newPassword'), PASSWORD_DEFAULT));
+            $this->db->where('email', $this->session->userdata('email'));
+            $this->db->update('user');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password berhasil diganti!</div>');
+            return true;
+        } else {
+            return false;
+        }
     }
 }

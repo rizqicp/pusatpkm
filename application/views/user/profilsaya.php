@@ -56,7 +56,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="account-fn">Nama</label>
-                                                <input class="form-control" type="text" id="userNama" name="userNama" value="<?= $user['nama']; ?>" disabled>
+                                                <input class="form-control" type="text" id="userNama" value="<?= $user['nama']; ?>" disabled>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -86,37 +86,36 @@
                                     <div class="col-12">
                                         <hr>
                                         <h5 class="author-card-name text-lg mb-3"><b>Informasi Login</b></h5>
+                                        <?= $this->session->flashdata('message'); ?>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="account-email">Alamat E-mail</label>
-                                            <input class="form-control" type="email" id="userEmail" name="userEmail" value="<?= $user['email']; ?>" disabled>
+                                            <input class="form-control" type="email" id="userEmail" value="<?= $user['email']; ?>" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group" id="passwordLama" style="display: none;">
-                                            <label for="account-pass">Password Lama</label>
-                                            <input class="form-control" type="password" id="userPassword" name="userPassword">
-                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group" id="passwordBaru" style="display: none;">
                                             <label for="account-pass">Password Baru</label>
-                                            <input class="form-control" type="password" id="newPassword" name="newPassword">
+                                            <input class="form-control" type="password" id="newPassword" name="newPassword" onchange="hideError('newPasswordError')">
+                                            <?= form_error('newPassword', '<small id="newPasswordError" class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group" id="passwordKonfirm" style="display: none;">
                                             <label for="account-confirm-pass">Konfirmasi Password</label>
-                                            <input class="form-control" type="password" id="repeatPassword" name="repeatPassword">
+                                            <input class="form-control" type="password" id="repeatPassword" name="repeatPassword" onchange="hideError('repeatPasswordError')">
+                                            <?= form_error('repeatPassword', '<small id="repeatPasswordError" class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <hr class="mt-2 mb-3">
                                         <div class="d-flex flex-row-reverse">
-                                            <button class="btn btn-style-1 btn-primary" id="startEditButton" type="button" onclick="startEdit()">Edit Profil</button>
+                                            <button class="btn btn-style-1 btn-primary" id="startEditButton" type="button" onclick="startEdit()">Ganti Password</button>
                                             <button class="btn btn-style-1 btn-success mr-2" id="saveEditButton" type="submit" style="display: none;">Simpan</button>
-                                            <button class="btn btn-style-1 btn-danger mr-2" id="stopEditButton" type="button" onclick="location.reload()" style="display: none;">Batal</button>
+                                            <button class="btn btn-style-1 btn-danger mr-2" id="stopEditButton" type="button" onclick="window.location.href = window.location.href" style="display: none;">Batal</button>
                                         </div>
                                     </div>
                                 </form>
@@ -147,16 +146,23 @@
 
     <script>
         function startEdit() {
-            if (document.getElementById("userRole").innerHTML != 'admin') {
-                document.getElementById("userNama").disabled = false;
-            };
-            document.getElementById("userEmail").disabled = false;
-            document.getElementById("passwordLama").style.display = "block";
             document.getElementById("passwordBaru").style.display = "block";
             document.getElementById("passwordKonfirm").style.display = "block";
             document.getElementById("startEditButton").style.display = "none";
             document.getElementById("saveEditButton").style.display = "block";
             document.getElementById("stopEditButton").style.display = "block";
+        }
+
+        var newFormError = document.getElementById("newPasswordError");
+        var repeatFormError = document.getElementById("repeatPasswordError");
+        if (typeof(newFormError) != 'undefined' && newFormError != null) {
+            startEdit();
+        } else if (typeof(repeatFormError) != 'undefined' && repeatFormError != null) {
+            startEdit();
+        }
+
+        function hideError(error) {
+            document.getElementById(error).style.display = "none";
         }
     </script>
 

@@ -41,7 +41,7 @@
                                         <?php if ($user['role'] == 'mahasiswa' || $user['role'] == 'dosen') : ?>
                                             <h5 class="author-card-name text-lg"><b><?= $user['nama']; ?></b></h5>
                                         <?php endif; ?>
-                                        <span class="author-card-position" id="userRole"><?= $user['role']; ?></span>
+                                        <span class="author-card-position" id="userRole"><?= ucfirst($user['role']); ?></span>
                                     </div>
                                 </div>
 
@@ -73,13 +73,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="account-fn">Prodi</label>
-                                                <input class="form-control" type="text" id="userProdi" value="<?= $user['prodi_id']; ?>" disabled>
+                                                <input class="form-control" type="text" id="userProdi" value="<?= $prodi['nama']; ?>" disabled>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="account-fn">Fakultas</label>
-                                                <input class="form-control" type="text" id="userFakultas" value="Ilmu Komputer" disabled>
+                                                <input class="form-control" type="text" id="userFakultas" value="<?= $fakultas['nama']; ?>" disabled>
                                             </div>
                                         </div>
                                     <?php endif; ?>

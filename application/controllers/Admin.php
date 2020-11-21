@@ -21,10 +21,38 @@ class Admin extends CI_Controller
         $this->load->view('user/profilsaya', $data);
     }
 
-    public function kelolaUser()
+    public function kelolaPengajuan()
     {
         $data['user'] = $this->session->userdata();
         $data['pengguna'] = $this->user_model->getalluser();
         $this->load->view('user/admin/kelolauser', $data);
+    }
+
+    public function kelolaPengumuman()
+    {
+        $data['user'] = $this->session->userdata();
+        $data['pengguna'] = $this->user_model->getalluser();
+        $this->load->view('user/admin/kelolauser', $data);
+    }
+
+    public function kelolaUser()
+    {
+        $data['user'] = $this->session->userdata();
+        $data['pengguna'] = $this->user_model->getAllUser();
+        $data['prodi'] = $this->db->get('prodi')->result_array();
+        $this->load->view('user/admin/kelolauser', $data);
+    }
+
+    public function tambahUser()
+    {
+        $data['user'] = $this->session->userdata();
+        $data['pengguna'] = $this->user_model->getAllUser();
+        $data['prodi'] = $this->db->get('prodi')->result_array();
+
+        if ($this->user_model->tambahUser() == true) {
+            redirect('admin/kelolauser');
+        } else {
+            $this->load->view('user/admin/tambahuser', $data);
+        }
     }
 }

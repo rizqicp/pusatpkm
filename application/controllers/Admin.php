@@ -66,10 +66,8 @@ class Admin extends CI_Controller
         $data['edituser'] = $this->user_model->getUserById($this->session->userdata('edituserid'));
         $data['prodi'] = $this->db->get_where('prodi', array('id' => $data['edituser']['prodi_id']))->result_array()[0];
         $data['fakultas'] = $this->db->get_where('fakultas', array('id' => $data['prodi']['fakultas_id']))->result_array()[0];
-        // var_dump($data);
-        // die;
 
-        if ($this->user_model->editUser($data['edituser']) == true) {
+        if ($this->user_model->editUser($data[]) == true) {
             redirect('admin/kelolauser');
         } else {
             $this->load->view('user/admin/edituser', $data);

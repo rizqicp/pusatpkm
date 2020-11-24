@@ -162,14 +162,7 @@ class User_model extends CI_Model
             ]);
         }
 
-
-
-
         if ($this->form_validation->run() == true) {
-            // var_dump($this->session->userdata());
-            // var_dump($user);
-            // var_dump($this->input->post());
-            // die;
             if ($this->input->post('userEmail') != null && $this->input->post('userEmail') != $user['email']) {
                 $this->db->set('email', $this->input->post('userEmail'));
             }

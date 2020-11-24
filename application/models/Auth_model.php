@@ -320,21 +320,38 @@ class Auth_model extends CI_Model
 
     public function changePassword()
     {
-        $this->form_validation->set_rules('newPassword', 'Password', 'required|trim|min_length[6]|matches[repeatPassword]', [
-            'required' => 'Password baru harus diisi!',
-            'min_length' => 'Password terlalu pendek!',
-            'matches' => ''
-        ]);
-        $this->form_validation->set_rules('repeatPassword', 'Repeat', 'required|trim|matches[newPassword]', [
-            'required' => 'Ketik ulang Password!',
-            'matches' => 'Password tidak cocok!'
-        ]);
+        // validate email
+        if ($this->input->post('userEmail') != null && $this->input->post('userEmail') != $this->session->userdata('email')) {
+            $this->form_validation->set_rules('userEmail', 'Email', 'trim|valid_email|is_unique[user.email]', [
+                'valid_email' => 'Email tidak valid!',
+                'is_unique' => 'Email sudah terdaftar!'
+            ]);
+        }
+
+        // validate password
+        if ($this->input->post('newPassword') != null || $this->input->post('repeatPassword') != null) {
+            $this->form_validation->set_rules('newPassword', 'Password', 'required|trim|min_length[6]|matches[repeatPassword]', [
+                'required' => 'Password baru harus diisi!',
+                'min_length' => 'Password terlalu pendek!',
+                'matches' => ''
+            ]);
+            $this->form_validation->set_rules('repeatPassword', 'Repeat', 'required|trim|matches[newPassword]', [
+                'required' => 'Ketik ulang Password!',
+                'matches' => 'Password tidak cocok!'
+            ]);
+        }
 
         if ($this->form_validation->run() == true) {
-            $this->db->set('password', password_hash($this->input->post('newPassword'), PASSWORD_DEFAULT));
-            $this->db->where('email', $this->session->userdata('email'));
+            if ($this->input->post('userEmail') != null && $this->input->post('userEmail') != $this->session->userdata('email')) {
+                $this->session->set_userdata(array('email' => $this->input->post('userEmail')));
+                $this->db->set('email', $this->input->post('userEmail'));
+            }
+            if ($this->input->post('newPassword') != null || $this->input->post('repeatPassword') != null) {
+                $this->db->set('password', password_hash($this->input->post('newPassword'), PASSWORD_DEFAULT));
+            }
+            $this->db->where('id', $this->session->userdata('id'));
             $this->db->update('user');
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password berhasil diganti!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Informasi login berhasil diperbarui!</div>');
             return true;
         } else {
             return false;

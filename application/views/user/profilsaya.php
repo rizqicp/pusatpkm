@@ -91,10 +91,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="account-email">Alamat E-mail</label>
-                                            <input class="form-control" type="email" id="userEmail" value="<?= $user['email']; ?>" disabled>
+                                            <input class="form-control" type="email" id="userEmail" name="userEmail" value="<?= $user['email']; ?>" onchange="hideError('userEmailError')" disabled>
+                                            <?= form_error('userEmail', '<small id="userEmailError" class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="account-email">Status Verifikasi</label>
+                                            <input class="form-control" type="text" id="userStatus" value="<?= ucfirst($user['status']); ?>" disabled>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group" id="passwordBaru" style="display: none;">
@@ -113,7 +118,7 @@
                                     <div class="col-12">
                                         <hr class="mt-2 mb-3">
                                         <div class="d-flex flex-row-reverse">
-                                            <button class="btn btn-style-1 btn-primary" id="startEditButton" type="button" onclick="startEdit()">Ganti Password</button>
+                                            <button class="btn btn-style-1 btn-primary" id="startEditButton" type="button" onclick="startEdit()">Edit Info Login</button>
                                             <button class="btn btn-style-1 btn-success mr-2" id="saveEditButton" type="submit" style="display: none;">Simpan</button>
                                             <button class="btn btn-style-1 btn-danger mr-2" id="stopEditButton" type="button" onclick="window.location.href = window.location.href" style="display: none;">Batal</button>
                                         </div>
@@ -146,6 +151,7 @@
 
     <script>
         function startEdit() {
+            document.getElementById("userEmail").disabled = false;
             document.getElementById("passwordBaru").style.display = "block";
             document.getElementById("passwordKonfirm").style.display = "block";
             document.getElementById("startEditButton").style.display = "none";

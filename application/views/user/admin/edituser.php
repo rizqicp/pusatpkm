@@ -91,13 +91,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="account-email">Alamat E-mail</label>
-                                            <input class="form-control" type="email" id="userEmail" name="userEmail" value="<?= $edituser['email']; ?>">
+                                            <input class="form-control" type="email" id="userEmail" name="userEmail" value="<?= $edituser['email']; ?>" onchange="hideError('userEmailError')">
                                             <?= form_error('userEmail', '<small id="userEmailError" class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="account-email">Status Aktivasi</label>
+                                            <label for="account-email">Status Verifikasi</label>
                                             <select class="custom-select form-control" id="userStatus" name="userStatus">
                                                 <option value="aktif" <?= $edituser['status'] == 'aktif' ? "selected" : "" ?>>Aktif</option>
                                                 <option value="pasif" <?= $edituser['status'] == 'pasif' ? "selected" : "" ?>>Pasif</option>

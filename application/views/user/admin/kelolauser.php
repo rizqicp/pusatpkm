@@ -32,10 +32,24 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Kelola Pengguna</h1>
-                    <a class="small" href="<?= base_url('admin/tambahuser'); ?>">
-                        <button type="button" class="btn btn-primary btn-sm mb-2" href="#">Tambah User</button>
-                    </a>
                     <?= $this->session->flashdata('message'); ?>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <a class="small" href="<?= base_url('admin/tambahuser'); ?>">
+                                <button type="button" class="btn btn-primary btn-sm mb-2" href="#">Tambah User</button>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <form action="<?= base_url('admin/kelolauser'); ?>" method="POST">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="search" placeholder="Email User" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="submit">Cari</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead class="thead-light">

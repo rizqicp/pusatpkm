@@ -20,8 +20,11 @@ class User_model extends CI_Model
         return $data;
     }
 
-    public function getUserLimit($limit, $start)
+    public function getUserLimit($limit, $start, $search = null)
     {
+        if ($search != null) {
+            $this->db->like('email', $search);
+        }
         $users = $this->db->get('user', $limit, $start)->result_array();
         $data = array();
         foreach ($users as $user) {

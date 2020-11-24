@@ -40,29 +40,10 @@ class Admin extends CI_Controller
         $config['base_url'] = base_url('admin/kelolauser');
         $config['total_rows'] = $this->db->get('user')->num_rows();
         $config['per_page'] = 10;
-        $config['full_tag_open'] = '<nav><ul class="pagination pagination-sm justify-content-center">';
-        $config['first_tag_open'] = '<li class="page-item">';
-        $config['first_link'] = 'Pertama';
-        $config['first_tag_close'] = '</li>';
-        $config['last_tag_open'] = '<li class="page-item">';
-        $config['last_link'] = 'Terakhir';
-        $config['last_tag_close'] = '</li>';
-        $config['next_tag_open'] = '<li class="page-item">';
-        $config['next_link'] = '&raquo';
-        $config['next_tag_close'] = '</li>';
-        $config['prev_tag_open'] = '<li class="page-item">';
-        $config['prev_link'] = '&laquo';
-        $config['prev_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li class="page-item">';
-        $config['num_tag_close'] = '</li>';
-        $config['full_tag_close'] = '</ul></nav>';
-        $config['attributes'] = array('class' => 'page-link');
         $this->pagination->initialize($config);
 
         $data['user'] = $this->session->userdata();
-        $data['pengguna'] = $this->user_model->getUserLimit($config['per_page'], $this->uri->segment(3));
+        $data['pengguna'] = $this->user_model->getUserLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
         $data['prodi'] = $this->db->get('prodi')->result_array();
         $this->load->view('user/admin/kelolauser', $data);
     }

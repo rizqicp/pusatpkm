@@ -20,6 +20,24 @@ class User_model extends CI_Model
         return $data;
     }
 
+    public function getUserLimit($limit, $start)
+    {
+        $users = $this->db->get('user', $limit, $start)->result_array();
+        $data = array();
+        foreach ($users as $user) {
+            $this->db->select('*');
+            $this->db->from('user');
+            if ($user['role'] == 'mahasiswa') {
+                $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
+            } elseif ($user['role'] == 'dosen') {
+                $this->db->join('dosen', 'user.id = dosen.user_id');
+            }
+            $this->db->where('email', $user['email']);
+            array_push($data, $this->db->get()->row_array());
+        }
+        return $data;
+    }
+
     public function getUserById($id)
     {
         $userExist = $this->db->get_where('user', ['id' => $id])->row_array();

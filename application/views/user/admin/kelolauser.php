@@ -56,26 +56,26 @@
                                             <td><?= $pengguna['nama']; ?></td>
                                         <?php endif; ?>
                                         <td><?= $pengguna['email']; ?></td>
-                                        <td><?= $pengguna['role']; ?></td>
-                                        <td><?= $pengguna['status']; ?></td>
+                                        <td><?= ucfirst($pengguna['role']); ?></td>
+                                        <td><?= ucfirst($pengguna['status']); ?></td>
                                         <?php if ($pengguna['role'] != 'admin') : ?>
                                             <td>
-                                                <a type="button" class="btn btn-primary btn-sm" href="<?= base_url('admin/edituser') . '?id=' . $pengguna['id']; ?>">&nbspUbah&nbsp</a>
-                                                <button type="button" class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#hapusUserModal<?= $pengguna['id']; ?>">Hapus</button>
+                                                <a type="button" class="btn btn-primary btn-sm mb-1" href="<?= base_url('admin/edituser') . '?id=' . $pengguna['id']; ?>">&nbspUbah&nbsp</a>
+                                                <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusUserModal<?= $pengguna['id']; ?>">Hapus</button>
                                                 <!-- hapusUser Modal-->
                                                 <?php $this->load->view("user/admin/_hapusUserModal.php", $pengguna) ?>
                                             </td>
                                         <?php else : ?>
                                             <td>
-                                                <button type="button" class="btn btn-secondary btn-sm" disabled>&nbspUbah&nbsp</button>
-                                                <button type="button" class="btn btn-secondary btn-sm" disabled>Hapus</button>
-
+                                                <button type="button" class="btn btn-secondary btn-sm mb-1" disabled>&nbspUbah&nbsp</button>
+                                                <button type="button" class="btn btn-secondary btn-sm mb-1" disabled>Hapus</button>
                                             </td>
                                         <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+                        <?= $this->pagination->create_links(); ?>
                     </div>
 
                 </div>

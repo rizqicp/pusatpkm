@@ -117,4 +117,16 @@ class User_model extends CI_Model
             return false;
         }
     }
+
+    public function hapusUser()
+    {
+        if (isset($_POST['hapusid'])) {
+            $this->db->delete('user', array('id' => $_POST['hapusid']));
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun ' . $_POST['hapusnama'] . ' berhasil dihapus</div>');
+            return true;
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun ' . $_POST['hapusnama'] . ' gagal dihapus</div>');
+            return false;
+        }
+    }
 }

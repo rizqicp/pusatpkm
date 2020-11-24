@@ -55,4 +55,13 @@ class Admin extends CI_Controller
             $this->load->view('user/admin/tambahuser', $data);
         }
     }
+
+    public function hapusUser()
+    {
+        if ($this->user_model->hapusUser() == true) {
+            redirect('admin/kelolauser');
+        } else {
+            redirect('admin/kelolauser');
+        }
+    }
 }

@@ -48,7 +48,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <select class="custom-select" id="userRole" name="userRole" onchange="roleCheck(this);hideError('userRoleError');">
-                                <option value="" disabled <?= !set_value('userRole') ? "selected" : ""; ?> hidden>Apakah anda Mahasiswa atau Dosen?</option>
+                                <option value="" disabled <?= !set_value('userRole') ? "selected" : ""; ?> hidden>Tambah sebagai Mahasiswa atau Dosen?</option>
                                 <option value="mahasiswa" <?= set_value('userRole') == 'mahasiswa' ? "selected" : ""; ?>>Mahasiswa</option>
                                 <option value="dosen" <?= set_value('userRole') == 'dosen' ? "selected" : ""; ?>>Dosen</option>
                             </select>
@@ -78,6 +78,9 @@
                         <button type="submit" class="btn btn-primary btn-user btn-block">
                             Daftarkan Akun
                         </button>
+                        <div class="text-center mt-3">
+                            <a class="small" href="<?= base_url('admin/kelolauser'); ?>">&larr; Kembali &nbsp;&nbsp;</a>
+                        </div>
                     </form>
 
                 </div>

@@ -60,10 +60,16 @@
                                         <td><?= $pengguna['status']; ?></td>
                                         <?php if ($pengguna['role'] != 'admin') : ?>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#editUserModal">Ubah&nbsp&nbsp</button>
+                                                <a type="button" class="btn btn-primary btn-sm" href="<?= base_url('admin/edituser') . '?id=' . $pengguna['id']; ?>">&nbspUbah&nbsp</a>
                                                 <button type="button" class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#hapusUserModal<?= $pengguna['id']; ?>">Hapus</button>
                                                 <!-- hapusUser Modal-->
                                                 <?php $this->load->view("user/admin/_hapusUserModal.php", $pengguna) ?>
+                                            </td>
+                                        <?php else : ?>
+                                            <td>
+                                                <button type="button" class="btn btn-secondary btn-sm" disabled>&nbspUbah&nbsp</button>
+                                                <button type="button" class="btn btn-secondary btn-sm" disabled>Hapus</button>
+
                                             </td>
                                         <?php endif; ?>
                                     </tr>
@@ -92,8 +98,6 @@
     <?php $this->load->view("user/_scrollTop.php") ?>
     <!-- Logout Modal-->
     <?php $this->load->view("user/_logoutModal.php") ?>
-    <!-- editUser Modal-->
-    <?php $this->load->view("user/admin/_editUserModal.php") ?>
 
     <!-- Core Script Data -->
     <?php $this->load->view("partial/_script.php") ?>

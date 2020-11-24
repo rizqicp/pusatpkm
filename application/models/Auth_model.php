@@ -245,9 +245,13 @@ class Auth_model extends CI_Model
     public function forgot()
     {
         // validasi form
-        $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email', [
+        foreach ($this->db->get('user')->result_array() as $user) {
+            $userEmail[] = $user['email'];
+        }
+        $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email|in_list[' . implode(',', $userEmail) . ']', [
             'required' => 'Silahkan masukkan Email!',
-            'valid_email' => 'Email tidak valid!'
+            'valid_email' => 'Email tidak valid!',
+            'in_list' => 'Email tidak terdaftar!'
         ]);
         if ($this->form_validation->run() == true) {
             // get user data

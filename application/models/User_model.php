@@ -20,6 +20,23 @@ class User_model extends CI_Model
         return $data;
     }
 
+    public function getUserById($id)
+    {
+        $userExist = $this->db->get_where('user', ['id' => $id])->row_array();
+        $userRole = ($userExist) ? $userExist['role'] : null;
+
+        $this->db->select('*');
+        $this->db->from('user');
+        if ($userRole == 'mahasiswa') {
+            $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
+        } elseif ($userRole == 'dosen') {
+            $this->db->join('dosen', 'user.id = dosen.user_id');
+        }
+        $this->db->where('id', $id);
+        $user = $this->db->get()->row_array();
+        return $user;
+    }
+
     public function tambahUser()
     {
         // validasi form
@@ -112,6 +129,59 @@ class User_model extends CI_Model
             }
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat</div>');
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function editUser($user)
+    {
+        // validate email
+        if ($this->input->post('userEmail') != null && $this->input->post('userEmail') != $user['email']) {
+            $this->form_validation->set_rules('userEmail', 'Email', 'trim|valid_email|is_unique[user.email]', [
+                'valid_email' => 'Email tidak valid!',
+                'is_unique' => 'Email sudah terdaftar!'
+            ]);
+        }
+
+        if ($this->input->post('userStatus') != null && $this->input->post('userStatus') != $user['status']) {
+            $this->form_validation->set_rules('userStatus', 'Status', 'trim', []);
+        }
+
+        // validate password
+        if ($this->input->post('newPassword') != null || $this->input->post('repeatPassword') != null) {
+            $this->form_validation->set_rules('newPassword', 'Password', 'required|trim|min_length[6]|matches[repeatPassword]', [
+                'required' => 'Password baru harus diisi!',
+                'min_length' => 'Password terlalu pendek!',
+                'matches' => ''
+            ]);
+            $this->form_validation->set_rules('repeatPassword', 'Repeat', 'required|trim|matches[newPassword]', [
+                'required' => 'Ketik ulang Password!',
+                'matches' => 'Password tidak cocok!'
+            ]);
+        }
+
+
+
+
+        if ($this->form_validation->run() == true) {
+            // var_dump($this->session->userdata());
+            // var_dump($user);
+            // var_dump($this->input->post());
+            // die;
+            if ($this->input->post('userEmail') != null && $this->input->post('userEmail') != $user['email']) {
+                $this->db->set('email', $this->input->post('userEmail'));
+            }
+            if ($this->input->post('newPassword') != null || $this->input->post('repeatPassword') != null) {
+                $this->db->set('password', password_hash($this->input->post('newPassword'), PASSWORD_DEFAULT));
+            }
+            if ($this->input->post('userStatus') != null && $this->input->post('userStatus') != $user['status']) {
+                $this->db->set('status', $this->input->post('userStatus'));
+            }
+            $this->db->where('id', $user['id']);
+            $this->db->update('user');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">User ' . $user['nama'] . ' berhasil diperbarui!</div>');
             return true;
         } else {
             return false;

@@ -56,6 +56,26 @@ class Admin extends CI_Controller
         }
     }
 
+    public function editUser()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('edituserid' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['pengguna'] = $this->user_model->getAllUser();
+        $data['edituser'] = $this->user_model->getUserById($this->session->userdata('edituserid'));
+        $data['prodi'] = $this->db->get_where('prodi', array('id' => $data['edituser']['prodi_id']))->result_array()[0];
+        $data['fakultas'] = $this->db->get_where('fakultas', array('id' => $data['prodi']['fakultas_id']))->result_array()[0];
+        // var_dump($data);
+        // die;
+
+        if ($this->user_model->editUser($data['edituser']) == true) {
+            redirect('admin/kelolauser');
+        } else {
+            $this->load->view('user/admin/edituser', $data);
+        }
+    }
+
     public function hapusUser()
     {
         if ($this->user_model->hapusUser() == true) {

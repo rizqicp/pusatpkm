@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">Anda akan menghapus <?= $nama; ?> ?</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                <button class="btn btn-primary" type="button" data-dismiss="modal">Batal</button>
                 <form action="<?= base_url('admin/hapususer') ?>" method="POST">
                     <input type="text" name="hapusid" id="hapususerid" value="<?= $id; ?>" style="display: none;">
                     <input type="text" name="hapusrole" id="hapususerrole" value="<?= $role; ?>" style="display: none;">

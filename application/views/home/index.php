@@ -25,7 +25,6 @@
                     <?php foreach ($pengumuman as $pengumuman) : ?>
                         <!-- Blog Post -->
                         <div class="card bg-light mb-4">
-                            <!-- <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap"> -->
                             <?php if ($pengumuman['gambar']) : ?>
                                 <img class="card-img-top" src="<?= base_url('assets/'); ?>img/pengumuman/<?= $pengumuman['gambar']; ?>" alt="Gambar Pengumuman">
                             <?php endif; ?>

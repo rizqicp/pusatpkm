@@ -54,10 +54,10 @@
                         <table class="table table-hover">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Nama</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Peran</th>
-                                    <th scope="col">Status</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Peran</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -65,22 +65,22 @@
                                 <?php foreach ($pengguna as $pengguna) : ?>
                                     <tr>
                                         <?php if ($pengguna['role'] == 'admin') : ?>
-                                            <td>Administrator</td>
+                                            <td class="align-middle">Administrator</td>
                                         <?php else : ?>
-                                            <td><?= $pengguna['nama']; ?></td>
+                                            <td class="align-middle"><?= $pengguna['nama']; ?></td>
                                         <?php endif; ?>
-                                        <td><?= $pengguna['email']; ?></td>
-                                        <td><?= ucfirst($pengguna['role']); ?></td>
-                                        <td><?= ucfirst($pengguna['status']); ?></td>
+                                        <td class="align-middle"><?= $pengguna['email']; ?></td>
+                                        <td class="align-middle"><?= ucfirst($pengguna['role']); ?></td>
+                                        <td class="align-middle"><?= ucfirst($pengguna['status']); ?></td>
                                         <?php if ($pengguna['role'] != 'admin') : ?>
-                                            <td>
+                                            <td class="align-middle">
                                                 <a type="button" class="btn btn-primary btn-sm mb-1" href="<?= base_url('admin/edituser') . '?id=' . $pengguna['id']; ?>">&nbspUbah&nbsp</a>
                                                 <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusUserModal<?= $pengguna['id']; ?>">Hapus</button>
                                                 <!-- hapusUser Modal-->
                                                 <?php $this->load->view("user/admin/_hapusUserModal.php", $pengguna) ?>
                                             </td>
                                         <?php else : ?>
-                                            <td>
+                                            <td class="align-middle">
                                                 <button type="button" class="btn btn-secondary btn-sm mb-1" disabled>&nbspUbah&nbsp</button>
                                                 <button type="button" class="btn btn-secondary btn-sm mb-1" disabled>Hapus</button>
                                             </td>
@@ -88,6 +88,7 @@
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <caption class="mt-2"><small><?= $caption['firstData']; ?> - <?= $caption['lastData']; ?> dari <?= $caption['totalData']; ?> User</small></caption>
                         </table>
                         <?= $this->pagination->create_links(); ?>
                     </div>

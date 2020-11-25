@@ -57,7 +57,7 @@ class Pengajuan_model extends CI_Model
             if ($current->upload->do_upload('userFile')) {
                 return $current->upload->data("file_name");
             } else {
-                echo "error";
+                echo "error upload file";
                 var_dump($_FILES);
                 die;
             }

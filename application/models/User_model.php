@@ -20,6 +20,18 @@ class User_model extends CI_Model
         return $data;
     }
 
+    public function getCaptionData($limit, $start, $count)
+    {
+        $firstData = $start != null ? intval($start) + 1 : 1;
+        $lastData = $firstData + $limit - 1;
+        $totalData = count($count);
+        return array(
+            'firstData' => $firstData,
+            'lastData' => $lastData,
+            'totalData' => $totalData
+        );
+    }
+
     public function getUserLimit($limit, $start, $search = null)
     {
         if ($search != null) {

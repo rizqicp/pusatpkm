@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="account-email">Status Verifikasi</label>
+                                            <label for="userStatus">Status Verifikasi</label>
                                             <select class="custom-select form-control" id="userStatus" name="userStatus">
                                                 <option value="aktif" <?= $edituser['status'] == 'aktif' ? "selected" : "" ?>>Aktif</option>
                                                 <option value="pasif" <?= $edituser['status'] == 'pasif' ? "selected" : "" ?>>Pasif</option>

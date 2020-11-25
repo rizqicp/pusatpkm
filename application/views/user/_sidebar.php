@@ -28,22 +28,22 @@
         case 'admin': ?>
             <!-- Nav Item - Kelola Pengajuan -->
             <li class="nav-item <?= $this->uri->segment(2) == 'kelolapengajuan' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= base_url($user['role'] . '/kelolapengajuan'); ?>">
-                    <i class=" fas fa-fw fa-user-edit"></i>
-                    <span>Kelola Pengajuan</span>
+                <a class="nav-link disabled" href="<?= base_url($user['role'] . '/kelolapengajuan'); ?>">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span style="color: gray;">Kelola Pengajuan</span>
                 </a>
             </li>
             <!-- Nav Item - Kelola Pengumuman -->
             <li class="nav-item <?= $this->uri->segment(2) == 'kelolapengumuman' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= base_url($user['role'] . '/kelolapengumuman'); ?>">
-                    <i class=" fas fa-fw fa-user-edit"></i>
+                    <i class=" fas fa-fw fa-bullhorn"></i>
                     <span>Kelola Pengumuman</span>
                 </a>
             </li>
             <!-- Nav Item - Kelola Pengguna -->
             <li class="nav-item <?= $this->uri->segment(2) == 'kelolauser' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= base_url($user['role'] . '/kelolauser'); ?>">
-                    <i class=" fas fa-fw fa-user-edit"></i>
+                <a class="nav-link " href="<?= base_url($user['role'] . '/kelolauser'); ?>">
+                    <i class="fas fa-fw fa-user-edit"></i>
                     <span>Kelola Users</span>
                 </a>
             </li>
@@ -62,9 +62,9 @@
         case 'dosen': ?>
             <!-- Nav Item - ulasan -->
             <li class="nav-item <?= $this->uri->segment(2) == 'ulasan' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= base_url($user['role'] . '/ulasan'); ?>">
+                <a class="nav-link disabled" href="<?= base_url($user['role'] . '/ulasan'); ?>">
                     <i class="fas fa-fw fa-file-alt"></i>
-                    <span>Ulasan</span>
+                    <span style="color: gray;">Ulasan</span>
                 </a>
             </li>
             <?php break; ?>
@@ -72,9 +72,9 @@
 
     <!-- Nav Item - Profil Saya -->
     <li class="nav-item <?= $this->uri->segment(2) == 'historiproposal' ? 'active' : '' ?>">
-        <a class="nav-link" href="#">
-            <i class=" fas fa-fw fa-user-circle"></i>
-            <span>Histori Proposal</span>
+        <a class="nav-link disabled" href="#">
+            <i class=" fas fa-fw fa-folder-open"></i>
+            <span style="color: gray;">Histori Proposal</span>
         </a>
     </li>
 

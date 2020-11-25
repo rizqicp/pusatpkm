@@ -39,34 +39,11 @@
                         </div>
                     <?php endforeach; ?>
                 <?php else : ?>
+                    <?php $caption['firstData'] = 0; ?>
                     <p>Data tidak ditemukan.</p>
                 <?php endif; ?>
-
-
-                <!-- Pagination -->
-                <ul class="pagination justify-content-center mb-4">
-                    <?php
-                    if ($page['activePage'] < $page['count']) {
-                        $older = "";
-                    } else {
-                        $older = "disabled";
-                    }
-                    ?>
-                    <li class="page-item <?= $older; ?>">
-                        <a class="page-link" href="?page=<?= $page['activePage'] + 1; ?>">&larr; Terdahulu</a>
-                    </li>
-                    <?php
-                    if ($page['activePage'] > 1) {
-                        $earlier = "";
-                    } else {
-                        $earlier = "disabled";
-                    }
-                    ?>
-                    <li class="page-item <?= $earlier; ?>">
-                        <a class="page-link" href="?page=<?= $page['activePage'] - 1; ?>">Terbaru &rarr;</a>
-                    </li>
-                </ul>
-
+                <caption class="mt-2"><small><?= $caption['firstData']; ?> - <?= $caption['lastData']; ?> dari <?= $caption['totalData']; ?> Pengumuman</small></caption>
+                <?= $this->pagination->create_links(); ?>
             </div>
 
             <!-- Sidebar Widgets Column -->

@@ -2,24 +2,18 @@
 
 class Home_model extends CI_Model
 {
-    public function lihatPengumuman()
+    public function getAllPengumuman()
     {
-        $maxData = 2;
-        $dataCount = count($this->db->get('pengumuman')->result_array());
-        $pageCount = ceil($dataCount / $maxData);
-        $activePage = max(isset($_GET['page']) ? (int)$_GET['page'] : 1, 0);
-        $startFrom = ($maxData * $activePage) - $maxData;
+        $this->db->where('status', 'aktif');
+        return $this->db->get('pengumuman')->result_array();
+    }
 
-        if ($activePage <= $pageCount && $activePage >= 1) {
-            $this->db->select('id, judul, isi, gambar, waktu, status');
-            $this->db->from('pengumuman');
-            $this->db->where('status', 'aktif');
-            $this->db->limit($maxData, $startFrom);
-            $this->db->order_by('waktu', 'DESC');
-            return $this->db->get()->result_array();
-        } else {
-            return null;
-        }
+    public function getPengumumanLimit($limit, $start, $search = null)
+    {
+        $this->db->like('judul', $search);
+        $this->db->where('status', 'aktif');
+        $this->db->order_by('waktu', 'DESC');
+        return $this->db->get('pengumuman', $limit, $start)->result_array();
     }
 
     public function getPengumumanById($id)
@@ -30,19 +24,15 @@ class Home_model extends CI_Model
         return $this->db->get()->row_array();
     }
 
-    public function pagination()
+    public function getCaptionData($limit, $start, $count)
     {
-        $maxData = 2;
-        $dataCount = count($this->db->get('pengumuman')->result_array());
-        $pageCount = ceil($dataCount / $maxData);
-        $activePage = max(isset($_GET['page']) ? (int)$_GET['page'] : 1, 0);
-        $startFrom = ($maxData * $activePage) - $maxData;
-
-        return [
-            'max' => $maxData,
-            'from' => $startFrom,
-            'count' => $pageCount,
-            'activePage' => $activePage
-        ];
+        $firstData = $start != null ? intval($start) + 1 : 1;
+        $lastData = $firstData + $limit - 1;
+        $totalData = count($count);
+        return array(
+            'firstData' => $firstData,
+            'lastData' => $lastData,
+            'totalData' => $totalData
+        );
     }
 }

@@ -40,7 +40,7 @@
                             </a>
                         </div>
                         <div class="col-md-3">
-                            <form action="#" method="POST">
+                            <form action="<?= base_url('admin/kelolapengumuman'); ?>" method="POST">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" name="search" placeholder="Judul Pengumuman" autocomplete="off">
                                     <div class="input-group-append">
@@ -63,7 +63,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = 1;
+                                <?php if ($pengumuman == null) : ?>
+                                    <?php $caption['firstData'] = 0; ?>
+                                    <tr>
+                                        <td class="align-middle text-center" colspan="6">Tidak ada data</td>
+                                    </tr>
+                                <?php endif; ?>
+                                <?php $i = $caption['firstData'];
                                 foreach ($pengumuman as $pengumuman) : ?>
                                     <tr>
                                         <td class="align-middle"><?= $i++; ?></td>
@@ -79,7 +85,9 @@
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <caption class="mt-2"><small><?= $caption['firstData']; ?> - <?= $caption['lastData']; ?> dari <?= $caption['totalData']; ?> Pengumuman</small></caption>
                         </table>
+                        <?= $this->pagination->create_links(); ?>
                     </div>
 
                 </div>

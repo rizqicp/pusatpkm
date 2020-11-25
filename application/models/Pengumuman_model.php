@@ -14,6 +14,27 @@ class Pengumuman_model extends CI_Model
         return $this->db->get('pengumuman')->row_array();
     }
 
+    public function getCaptionData($limit, $start, $count)
+    {
+        $firstData = $start != null ? intval($start) + 1 : 1;
+        $lastData = $firstData + $limit - 1;
+        $totalData = count($count);
+        return array(
+            'firstData' => $firstData,
+            'lastData' => $lastData,
+            'totalData' => $totalData
+        );
+    }
+
+    public function getPengumumanLimit($limit, $start, $search = null)
+    {
+        if ($search != null) {
+            $this->db->like('judul', $search);
+        }
+        $this->db->order_by('waktu', 'DESC');
+        return $this->db->get('pengumuman', $limit, $start)->result_array();
+    }
+
     public function tambahPengumuman()
     {
         // validasi form

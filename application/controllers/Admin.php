@@ -31,8 +31,14 @@ class Admin extends CI_Controller
 
     public function kelolaPengumuman()
     {
+        $config['base_url'] = base_url('admin/kelolapengumuman');
+        $config['total_rows'] = $this->db->get('pengumuman')->num_rows();
+        $config['per_page'] = 10;
+        $this->pagination->initialize($config);
+
         $data['user'] = $this->session->userdata();
-        $data['pengumuman'] = $this->pengumuman_model->getAllPengumuman();
+        $data['pengumuman'] = $this->pengumuman_model->getPengumumanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['caption'] = $this->pengumuman_model->getCaptionData(count($data['pengumuman']), $this->uri->segment(3), $this->pengumuman_model->getAllPengumuman());
         $this->load->view('user/admin/kelolapengumuman', $data);
     }
 

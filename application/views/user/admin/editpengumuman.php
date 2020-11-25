@@ -51,7 +51,7 @@
                                     <label class="custom-file-label" for="gambarPengumuman" id="gambarLabel" style="color: #999;">Pilih file</label>
                                 </div>
                             </div>
-                            <div class="mb-3 col-sm-1">
+                            <div class="col-sm-1">
                                 <button class="btn btn-style-1 btn-danger ml-1" type="button" href="#" onclick="deleteImage()">Hapus</button>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 mt-5">
                             <div class="d-flex flex-row-reverse">
                                 <button class="btn btn-style-1 btn-success mr-2" type="submit">Simpan</button>
                                 <a class="btn btn-style-1 btn-danger mr-2" href="<?= base_url('admin/kelolapengumuman'); ?>">Batal</a>

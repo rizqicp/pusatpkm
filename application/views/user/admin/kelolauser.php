@@ -62,6 +62,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if ($pengguna == null) : ?>
+                                    <?php $caption['firstData'] = 0; ?>
+                                    <tr>
+                                        <td class="align-middle text-center" colspan="6">Tidak ada data</td>
+                                    </tr>
+                                <?php endif; ?>
                                 <?php foreach ($pengguna as $pengguna) : ?>
                                     <tr>
                                         <?php if ($pengguna['role'] == 'admin') : ?>

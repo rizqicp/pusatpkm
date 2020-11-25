@@ -13,6 +13,15 @@ class Home extends CI_Controller
         $this->load->view('home/index', $data);
     }
 
+    public function pengumuman()
+    {
+        $this->load->model('home_model');
+        $data['pengumuman'] = $this->home_model->getPengumumanById(intval($_GET['id']));
+        $data['user'] = $this->session->userdata();
+
+        $this->load->view('home/pengumuman', $data);
+    }
+
     public function panduan()
     {
         $data['user'] = $this->session->userdata();

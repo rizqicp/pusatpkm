@@ -30,8 +30,8 @@
                             <?php endif; ?>
                             <div class="card-body">
                                 <h2 class="card-title"><?= $pengumuman['judul']; ?></h2>
-                                <p class="card-text"><?= $pengumuman['isi']; ?></p>
-                                <a href="#" class="btn btn-primary">Lebih Banyak &rarr;</a>
+                                <p class="card-text"><?= mb_strimwidth($pengumuman['isi'], 0, 256, "..."); ?></p>
+                                <a href="<?= base_url('home/pengumuman') . '?id=' . $pengumuman['id']; ?>" class="btn btn-primary">Lebih Banyak &rarr;</a>
                             </div>
                             <div class="card-footer text-muted">
                                 Ditulis <?= date("d-F-Y", strtotime($pengumuman['waktu'])); ?> oleh Admin

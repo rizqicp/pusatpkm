@@ -22,6 +22,14 @@ class Home_model extends CI_Model
         }
     }
 
+    public function getPengumumanById($id)
+    {
+        $this->db->select('id, judul, isi, gambar, waktu, status');
+        $this->db->from('pengumuman');
+        $this->db->where('id', $id);
+        return $this->db->get()->row_array();
+    }
+
     public function pagination()
     {
         $maxData = 2;

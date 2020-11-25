@@ -56,6 +56,21 @@ class Admin extends CI_Controller
         }
     }
 
+    public function editPengumuman()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('editpengumumanid' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['editpengumuman'] = $this->pengumuman_model->getPengumumanById($this->session->userdata('editpengumumanid'));
+
+        if ($this->pengumuman_model->editPengumuman($data['editpengumuman']) == true) {
+            redirect('admin/kelolapengumuman');
+        } else {
+            $this->load->view('user/admin/editpengumuman', $data);
+        }
+    }
+
     public function kelolaUser()
     {
         $config['base_url'] = base_url('admin/kelolauser');

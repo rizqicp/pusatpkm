@@ -72,7 +72,7 @@
                                         <td class="align-middle"><?= date("d M Y", strtotime($pengumuman['waktu'])); ?></td>
                                         <td class="align-middle"><?= ucfirst($pengumuman['status']); ?></td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-primary btn-sm mb-1" href="#">&nbspUbah&nbsp</button>
+                                            <a type="button" class="btn btn-primary btn-sm mb-1" href="<?= base_url('admin/editpengumuman') . '?id=' . $pengumuman['id']; ?>">&nbspUbah&nbsp</a>
                                             <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusPengumumanModal<?= $pengumuman['id']; ?>">Hapus</button>
                                             <?php $this->load->view("user/admin/_hapusPengumumanModal.php", $pengumuman) ?>
                                         </td>

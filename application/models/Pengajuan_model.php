@@ -30,6 +30,7 @@ class Pengajuan_model extends CI_Model
         $this->db->order_by('pengajuan.id', 'DESC');
         return $this->db->get('pengusul')->result_array();
     }
+
     public function getPengajuanLimit($limit, $start, $search = null)
     {
         $this->db->select('
@@ -92,8 +93,8 @@ class Pengajuan_model extends CI_Model
         $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
         $this->form_validation->set_rules('abstraksi', 'Abstraksi', 'trim');
         $this->form_validation->set_rules('dana', 'Dana', 'trim|numeric');
-        $this->form_validation->set_rules('dosenNidn', 'NIDN', 'required|numeric|exact_length[10]|in_list[' . implode(',', $dosenNidn) . ']');
-        $this->form_validation->set_rules('mahasiswaNpm', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']');
+        // $this->form_validation->set_rules('dosen', 'NIDN', 'required|numeric|exact_length[10]|in_list[' . implode(',', $dosenNidn) . ']');
+        // $this->form_validation->set_rules('mahasiswaNpm', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']');
 
         // fungsi insert, return id
         function create($table, $data)
@@ -126,6 +127,9 @@ class Pengajuan_model extends CI_Model
 
         // simpan data pengajuan ke dalam variabel
         if ($this->form_validation->run() == true) {
+            var_dump($this->input->post());
+            var_dump($_FILES);
+            die;
             $dataPengajuan = [
                 'id' => null,
                 'periode_id' => $this->input->post('periode'),

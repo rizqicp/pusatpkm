@@ -74,30 +74,40 @@
                         <div class="form-group row">
                             <label for="dana" class="col-sm-2 col-form-label col-form-label-lg"><b>Dana Ajuan</b></label>
                             <div class="col-sm-10 pt-1">
-                                <input type="number" class="form-control " id="dana" name="dana" value="<?= set_value('dana'); ?>" min="0" max="999999999" placeholder="0" onchange="hideError('danaError');">
-                                <?= form_error('dana', '<small id="danaError" class="text-danger pl-3">', '</small>'); ?>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rp</span>
+                                    </div>
+                                    <input type="text" class="form-control " id="dana" name="dana" value="<?= set_value('dana'); ?>" min="0" max="999999999" placeholder="0" onchange="hideError('danaError');">
+                                    <?= form_error('dana', '<small id="danaError" class="text-danger pl-3">', '</small>'); ?>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="dosenNidn" class="col-sm-2 col-form-label col-form-label-lg"><b>Pembimbing</b></label>
+                            <label for="dosen" class="col-sm-2 col-form-label col-form-label-lg"><b>NIDN Pembimbing</b></label>
                             <div class="col-sm-10 pt-1">
-                                <input type="text" class="form-control " id="dosenNidn" name="dosenNidn" value="<?= set_value('dosenNidn'); ?>" onchange="hideError('dosenNidnError');">
-                                <?= form_error('dosenNidn', '<small id="dosenNidnError" class="text-danger pl-3">', '</small>'); ?>
+                                <input type="text" class="form-control " id="dosen" name="dosen" value="<?= set_value('dosen'); ?>" placeholder="NIDN" onchange="hideError('dosenError');">
+                                <?= form_error('dosen', '<small id="dosenError" class="text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="mahasiswaNpm" class="col-sm-2 col-form-label col-form-label-lg"><b>Anggota</b></label>
-                            <div class="col-sm-10 pt-1">
-                                <input type="text" class="form-control " id="mahasiswaNpm" name="mahasiswaNpm" value="<?= set_value('mahasiswaNpm'); ?>" onchange="hideError('mahasiswaNpmError');">
-                                <?= form_error('mahasiswaNpm', '<small id="mahasiswaNpmError" class="text-danger pl-3">', '</small>'); ?>
+                        <div class="form-group row" id="newAnggota">
+                            <label for="anggota" class="col-sm-2 col-form-label col-form-label-lg"><b>NPM Anggota</b></label>
+                            <div class="col-sm-2 pt-1">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control " id="anggota" name="anggota[]" value="<?= $user['npm']; ?>" readonly>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary" type="button" onclick="addAnggota()"><i class="fas fa-fw fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <?= form_error('anggota', '<small id="anggotaError" class="text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
                         <div class="form-group row mt-5">
                             <label for="userFile" class="col-sm-2 col-form-label col-form-label-lg"><b>Proposal</b></label>
                             <div class="input-group mb-3 col-sm-10">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="userFile" name="userFile" accept=".doc, .docx" onchange="validateFileType(); changeText('gambarLabel',this.value); loadImage(event);">
-                                    <label class="custom-file-label" for="userFile" id="gambarLabel" style="color: #999;">Pilih file</label>
+                                    <input type="file" class="custom-file-input" id="userFile" name="userFile" accept=".doc, .docx" onchange="validateFileType(); changeText('fileLabel',this.value);">
+                                    <label class="custom-file-label" for="userFile" id="fileLabel" style="color: #999;">Pilih file</label>
                                 </div>
                             </div>
                         </div>
@@ -130,6 +140,54 @@
     <?php $this->load->view("user/_scrollTop.php") ?>
     <!-- Logout Modal-->
     <?php $this->load->view("user/_logoutModal.php") ?>
+
+    <script>
+        function changeText(id, value) {
+            document.getElementById(id).innerHTML = value.split('\\').pop();
+        }
+
+        function validateFileType() {
+            var fileName = document.getElementById("userFile").value;
+            var idxDot = fileName.lastIndexOf(".") + 1;
+            var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+            if (extFile == "doc" || extFile == "docx") {
+                //accept file
+            } else {
+                alert("Hanya Dokumen Word yang diperbolehkan!");
+                document.getElementById("userFile").value = null;
+            }
+        }
+
+        function hideError(error) {
+            document.getElementById(error).style.display = "none";
+        }
+
+        var idAnggota = 0;
+        var jumlahAnggota = 1;
+
+        function addAnggota() {
+            if (jumlahAnggota < 5) {
+                var formAnggota = document.createElement('div');
+                formAnggota.className = 'col-sm-2 pt-1';
+                formAnggota.id = 'anggota' + idAnggota++;
+                formAnggota.innerHTML =
+                    '<div class="input-group mb-3">' +
+                    '<input type="text" class="form-control" name="anggota[' + idAnggota + ']" placeholder="NPM">' +
+                    '<div class="input-group-append">' +
+                    '<button class="btn btn-outline-danger" type="button" onclick="removeAnggota(\'' + formAnggota.id + '\')"><i class="fas fa-fw fa-minus"></i></button>' +
+                    '</div>' +
+                    '</div>';
+                document.getElementById("newAnggota").appendChild(formAnggota);
+                jumlahAnggota++;
+            }
+        }
+
+        function removeAnggota(id) {
+            var anggota = document.getElementById(id);
+            anggota.remove();
+            jumlahAnggota--;
+        }
+    </script>
 
     <!-- Core Script Data -->
     <?php $this->load->view("partial/_script.php") ?>

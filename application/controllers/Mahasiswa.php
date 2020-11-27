@@ -25,8 +25,14 @@ class Mahasiswa extends CI_Controller
 
     public function pengajuan()
     {
+        $config['base_url'] = base_url('mahasiswa/pengajuan');
+        $config['total_rows'] = count($this->pengajuan_model->getAllPengajuan());
+        $config['per_page'] = 10;
+        $this->pagination->initialize($config);
+
         $data['user'] = $this->session->userdata();
-        $data['pengajuan'] = $this->pengajuan_model->lihatPengajuan($data['user']['npm']);
+        $data['pengajuan'] = $this->pengajuan_model->getPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getAllPengajuan());
         $this->load->view('user/mahasiswa/pengajuan', $data);
     }
 

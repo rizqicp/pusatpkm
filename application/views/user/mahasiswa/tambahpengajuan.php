@@ -94,21 +94,60 @@
                             <label for="anggota" class="col-sm-2 col-form-label col-form-label-lg"><b>NPM Anggota</b></label>
                             <div class="col-sm-2 pt-1">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control " id="anggota" name="anggota[]" value="<?= $user['npm']; ?>" readonly>
+                                    <input type="text" class="form-control" id="anggota1" name="anggota1" value="<?= $user['npm']; ?>" readonly>
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-primary" type="button" onclick="addAnggota()"><i class="fas fa-fw fa-plus"></i></button>
+                                        <button class="btn btn-outline-primary" type="button" onclick="addAnggota();"><i class="fas fa-fw fa-plus"></i></button>
                                     </div>
                                 </div>
-                                <?= form_error('anggota', '<small id="anggotaError" class="text-danger pl-3">', '</small>'); ?>
+                                <?= form_error('anggota1', '<small id="anggota1Error" class="text-danger pl-3">', '</small>'); ?>
+                            </div>
+                            <div class="col-sm-2 pt-1" id="formAnggota2" style="display: none ;">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="anggota2" name="anggota2" value="<?= set_value('anggota2'); ?>" placeholder="Anggota 2" onchange="hideError('anggota2Error');" disabled>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" onclick="removeAnggota(2)"><i class="fas fa-fw fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <?= form_error('anggota2', '<small id="anggota2Error" class="text-danger pl-3">', '</small>'); ?>
+                            </div>
+                            <div class="col-sm-2 pt-1" id="formAnggota3" style="display: none ;">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="anggota3" name="anggota3" value="<?= set_value('anggota3'); ?>" placeholder="Anggota 3" onchange="hideError('anggota3Error');" disabled>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" onclick="removeAnggota(3)"><i class="fas fa-fw fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <?= form_error('anggota3', '<small id="anggota3Error" class="text-danger pl-3">', '</small>'); ?>
+                            </div>
+                            <div class="col-sm-2 pt-1" id="formAnggota4" style="display: none ;">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="anggota4" name="anggota4" value="<?= set_value('anggota4'); ?>" placeholder="Anggota 4" onchange="hideError('anggota4Error');" disabled>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" onclick="removeAnggota(3)"><i class="fas fa-fw fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <?= form_error('anggota4', '<small id="anggota4Error" class="text-danger pl-3">', '</small>'); ?>
+                            </div>
+                            <div class="col-sm-2 pt-1" id="formAnggota5" style="display: none ;">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="anggota5" name="anggota5" value="<?= set_value('anggota5'); ?>" placeholder="Anggota 5" onchange="hideError('anggota5Error');" disabled>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" onclick="removeAnggota(3)"><i class="fas fa-fw fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <?= form_error('anggota5', '<small id="anggota5Error" class="text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
                         <div class="form-group row mt-5">
                             <label for="userFile" class="col-sm-2 col-form-label col-form-label-lg"><b>Proposal</b></label>
                             <div class="input-group mb-3 col-sm-10">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="userFile" name="userFile" accept=".doc, .docx" onchange="validateFileType(); changeText('fileLabel',this.value);">
-                                    <label class="custom-file-label" for="userFile" id="fileLabel" style="color: #999;">Pilih file</label>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="userFile" name="userFile" accept=".doc, .docx" onchange="validateFileType(); changeText('fileLabel',this.value); hideError('userFile');">
+                                        <label class="custom-file-label" for="userFile" id="fileLabel" style="color: #999;">Pilih file</label>
+                                    </div>
                                 </div>
+                                <?= form_error('userFile', '<small id="userFile" class="text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
                         <button type="submit" alue="upload" class="btn btn-primary btn-user btn-block">Buat Pengajuan</button>
@@ -162,30 +201,36 @@
             document.getElementById(error).style.display = "none";
         }
 
-        var idAnggota = 0;
         var jumlahAnggota = 1;
 
         function addAnggota() {
-            if (jumlahAnggota < 5) {
-                var formAnggota = document.createElement('div');
-                formAnggota.className = 'col-sm-2 pt-1';
-                formAnggota.id = 'anggota' + idAnggota++;
-                formAnggota.innerHTML =
-                    '<div class="input-group mb-3">' +
-                    '<input type="text" class="form-control" name="anggota[' + idAnggota + ']" placeholder="NPM">' +
-                    '<div class="input-group-append">' +
-                    '<button class="btn btn-outline-danger" type="button" onclick="removeAnggota(\'' + formAnggota.id + '\')"><i class="fas fa-fw fa-minus"></i></button>' +
-                    '</div>' +
-                    '</div>';
-                document.getElementById("newAnggota").appendChild(formAnggota);
-                jumlahAnggota++;
-            }
+            var anggota = document.getElementById('formAnggota' + (jumlahAnggota + 1));
+            anggota.style.display = 'block';
+            document.getElementById('anggota' + (jumlahAnggota + 1)).disabled = false;
+            jumlahAnggota++;
         }
 
         function removeAnggota(id) {
-            var anggota = document.getElementById(id);
-            anggota.remove();
+            document.getElementById("anggota" + id + "Error").style.display = 'none';
+            if (jumlahAnggota > id) {
+                while (id < jumlahAnggota) {
+                    var anggotaValue = document.getElementById('anggota' + (id + 1)).value;
+                    document.getElementById('anggota' + id).value = anggotaValue;
+                    document.getElementById('anggota' + (id + 1)).value = null;
+                    id++;
+                }
+            } else {
+                document.getElementById('anggota' + (id)).value = null;
+            }
+            document.getElementById('formAnggota' + (id)).style.display = 'none';
+            document.getElementById('anggota' + (id)).disabled = true;
             jumlahAnggota--;
+        }
+
+        for (idAnggota = 2; idAnggota <= 5; idAnggota++) {
+            if (document.getElementById("anggota" + idAnggota).value || document.getElementById("anggota" + idAnggota + "Error")) {
+                addAnggota();
+            }
         }
     </script>
 

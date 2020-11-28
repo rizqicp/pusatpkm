@@ -90,11 +90,64 @@ class Pengajuan_model extends CI_Model
         }
         $this->form_validation->set_rules('periode', 'Periode', 'required|in_list[' . implode(',', $periodeId) . ']');
         $this->form_validation->set_rules('kategori', 'Periode', 'required|in_list[' . implode(',', $kategoriId) . ']');
-        $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
-        $this->form_validation->set_rules('abstraksi', 'Abstraksi', 'trim');
-        $this->form_validation->set_rules('dana', 'Dana', 'trim|numeric');
-        // $this->form_validation->set_rules('dosen', 'NIDN', 'required|numeric|exact_length[10]|in_list[' . implode(',', $dosenNidn) . ']');
-        // $this->form_validation->set_rules('mahasiswaNpm', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']');
+        $this->form_validation->set_rules('judul', 'Judul', 'required|trim', ['required' => 'Judul harus diisi!']);
+        $this->form_validation->set_rules('abstraksi', 'Abstraksi', 'required|trim', ['required' => 'Abstraksi harus diisi!']);
+        $this->form_validation->set_rules('dana', 'Dana', 'trim|numeric', ['numeric' => 'Dana harus berupa angka!']);
+        $this->form_validation->set_rules('dosen', 'NIDN', 'required|numeric|exact_length[10]|in_list[' . implode(',', $dosenNidn) . ']', [
+            'required' => 'NIDN Pembimbing harus diisi!',
+            'numeric' => 'NIDN harus berupa angka!',
+            'exact_length' => 'NIDN harus 10 digit!',
+            'in_list' => 'Pembimbing belum terdaftar!'
+        ]);
+        $this->form_validation->set_rules('anggota1', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+            'required' => 'NPM Anggota harus diisi!',
+            'numeric' => 'NPM harus berupa angka!',
+            'min_length' => 'NPM minimal 10 digit!',
+            'max_length' => 'NPM maksimal 11 digit!',
+            'in_list' => 'Mahasiswa belum terdaftar!'
+        ]);
+        if ($this->input->post()) {
+            if (array_key_exists("anggota2", $this->input->post())) {
+                $this->form_validation->set_rules('anggota2', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+                    'required' => 'NPM Anggota harus diisi!',
+                    'numeric' => 'NPM harus berupa angka!',
+                    'min_length' => 'NPM minimal 10 digit!',
+                    'max_length' => 'NPM maksimal 11 digit!',
+                    'in_list' => 'Mahasiswa belum terdaftar!'
+                ]);
+            }
+            if (array_key_exists("anggota3", $this->input->post())) {
+                $this->form_validation->set_rules('anggota3', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+                    'required' => 'NPM Anggota harus diisi!',
+                    'numeric' => 'NPM harus berupa angka!',
+                    'min_length' => 'NPM minimal 10 digit!',
+                    'max_length' => 'NPM maksimal 11 digit!',
+                    'in_list' => 'Mahasiswa belum terdaftar!'
+                ]);
+            }
+            if (array_key_exists("anggota4", $this->input->post())) {
+                $this->form_validation->set_rules('anggota4', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+                    'required' => 'NPM Anggota harus diisi!',
+                    'numeric' => 'NPM harus berupa angka!',
+                    'min_length' => 'NPM minimal 10 digit!',
+                    'max_length' => 'NPM maksimal 11 digit!',
+                    'in_list' => 'Mahasiswa belum terdaftar!'
+                ]);
+            }
+            if (array_key_exists("anggota5", $this->input->post())) {
+                $this->form_validation->set_rules('anggota5', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+                    'required' => 'NPM Anggota harus diisi!',
+                    'numeric' => 'NPM harus berupa angka!',
+                    'min_length' => 'NPM minimal 10 digit!',
+                    'max_length' => 'NPM maksimal 11 digit!',
+                    'in_list' => 'Mahasiswa belum terdaftar!'
+                ]);
+            }
+        }
+        if (empty($_FILES['userFile']['name'])) {
+            $this->form_validation->set_rules('userFile', 'Document', 'required', ['required' => 'Silahkan upload proposal!']);
+        }
+
 
         // fungsi insert, return id
         function create($table, $data)

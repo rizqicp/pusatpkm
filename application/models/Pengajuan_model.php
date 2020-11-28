@@ -178,17 +178,14 @@ class Pengajuan_model extends CI_Model
             }
         }
 
-        // simpan data pengajuan ke dalam variabel
+        // insert data pengajuan
         if ($this->form_validation->run() == true) {
-            var_dump($this->input->post());
-            var_dump($_FILES);
-            die;
             $dataPengajuan = [
                 'id' => null,
                 'periode_id' => $this->input->post('periode'),
                 'kategori_id' => $this->input->post('kategori'),
                 'tahap_id' => 1,
-                'dosen_nidn' => $this->input->post('dosenNidn'),
+                'dosen_nidn' => $this->input->post('dosen'),
                 'judul' => $this->input->post('judul'),
                 'abstraksi' => $this->input->post('abstraksi'),
                 'dana' => $this->input->post('dana'),
@@ -203,23 +200,28 @@ class Pengajuan_model extends CI_Model
             $this->db->where('id', $pengajuanId);
             $this->db->update('pengajuan');
 
-            // data pengusul perlu diperbaiki
-            $dataPengusul = [
-                'id' => null,
-                'pengajuan_id' => $pengajuanId,
-                'mahasiswa_npm' => $this->input->post('mahasiswaNpm'),
-                'anggota' => 1
-            ];
-            create('pengusul', $dataPengusul);
+            // insert data pengusul
+            $jumlahPengusul = count($this->input->post()) - 6;
+            for ($add = 1; $add <= $jumlahPengusul; $add++) {
+                $dataPengusul = [
+                    'id' => null,
+                    'pengajuan_id' => $pengajuanId,
+                    'mahasiswa_npm' => $this->input->post('anggota' . $add),
+                    'anggota' => $add
+                ];
+                create('pengusul', $dataPengusul);
+            }
 
+            // insert log pengajuan
             $dataLog = [
                 'id' => null,
                 'pengajuan_id' => $pengajuanId,
                 'waktu' => null,
-                'berita' => 'pengajuan dibuat'
+                'berita' => 'Pengajuan dibuat'
             ];
             create('log', $dataLog);
 
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan berhasil dibuat!</div>');
             return true;
         }
     }

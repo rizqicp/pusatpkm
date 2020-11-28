@@ -63,6 +63,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if ($pengajuan == null) : ?>
+                                <?php $caption['firstData'] = 0; ?>
+                                <tr>
+                                    <td class="align-middle text-center" colspan="6">Tidak ada data</td>
+                                </tr>
+                            <?php endif; ?>
                             <?php $i = 1; ?>
                             <?php foreach ($pengajuan as $pengajuan) : ?>
                                 <tr>

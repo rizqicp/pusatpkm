@@ -52,6 +52,26 @@ class Mahasiswa extends CI_Controller
         }
     }
 
+    public function editPengajuan()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('editpengajuanid' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $this->db->where('status', 'aktif');
+        $data['periode'] = $this->db->get('periode')->result_array();
+        $data['kategori'] = $this->db->get('kategori')->result_array();
+        $data['mahasiswa'] = $this->db->get('mahasiswa')->result_array();
+        $data['dosen'] = $this->db->get('dosen')->result_array();
+        $data['editpengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('editpengajuanid'));
+
+        if ($this->pengajuan_model->editPengajuan($data['editpengajuan']) == true) {
+            redirect('mahasiswa/pengajuan');
+        } else {
+            $this->load->view('user/mahasiswa/editpengajuan', $data);
+        }
+    }
+
     public function hapusPengajuan()
     {
         if ($this->pengajuan_model->hapusPengajuan() == true) {

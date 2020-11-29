@@ -79,7 +79,7 @@
                                         <td class="align-middle"><?= $pengajuan['periode_tahun']; ?></td>
                                         <td class="align-middle"><?= $pengajuan['tahap_nama']; ?></td>
                                         <td class="align-middle">
-                                            <a type="button" class="disabled btn btn-primary btn-sm mb-1 <?= $pengajuan['tahap_id'] > 1 ? 'disabled' : '' ?>" href="#">&nbspUbah&nbsp</a>
+                                            <a type="button" class="btn btn-primary btn-sm mb-1" href="<?= base_url('mahasiswa/editpengajuan') . '?id=' . $pengajuan['pengajuan_id']; ?>">&nbspUbah&nbsp</a>
                                             <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['pengajuan_id']; ?>">Hapus</button>
                                             <!-- hapusPengajuan Modal -->
                                             <?php $this->load->view("user/mahasiswa/_hapusPengajuanModal.php", $pengajuan) ?>

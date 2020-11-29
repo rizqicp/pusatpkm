@@ -61,6 +61,21 @@ class Pengajuan_model extends CI_Model
         return $this->db->get('pengusul', $limit, $start)->result_array();
     }
 
+    public function getPengajuanById($id)
+    {
+        $this->db->where('id', $id);
+        $pengajuan = $this->db->get('pengajuan')->row_array();
+
+        $this->db->where('pengajuan_id', $id);
+        $pengusul = $this->db->get('pengusul')->result_array();
+
+        for ($i = 0; $i < count($pengusul); $i++) {
+            $anggota['anggota' . ($i + 1)] = $pengusul[$i]['mahasiswa_npm'];
+        }
+
+        return array_merge($pengajuan, $anggota);
+    }
+
     public function getCaptionData($limit, $start, $count)
     {
         $firstData = $start != null ? intval($start) + 1 : 1;
@@ -165,7 +180,7 @@ class Pengajuan_model extends CI_Model
             $config['allowed_types']        = 'doc|docx';
             $config['file_name']            = 'pengajuan_' . $id;
             $config['overwrite']            = true;
-            $config['max_size']             = 2048; // 2MB
+            $config['max_size']             = 10240; // 10MB
 
             $current->load->library('upload', $config);
 
@@ -223,6 +238,198 @@ class Pengajuan_model extends CI_Model
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan berhasil dibuat!</div>');
             return true;
+        }
+    }
+
+    public function editPengajuan($pengajuan)
+    {
+        // fungsi insert, return id
+        function createNew($table, $data)
+        {
+            $current = get_instance();
+            $current->db->insert($table, $data);
+            return $current->db->insert_id();
+        }
+
+        function _updateFile($id)
+        {
+            $current = get_instance();
+            $config['upload_path']          = './upload/pengajuan/';
+            $config['allowed_types']        = 'doc|docx';
+            $config['file_name']            = 'pengajuan_' . $id;
+            $config['overwrite']            = true;
+            $config['max_size']             = 10240; // 10MB
+
+            $current->load->library('upload', $config);
+
+            if ($current->upload->do_upload('userFile')) {
+                return $current->upload->data("file_name");
+            } else {
+                echo "error upload file";
+                var_dump($_FILES);
+                die;
+            }
+        }
+
+        // validasi form
+        foreach ($this->db->get('periode')->result_array() as $periode) {
+            $periodeId[] = $periode['id'];
+        }
+        foreach ($this->db->get('kategori')->result_array() as $kategori) {
+            $kategoriId[] = $kategori['id'];
+        }
+        foreach ($this->db->get('mahasiswa')->result_array() as $mahasiswa) {
+            $mahasiswaNpm[] = $mahasiswa['npm'];
+        }
+        foreach ($this->db->get('dosen')->result_array() as $dosen) {
+            $dosenNidn[] = $dosen['nidn'];
+        }
+        if ($this->input->post('periode') != $pengajuan['periode_id']) {
+            $this->form_validation->set_rules('periode', 'Periode', 'required|in_list[' . implode(',', $periodeId) . ']');
+        }
+        if ($this->input->post('kategori') != $pengajuan['kategori_id']) {
+            $this->form_validation->set_rules('kategori', 'Periode', 'required|in_list[' . implode(',', $kategoriId) . ']');
+        }
+        if ($this->input->post('judul') != $pengajuan['judul']) {
+            $this->form_validation->set_rules('judul', 'Judul', 'required|trim', ['required' => 'Judul harus diisi!']);
+        }
+        if ($this->input->post('abstraksi') != $pengajuan['abstraksi']) {
+            $this->form_validation->set_rules('abstraksi', 'Abstraksi', 'required|trim', ['required' => 'Abstraksi harus diisi!']);
+        }
+        if ($this->input->post('dana') != $pengajuan['dana']) {
+            $this->form_validation->set_rules('dana', 'Dana', 'trim|numeric', ['numeric' => 'Dana harus berupa angka!']);
+        }
+        if ($this->input->post('dosen') != $pengajuan['dosen_nidn']) {
+            $this->form_validation->set_rules('dosen', 'NIDN', 'required|numeric|exact_length[10]|in_list[' . implode(',', $dosenNidn) . ']', [
+                'required' => 'NIDN Pembimbing harus diisi!',
+                'numeric' => 'NIDN harus berupa angka!',
+                'exact_length' => 'NIDN harus 10 digit!',
+                'in_list' => 'Pembimbing belum terdaftar!'
+            ]);
+        }
+        if ($this->input->post('anggota1') != $pengajuan['anggota1']) {
+            $this->form_validation->set_rules('anggota1', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+                'required' => 'NPM Anggota harus diisi!',
+                'numeric' => 'NPM harus berupa angka!',
+                'min_length' => 'NPM minimal 10 digit!',
+                'max_length' => 'NPM maksimal 11 digit!',
+                'in_list' => 'Mahasiswa belum terdaftar!'
+            ]);
+        }
+        if ($this->input->post()) {
+            if (array_key_exists("anggota2", $this->input->post())) {
+                if ($this->input->post('anggota2') != $pengajuan['anggota2']) {
+                    $this->form_validation->set_rules('anggota2', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+                        'required' => 'NPM Anggota harus diisi!',
+                        'numeric' => 'NPM harus berupa angka!',
+                        'min_length' => 'NPM minimal 10 digit!',
+                        'max_length' => 'NPM maksimal 11 digit!',
+                        'in_list' => 'Mahasiswa belum terdaftar!'
+                    ]);
+                }
+            }
+            if (array_key_exists("anggota3", $this->input->post())) {
+                if ($this->input->post('anggota3') != $pengajuan['anggota3']) {
+                    $this->form_validation->set_rules('anggota3', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+                        'required' => 'NPM Anggota harus diisi!',
+                        'numeric' => 'NPM harus berupa angka!',
+                        'min_length' => 'NPM minimal 10 digit!',
+                        'max_length' => 'NPM maksimal 11 digit!',
+                        'in_list' => 'Mahasiswa belum terdaftar!'
+                    ]);
+                }
+            }
+            if (array_key_exists("anggota4", $this->input->post())) {
+                if ($this->input->post('anggota4') != $pengajuan['anggota4']) {
+                    $this->form_validation->set_rules('anggota4', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+                        'required' => 'NPM Anggota harus diisi!',
+                        'numeric' => 'NPM harus berupa angka!',
+                        'min_length' => 'NPM minimal 10 digit!',
+                        'max_length' => 'NPM maksimal 11 digit!',
+                        'in_list' => 'Mahasiswa belum terdaftar!'
+                    ]);
+                }
+            }
+            if (array_key_exists("anggota5", $this->input->post())) {
+                if ($this->input->post('anggota5') != $pengajuan['anggota5']) {
+                    $this->form_validation->set_rules('anggota5', 'NPM', 'required|numeric|min_length[10]|max_length[11]|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+                        'required' => 'NPM Anggota harus diisi!',
+                        'numeric' => 'NPM harus berupa angka!',
+                        'min_length' => 'NPM minimal 10 digit!',
+                        'max_length' => 'NPM maksimal 11 digit!',
+                        'in_list' => 'Mahasiswa belum terdaftar!'
+                    ]);
+                }
+            }
+        }
+
+        // cek file upload
+        $uploadFile = false;
+        if ($_FILES != null) {
+            if ($_FILES['userFile']['error'] != 4) {
+                $uploadFile = true;
+            } else {
+                $uploadFile = false;
+            }
+        }
+
+        if ($this->form_validation->run() == true || $uploadFile == true) {
+            if ($this->input->post('periode') != null && $this->input->post('periode') != $pengajuan['periode_id']) {
+                $this->db->set('periode_id', $this->input->post('periode'));
+                $this->db->where('id', $pengajuan['id']);
+                $this->db->update('pengajuan');
+            }
+            if ($this->input->post('kategori') != null && $this->input->post('kategori') != $pengajuan['kategori_id']) {
+                $this->db->set('kategori_id', $this->input->post('kategori'));
+                $this->db->where('id', $pengajuan['id']);
+                $this->db->update('pengajuan');
+            }
+            if ($this->input->post('judul') != null && $this->input->post('judul') != $pengajuan['judul']) {
+                $this->db->set('judul', $this->input->post('judul'));
+                $this->db->where('id', $pengajuan['id']);
+                $this->db->update('pengajuan');
+            }
+            if ($this->input->post('abstraksi') != null && $this->input->post('abstraksi') != $pengajuan['abstraksi']) {
+                $this->db->set('abstraksi', $this->input->post('abstraksi'));
+                $this->db->where('id', $pengajuan['id']);
+                $this->db->update('pengajuan');
+            }
+            if ($this->input->post('dana') != null && $this->input->post('dana') != $pengajuan['dana']) {
+                $this->db->set('dana', $this->input->post('dana'));
+                $this->db->where('id', $pengajuan['id']);
+                $this->db->update('pengajuan');
+            }
+            if ($this->input->post('dosen') != null && $this->input->post('dosen') != $pengajuan['dosen_nidn']) {
+                $this->db->set('dosen_nidn', $this->input->post('dosen'));
+                $this->db->where('id', $pengajuan['id']);
+                $this->db->update('pengajuan');
+            }
+            if ($_FILES['userFile']['error'] != 4) {
+                unlink('./upload/pengajuan/' . $pengajuan['file']);
+                $this->db->set('file', _updateFile($pengajuan['id']));
+                $this->db->where('id', $pengajuan['id']);
+                $this->db->update('pengajuan');
+            }
+
+            // hapus data pengusul lama
+            $this->db->where('pengajuan_id', $pengajuan['id']);
+            $this->db->delete('pengusul');
+            // insert data pengusul baru
+            $jumlahPengusul = count($this->input->post()) - 6;
+            for ($add = 1; $add <= $jumlahPengusul; $add++) {
+                $dataPengusul = [
+                    'id' => null,
+                    'pengajuan_id' => $pengajuan['id'],
+                    'mahasiswa_npm' => $this->input->post('anggota' . $add),
+                    'anggota' => $add
+                ];
+                createNew('pengusul', $dataPengusul);
+            }
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan berhasil diubah!</div>');
+            return true;
+        } else {
+            return false;
         }
     }
 

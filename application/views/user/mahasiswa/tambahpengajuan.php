@@ -108,7 +108,7 @@
                                         <button class="btn btn-outline-danger" type="button" onclick="removeAnggota(2)"><i class="fas fa-fw fa-minus"></i></button>
                                     </div>
                                 </div>
-                                <?= form_error('anggota2', '<small id="anggota2Error" class="text-danger pl-3">', '</small>'); ?>
+                                <?= form_error('anggota2', '<small id="anggota2Error" class="erroranggota text-danger pl-3">', '</small>'); ?>
                             </div>
                             <div class="col-sm-2 pt-1" id="formAnggota3" style="display: none ;">
                                 <div class="input-group mb-3">
@@ -117,7 +117,7 @@
                                         <button class="btn btn-outline-danger" type="button" onclick="removeAnggota(3)"><i class="fas fa-fw fa-minus"></i></button>
                                     </div>
                                 </div>
-                                <?= form_error('anggota3', '<small id="anggota3Error" class="text-danger pl-3">', '</small>'); ?>
+                                <?= form_error('anggota3', '<small id="anggota3Error" class="erroranggota text-danger pl-3">', '</small>'); ?>
                             </div>
                             <div class="col-sm-2 pt-1" id="formAnggota4" style="display: none ;">
                                 <div class="input-group mb-3">
@@ -126,7 +126,7 @@
                                         <button class="btn btn-outline-danger" type="button" onclick="removeAnggota(3)"><i class="fas fa-fw fa-minus"></i></button>
                                     </div>
                                 </div>
-                                <?= form_error('anggota4', '<small id="anggota4Error" class="text-danger pl-3">', '</small>'); ?>
+                                <?= form_error('anggota4', '<small id="anggota4Error" class="erroranggota text-danger pl-3">', '</small>'); ?>
                             </div>
                             <div class="col-sm-2 pt-1" id="formAnggota5" style="display: none ;">
                                 <div class="input-group mb-3">
@@ -135,7 +135,7 @@
                                         <button class="btn btn-outline-danger" type="button" onclick="removeAnggota(3)"><i class="fas fa-fw fa-minus"></i></button>
                                     </div>
                                 </div>
-                                <?= form_error('anggota5', '<small id="anggota5Error" class="text-danger pl-3">', '</small>'); ?>
+                                <?= form_error('anggota5', '<small id="anggota5Error" class="erroranggota text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
                         <div class="form-group row mt-5">
@@ -171,9 +171,6 @@
 
     </div>
     <!-- End of Page Wrapper -->
-
-    <!-- input form Modal-->
-    <?php $this->load->view("user/mahasiswa/_tambahAnggotaModal.php") ?>
 
     <!-- Scroll to Top Button-->
     <?php $this->load->view("user/_scrollTop.php") ?>
@@ -211,7 +208,8 @@
         }
 
         function removeAnggota(id) {
-            document.getElementById("anggota" + id + "Error").style.display = 'none';
+            $(".erroranggota").hide();
+
             if (jumlahAnggota > id) {
                 while (id < jumlahAnggota) {
                     var anggotaValue = document.getElementById('anggota' + (id + 1)).value;

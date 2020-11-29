@@ -51,4 +51,13 @@ class Mahasiswa extends CI_Controller
             $this->load->view('user/mahasiswa/tambahpengajuan', $data);
         }
     }
+
+    public function hapusPengajuan()
+    {
+        if ($this->pengajuan_model->hapusPengajuan() == true) {
+            redirect('mahasiswa/pengajuan');
+        } else {
+            redirect('mahasiswa/pengajuan');
+        }
+    }
 }

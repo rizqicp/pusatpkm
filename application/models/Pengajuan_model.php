@@ -225,4 +225,19 @@ class Pengajuan_model extends CI_Model
             return true;
         }
     }
+
+    public function hapusPengajuan()
+    {
+        if (isset($_POST['hapusid'])) {
+            if ($_POST['hapusfile'] != null) {
+                unlink('./upload/pengajuan/' . $_POST['hapusfile']);
+            }
+            $this->db->delete('pengajuan', array('id' => $_POST['hapusid']));
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan "' . $_POST['hapusjudul'] . '" berhasil dihapus!</div>');
+            return true;
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Pengajuan "' . $_POST['hapusjudul'] . '" gagal dihapus!</div>');
+            return false;
+        }
+    }
 }

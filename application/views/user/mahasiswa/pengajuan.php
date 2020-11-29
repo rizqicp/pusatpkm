@@ -51,42 +51,46 @@
                         </div>
                     </div>
 
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th class="align-middle">No</th>
-                                <th class="align-middle">Judul</th>
-                                <th class="align-middle">Pembimbing</th>
-                                <th class="align-middle">Periode</th>
-                                <th class="align-middle">Tahap</th>
-                                <th class="align-middle">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if ($pengajuan == null) : ?>
-                                <?php $caption['firstData'] = 0; ?>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
                                 <tr>
-                                    <td class="align-middle text-center" colspan="6">Tidak ada data</td>
+                                    <th class="align-middle">No</th>
+                                    <th class="align-middle">Judul</th>
+                                    <th class="align-middle">Pembimbing</th>
+                                    <th class="align-middle">Periode</th>
+                                    <th class="align-middle">Tahap</th>
+                                    <th class="align-middle">Aksi</th>
                                 </tr>
-                            <?php endif; ?>
-                            <?php $i = 1; ?>
-                            <?php foreach ($pengajuan as $pengajuan) : ?>
-                                <tr>
-                                    <th class="align-middle"><?= $i; ?></th>
-                                    <td class="align-middle"><?= $pengajuan['pengajuan_judul']; ?></td>
-                                    <td class="align-middle"><?= $pengajuan['dosen_nama']; ?></td>
-                                    <td class="align-middle"><?= $pengajuan['periode_tahun']; ?></td>
-                                    <td class="align-middle"><?= $pengajuan['tahap_nama']; ?></td>
-                                    <td class="align-middle">
-                                        <a type="button" class="btn btn-primary btn-sm mb-1 <?= $pengajuan['tahap_id'] > 1 ? 'disabled' : '' ?>" href="#">&nbspUbah&nbsp</a>
-                                        <button type="button" class="btn btn-danger btn-sm mb-1" href="#">Hapus</button>
-                                    </td>
-                                </tr>
-                                <?php $i++; ?>
-                            <?php endforeach; ?>
-                        </tbody>
-                        <caption class="mt-2"><small><?= $caption['firstData']; ?> - <?= $caption['lastData']; ?> dari <?= $caption['totalData']; ?> Pengajuan</small></caption>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php if ($pengajuan == null) : ?>
+                                    <?php $caption['firstData'] = 0; ?>
+                                    <tr>
+                                        <td class="align-middle text-center" colspan="6">Tidak ada data</td>
+                                    </tr>
+                                <?php endif; ?>
+                                <?php $i = 1; ?>
+                                <?php foreach ($pengajuan as $pengajuan) : ?>
+                                    <tr>
+                                        <th class="align-middle"><?= $i; ?></th>
+                                        <td class="align-middle"><?= $pengajuan['pengajuan_judul']; ?></td>
+                                        <td class="align-middle"><?= $pengajuan['dosen_nama']; ?></td>
+                                        <td class="align-middle"><?= $pengajuan['periode_tahun']; ?></td>
+                                        <td class="align-middle"><?= $pengajuan['tahap_nama']; ?></td>
+                                        <td class="align-middle">
+                                            <a type="button" class="disabled btn btn-primary btn-sm mb-1 <?= $pengajuan['tahap_id'] > 1 ? 'disabled' : '' ?>" href="#">&nbspUbah&nbsp</a>
+                                            <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['pengajuan_id']; ?>">Hapus</button>
+                                            <!-- hapusPengajuan Modal -->
+                                            <?php $this->load->view("user/mahasiswa/_hapusPengajuanModal.php", $pengajuan) ?>
+                                        </td>
+                                    </tr>
+                                    <?php $i++; ?>
+                                <?php endforeach; ?>
+                            </tbody>
+                            <caption class="mt-2"><small><?= $caption['firstData']; ?> - <?= $caption['lastData']; ?> dari <?= $caption['totalData']; ?> Pengajuan</small></caption>
+                        </table>
+                    </div>
                     <?= $this->pagination->create_links(); ?>
 
                 </div>

@@ -28,9 +28,9 @@
         case 'admin': ?>
             <!-- Nav Item - Kelola Pengajuan -->
             <li class="nav-item <?= $this->uri->segment(2) == 'kelolapengajuan' ? 'active' : '' ?>">
-                <a class="nav-link disabled" href="<?= base_url($user['role'] . '/kelolapengajuan'); ?>">
+                <a class="nav-link" href="<?= base_url($user['role'] . '/kelolapengajuan'); ?>">
                     <i class="fas fa-fw fa-file-alt"></i>
-                    <span style="color: gray;">Kelola Pengajuan</span>
+                    <span>Kelola Pengajuan</span>
                 </a>
             </li>
             <!-- Nav Item - Kelola Pengumuman -->

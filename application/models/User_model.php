@@ -225,4 +225,17 @@ class User_model extends CI_Model
             return false;
         }
     }
+
+    public function getKelompok($data)
+    {
+        $dosen = $this->db->get_where('dosen', array('nidn' => $data['dosen_nidn']))->row_array();
+        $jumlahAnggota = count($data) - 12;
+        for ($i = 1; $i <= $jumlahAnggota; $i++) {
+            $anggota[] = $this->db->get_where('mahasiswa', array('npm' => $data['anggota' . $i]))->row_array();
+        }
+        $kelompok['dosen'] = $dosen;
+        $kelompok['mahasiswa'] = $anggota;
+
+        return $kelompok;
+    }
 }

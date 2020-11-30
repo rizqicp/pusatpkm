@@ -9,6 +9,7 @@ class Admin extends CI_Controller
         isLoginHelper();
         $this->load->model('user_model');
         $this->load->model('pengumuman_model');
+        $this->load->model('pengajuan_model');
     }
 
     public function index()
@@ -24,9 +25,26 @@ class Admin extends CI_Controller
 
     public function kelolaPengajuan()
     {
+        $config['base_url'] = base_url('admin/kelolapengajuan');
+        $config['total_rows'] = count($this->pengajuan_model->getAllPengajuan());
+        $config['per_page'] = 10;
+        $this->pagination->initialize($config);
+
         $data['user'] = $this->session->userdata();
-        $data['pengguna'] = $this->user_model->getalluser();
-        $this->load->view('user/admin/kelolauser', $data);
+        $data['pengajuan'] = $this->pengajuan_model->getAllPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getAllPengajuan());
+        $this->load->view('user/admin/kelolapengajuan', $data);
+    }
+
+    public function detailPengajuan()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('detailpengajuanid' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
+        $data['kelompok'] = $this->user_model->getKelompok($data['pengajuan']);
+        $this->load->view('user/admin/detailpengajuan', $data);
     }
 
     public function kelolaPengumuman()

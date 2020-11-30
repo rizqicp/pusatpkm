@@ -5,6 +5,31 @@ class Pengajuan_model extends CI_Model
     public function getAllPengajuan()
     {
         $this->db->select('
+        pengajuan.id AS pengajuan_id,
+        pengajuan.judul AS pengajuan_judul,
+        pengajuan.abstraksi AS pengajuan_abstraksi,
+        pengajuan.dana AS pengajuan_dana,
+        pengajuan.file AS pengajuan_file,
+        pengajuan.file_laporan AS pengajuan_laporan,
+        pengajuan.belmawa_username,
+        pengajuan.belmawa_password,
+        periode.tahun AS periode_tahun,
+        kategori.nama AS kategori_nama,
+        tahap.nama AS tahap_nama,
+        tahap.id AS tahap_id,
+        dosen.nama AS dosen_nama
+        ');
+        $this->db->join('periode', 'pengajuan.periode_id = periode.id');
+        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
+        $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
+        $this->db->order_by('pengajuan.id', 'DESC');
+        return $this->db->get('pengajuan')->result_array();
+    }
+
+    public function getUserPengajuan()
+    {
+        $this->db->select('
         pengusul.id AS pengusul_id,
         pengusul.anggota AS pengusul_anggota,
         pengajuan.id AS pengajuan_id,
@@ -29,6 +54,32 @@ class Pengajuan_model extends CI_Model
         $this->db->where('pengusul.mahasiswa_npm', $this->session->userdata('npm'));
         $this->db->order_by('pengajuan.id', 'DESC');
         return $this->db->get('pengusul')->result_array();
+    }
+
+    public function getAllPengajuanLimit($limit, $start, $search = null)
+    {
+        $this->db->select('
+        pengajuan.id AS pengajuan_id,
+        pengajuan.judul AS pengajuan_judul,
+        pengajuan.abstraksi AS pengajuan_abstraksi,
+        pengajuan.dana AS pengajuan_dana,
+        pengajuan.file AS pengajuan_file,
+        pengajuan.file_laporan AS pengajuan_laporan,
+        pengajuan.belmawa_username,
+        pengajuan.belmawa_password,
+        periode.tahun AS periode_tahun,
+        kategori.nama AS kategori_nama,
+        tahap.nama AS tahap_nama,
+        tahap.id AS tahap_id,
+        dosen.nama AS dosen_nama
+        ');
+        $this->db->join('periode', 'pengajuan.periode_id = periode.id');
+        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
+        $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
+        $this->db->like('pengajuan.judul', $search);
+        $this->db->order_by('pengajuan.id', 'DESC');
+        return $this->db->get('pengajuan', $limit, $start)->result_array();
     }
 
     public function getPengajuanLimit($limit, $start, $search = null)

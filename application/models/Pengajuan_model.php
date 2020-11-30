@@ -127,6 +127,13 @@ class Pengajuan_model extends CI_Model
         return array_merge($pengajuan, $anggota);
     }
 
+    public function getPengulas($nidn)
+    {
+        $ulasan = $this->db->get_where('ulasan', array('pengajuan_id' => $nidn))->row_array();
+        $dosen = $this->db->get_where('dosen', array('nidn' => $ulasan['dosen_nidn']))->row_array();
+        return array_merge($ulasan, $dosen);
+    }
+
     public function getCaptionData($limit, $start, $count)
     {
         $firstData = $start != null ? intval($start) + 1 : 1;

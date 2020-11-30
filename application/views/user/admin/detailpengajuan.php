@@ -81,6 +81,8 @@
                                     case '2': ?>
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
+                                            <small><b>Oleh :</b></small>
+                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
                                         </div>
                                         <div class="card-footer text-muted">
                                             <a class="btn btn-primary btn-block text-left mt-2 disabled" href="#">Menunggu ulasan</a>

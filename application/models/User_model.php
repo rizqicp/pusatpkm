@@ -20,6 +20,32 @@ class User_model extends CI_Model
         return $data;
     }
 
+    public function getAllDosen()
+    {
+        $dosen = $this->db->get('dosen')->result_array();
+        $i = 0;
+        while ($i < count($dosen)) {
+            $dosen[$i]['prodi_nama'] = $this->db->get_where('prodi', array('id' => $dosen[$i]['prodi_id']))->row_array()['nama'];
+            $i++;
+        }
+        return $dosen;
+    }
+
+    public function getDosenLimit($limit, $start, $search = null)
+    {
+        if ($search != null) {
+            $this->db->like('nama', $search);
+        }
+        $dosen = $this->db->get('dosen', $limit, $start)->result_array();
+        $i = 0;
+        while ($i < count($dosen)) {
+            $dosen[$i]['prodi_nama'] = $this->db->get_where('prodi', array('id' => $dosen[$i]['prodi_id']))->row_array()['nama'];
+            $dosen[$i]['ulasan'] = $this->db->get_where('ulasan', array('dosen_nidn' => $dosen[$i]['nidn']))->num_rows();
+            $i++;
+        }
+        return $dosen;
+    }
+
     public function getCaptionData($limit, $start, $count)
     {
         $firstData = $start != null ? intval($start) + 1 : 1;

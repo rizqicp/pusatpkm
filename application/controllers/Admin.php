@@ -44,7 +44,28 @@ class Admin extends CI_Controller
         $data['user'] = $this->session->userdata();
         $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
         $data['kelompok'] = $this->user_model->getKelompok($data['pengajuan']);
+        $data['keterangan'] = $this->pengajuan_model->getKeterangan($data['pengajuan']);
         $this->load->view('user/admin/detailpengajuan', $data);
+    }
+
+    public function tugaskanPengajuan()
+    {
+        $config['base_url'] = base_url('admin/tugaskanpengajuan');
+        $config['total_rows'] = $this->db->get('dosen')->num_rows();
+        $config['per_page'] = 10;
+        $this->pagination->initialize($config);
+
+        $data['user'] = $this->session->userdata();
+        $data['dosen'] = $this->user_model->getDosenLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['caption'] = $this->user_model->getCaptionData(count($data['dosen']), $this->uri->segment(3), $this->user_model->getAllDosen());
+        $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
+        // var_dump($data);
+        // die;
+        if ($this->pengajuan_model->tugaskanPengajuan() == true) {
+            redirect('admin/detailPengajuan');
+        } else {
+            $this->load->view('user/admin/tugaskanpengajuan', $data);
+        }
     }
 
     public function kelolaPengumuman()
@@ -56,7 +77,7 @@ class Admin extends CI_Controller
 
         $data['user'] = $this->session->userdata();
         $data['pengumuman'] = $this->pengumuman_model->getPengumumanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
-        $data['caption'] = $this->pengumuman_model->getCaptionData(count($data['pengumuman']), $this->uri->segment(3), $this->pengumuman_model->getAllPengumuman());
+        $data['caption'] = $this->user_model->getCaptionData(count($data['pengumuman']), $this->uri->segment(3), $this->pengumuman_model->getAllPengumuman());
         $this->load->view('user/admin/kelolapengumuman', $data);
     }
 

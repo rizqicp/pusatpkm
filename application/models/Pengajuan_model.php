@@ -498,4 +498,40 @@ class Pengajuan_model extends CI_Model
             return false;
         }
     }
+
+    public function getKeterangan($data)
+    {
+        $periode = $this->db->get_where('periode', array('id' => $data['periode_id']))->row_array();
+        $kategori = $this->db->get_where('kategori', array('id' => $data['kategori_id']))->row_array();
+        $tahap = $this->db->get_where('tahap', array('id' => $data['tahap_id']))->row_array();
+
+        $keterangan['periode'] = $periode;
+        $keterangan['kategori'] = $kategori;
+        $keterangan['tahap'] = $tahap;
+
+        return $keterangan;
+    }
+
+    public function tugaskanPengajuan()
+    {
+        if (isset($_POST['pengajuan_id']) && isset($_POST['dosen_nidn'])) {
+            $ulasan = [
+                'id' => null,
+                'pengajuan_id' => $this->input->post('pengajuan_id'),
+                'dosen_nidn' => $this->input->post('dosen_nidn'),
+                'komentar' => null,
+                'file' => null,
+                'status' => 'aktif',
+            ];
+            $this->db->insert('ulasan', $ulasan);
+            $this->db->set('tahap_id', 2);
+            $this->db->where('id', $this->input->post('pengajuan_id'));
+            $this->db->update('pengajuan');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan berhasil ditugaskan!</div>');
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -32,6 +32,7 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Detail Pengajuan</h1>
+                    <?= $this->session->flashdata('message'); ?>
                     <div class="row">
 
                         <div class="col-md-8">
@@ -42,6 +43,10 @@
                                     <p class="card-text"><?= $pengajuan['abstraksi']; ?></p>
                                     <small><b>Dana ajuan :</b></small>
                                     <p>Rp <?= number_format($pengajuan['dana'], 0, ',', '.'); ?></p>
+                                    <small><b>Kategori :</b></small>
+                                    <p><?= $keterangan['kategori']['nama']; ?></p>
+                                    <small><b>Periode :</b></small>
+                                    <p><?= $keterangan['periode']['tahun']; ?></p>
                                 </div>
                                 <div class="card-footer text-muted">
                                     <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('upload/pengajuan/') . $pengajuan['file']; ?>"><i class=" fas fa-fw fa-file-alt"></i> File Proposal</a>
@@ -61,15 +66,28 @@
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            <!-- <div class="card bg-light mb-4">
+                            <div class="card bg-light mb-4">
                                 <h5 class="card-header"><b>Status Pengajuan</b></h5>
-                                <div class="card-body">
-
-                                </div>
-                                <div class="card-footer text-muted">
-                                    <a class="btn btn-primary btn-block text-left mt-2" href="#">Tugaskan</a>
-                                </div>
-                            </div> -->
+                                <?php switch ($pengajuan['tahap_id']):
+                                    case '1': ?>
+                                        <div class="card-body">
+                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('admin/tugaskanpengajuan') . '?id=' . $pengajuan['id']; ?>">Tugaskan</a>
+                                        </div>
+                                        <?php break; ?>
+                                    <?php
+                                    case '2': ?>
+                                        <div class="card-body">
+                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            <a class="btn btn-primary btn-block text-left mt-2 disabled" href="#">Menunggu ulasan</a>
+                                        </div>
+                                        <?php break; ?>
+                                <?php endswitch; ?>
+                            </div>
                         </div>
                     </div>
 

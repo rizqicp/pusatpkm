@@ -123,6 +123,8 @@
                                     case '4': ?>
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
+                                            <small><b>Komentar pengulas :</b></small>
+                                            <p><?= $ulasan['komentar']; ?></p>
                                         </div>
                                         <div class="card-footer text-muted">
                                             <button class="btn btn-danger btn-block text-left mt-2" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['id']; ?>">Hapus pengajuan</button>

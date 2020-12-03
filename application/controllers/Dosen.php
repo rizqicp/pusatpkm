@@ -64,10 +64,14 @@ class Dosen extends CI_Controller
         $data['kelompok'] = $this->user_model->getKelompok($data['pengajuan']);
         $data['keterangan'] = $this->pengajuan_model->getKeterangan($data['pengajuan']);
         $data['tahap'] = $this->db->get('tahap')->result_array();
-        $data['ulasan'] = $this->db->get_where('ulasan', array('dosen_nidn' => $data['user']['nidn']))->row_array();
-
-        if ($this->pengajuan_model->kirimUlasan($this->session->userdata('detailpengajuanid'), $data['ulasan']) == true) {
-            redirect('dosen/ulasan');
+        if ($data['pengajuan']['tahap_id'] >= 2) {
+            $data['pengulas'] = $this->pengajuan_model->getPengulas($this->session->userdata('detailpengajuanid'));
+            $data['ulasan'] = $this->db->get_where('ulasan', array('dosen_nidn' => $data['pengulas']['nidn']))->row_array();
+            if ($this->pengajuan_model->kirimUlasan($this->session->userdata('detailpengajuanid'), $data['ulasan']) == true) {
+                redirect('dosen/ulasan');
+            } else {
+                $this->load->view('user/dosen/detailpengajuan', $data);
+            }
         } else {
             $this->load->view('user/dosen/detailpengajuan', $data);
         }

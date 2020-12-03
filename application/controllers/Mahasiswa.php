@@ -40,9 +40,8 @@ class Mahasiswa extends CI_Controller
     public function tambahPengajuan()
     {
         $data['user'] = $this->session->userdata();
-        $this->db->where('status', 'aktif');
-        $data['periode'] = $this->db->get('periode')->result_array();
-        $data['kategori'] = $this->db->get('kategori')->result_array();
+        $data['periode'] = $this->db->get_where('periode', array('status' => 'aktif'))->result_array();
+        $data['kategori'] = $this->db->get_where('kategori', array('status' => 'aktif'))->result_array();
         $data['mahasiswa'] = $this->db->get('mahasiswa')->result_array();
         $data['dosen'] = $this->db->get('dosen')->result_array();
 

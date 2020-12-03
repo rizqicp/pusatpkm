@@ -53,6 +53,74 @@ class Pengajuan_model extends CI_Model
         return $this->db->get('pengajuan', $limit, $start)->result_array();
     }
 
+    public function getFinishPengajuan()
+    {
+        $this->db->select('
+        pengajuan.id AS pengajuan_id,
+        pengajuan.judul AS pengajuan_judul,
+        pengajuan.abstraksi AS pengajuan_abstraksi,
+        pengajuan.dana AS pengajuan_dana,
+        pengajuan.file AS pengajuan_file,
+        pengajuan.file_laporan AS pengajuan_laporan,
+        pengajuan.belmawa_username,
+        pengajuan.belmawa_password,
+        periode.tahun AS periode_tahun,
+        kategori.nama AS kategori_nama,
+        tahap.nama AS tahap_nama,
+        tahap.id AS tahap_id,
+        dosen.nama AS dosen_nama
+        ');
+        $this->db->join('periode', 'pengajuan.periode_id = periode.id');
+        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
+        $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
+        $this->db->where('pengajuan.tahap_id', 6);
+        $this->db->order_by('pengajuan.id', 'DESC');
+        return $this->db->get('pengajuan')->result_array();
+    }
+
+    public function getFinishPengajuanLimit($limit, $start, $search = null)
+    {
+        $this->db->select('
+        pengajuan.id AS pengajuan_id,
+        pengajuan.judul AS pengajuan_judul,
+        pengajuan.abstraksi AS pengajuan_abstraksi,
+        pengajuan.dana AS pengajuan_dana,
+        pengajuan.file AS pengajuan_file,
+        pengajuan.file_laporan AS pengajuan_laporan,
+        pengajuan.belmawa_username,
+        pengajuan.belmawa_password,
+        periode.tahun AS periode_tahun,
+        kategori.nama AS kategori_nama,
+        tahap.nama AS tahap_nama,
+        tahap.id AS tahap_id,
+        dosen.nama AS dosen_nama
+        ');
+        $this->db->join('periode', 'pengajuan.periode_id = periode.id');
+        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
+        $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
+        $this->db->like('pengajuan.judul', $search);
+        $this->db->where('pengajuan.tahap_id', 6);
+        $this->db->order_by('pengajuan.id', 'DESC');
+        return $this->db->get('pengajuan', $limit, $start)->result_array();
+    }
+
+    public function getPengajuanById($id)
+    {
+        $this->db->where('id', $id);
+        $pengajuan = $this->db->get('pengajuan')->row_array();
+
+        $this->db->where('pengajuan_id', $id);
+        $pengusul = $this->db->get('pengusul')->result_array();
+
+        for ($i = 0; $i < count($pengusul); $i++) {
+            $anggota['anggota' . ($i + 1)] = $pengusul[$i]['mahasiswa_npm'];
+        }
+
+        return array_merge($pengajuan, $anggota);
+    }
+
     public function getUserPengajuan()
     {
         $this->db->select('
@@ -112,19 +180,57 @@ class Pengajuan_model extends CI_Model
         return $this->db->get('pengusul', $limit, $start)->result_array();
     }
 
-    public function getPengajuanById($id)
+    public function getDosenBimbingan()
     {
-        $this->db->where('id', $id);
-        $pengajuan = $this->db->get('pengajuan')->row_array();
+        $this->db->select('
+        pengajuan.id AS pengajuan_id,
+        pengajuan.judul AS pengajuan_judul,
+        pengajuan.abstraksi AS pengajuan_abstraksi,
+        pengajuan.dana AS pengajuan_dana,
+        pengajuan.file AS pengajuan_file,
+        pengajuan.file_laporan AS pengajuan_laporan,
+        pengajuan.belmawa_username,
+        pengajuan.belmawa_password,
+        periode.tahun AS periode_tahun,
+        kategori.nama AS kategori_nama,
+        tahap.nama AS tahap_nama,
+        tahap.id AS tahap_id,
+        dosen.nama AS dosen_nama
+        ');
+        $this->db->join('periode', 'pengajuan.periode_id = periode.id');
+        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
+        $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
+        $this->db->where('pengajuan.dosen_nidn', $this->session->userdata('nidn'));
+        $this->db->order_by('pengajuan.id', 'DESC');
+        return $this->db->get('pengajuan')->result_array();
+    }
 
-        $this->db->where('pengajuan_id', $id);
-        $pengusul = $this->db->get('pengusul')->result_array();
-
-        for ($i = 0; $i < count($pengusul); $i++) {
-            $anggota['anggota' . ($i + 1)] = $pengusul[$i]['mahasiswa_npm'];
-        }
-
-        return array_merge($pengajuan, $anggota);
+    public function getDosenBimbinganLimit($limit, $start, $search = null)
+    {
+        $this->db->select('
+        pengajuan.id AS pengajuan_id,
+        pengajuan.judul AS pengajuan_judul,
+        pengajuan.abstraksi AS pengajuan_abstraksi,
+        pengajuan.dana AS pengajuan_dana,
+        pengajuan.file AS pengajuan_file,
+        pengajuan.file_laporan AS pengajuan_laporan,
+        pengajuan.belmawa_username,
+        pengajuan.belmawa_password,
+        periode.tahun AS periode_tahun,
+        kategori.nama AS kategori_nama,
+        tahap.nama AS tahap_nama,
+        tahap.id AS tahap_id,
+        dosen.nama AS dosen_nama
+        ');
+        $this->db->join('periode', 'pengajuan.periode_id = periode.id');
+        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
+        $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
+        $this->db->like('pengajuan.judul', $search);
+        $this->db->where('pengajuan.dosen_nidn', $this->session->userdata('nidn'));
+        $this->db->order_by('pengajuan.id', 'DESC');
+        return $this->db->get('pengajuan', $limit, $start)->result_array();
     }
 
     public function getDosenUlasan()
@@ -749,6 +855,95 @@ class Pengajuan_model extends CI_Model
                 $this->db->insert('log', $dataLog);
 
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Revisi berhasil dikirim!</div>');
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function kirimAkun($id)
+    {
+        $this->form_validation->set_rules('username', 'Username', 'required|trim', ['required' => 'Username harus diisi!']);
+        $this->form_validation->set_rules('password', 'Password', 'required|trim', ['required' => 'Password harus diisi!']);
+        if ($this->form_validation->run() == true) {
+            $this->db->set('belmawa_username', $this->input->post('username'));
+            $this->db->set('belmawa_password', $this->input->post('password'));
+            $this->db->where('id', $id);
+            $this->db->update('pengajuan');
+
+            $dataLog = [
+                'id' => null,
+                'pengajuan_id' => $id,
+                'waktu' => null,
+                'berita' => 'Akun Simbelmawa Dikirim'
+            ];
+            $this->db->insert('log', $dataLog);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun Simbelmawa berhasil dikirim!</div>');
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function unggahLaporan($pengajuan)
+    {
+        // fungsi upload
+        function _uploadLaporan($id)
+        {
+            $current = get_instance();
+            $config['upload_path']          = './upload/laporan/';
+            $config['allowed_types']        = 'doc|docx';
+            $config['file_name']            = 'laporan_' . $id;
+            $config['overwrite']            = true;
+            $config['max_size']             = 10240; // 10MB
+
+            $current->load->library('upload', $config);
+
+            if ($current->upload->do_upload('userFile')) {
+                return $current->upload->data("file_name");
+            } else {
+                echo "error upload file";
+                var_dump($_FILES);
+                die;
+            }
+        }
+
+        // Validasi
+        if (empty($_FILES['userFile']['name'])) {
+            $this->form_validation->set_rules('userFile', 'Document', 'required', ['required' => 'Silahkan upload file revisi!']);
+        }
+
+        // cek file upload
+        $uploadFile = false;
+        if ($_FILES != null) {
+            if ($_FILES['userFile']['error'] != 4) {
+                $uploadFile = true;
+            } else {
+                $uploadFile = false;
+            }
+        }
+
+        if ($this->form_validation->run() == true || $uploadFile == true) {
+            if ($_FILES['userFile']['error'] != 4) {
+                if ($pengajuan['file_laporan'] != null) {
+                    unlink('./upload/laporan/' . $pengajuan['file']);
+                }
+                $this->db->set('file_laporan', _uploadLaporan($pengajuan['id']));
+                $this->db->set('tahap_id', '6');
+                $this->db->where('id', $pengajuan['id']);
+                $this->db->update('pengajuan');
+
+                $dataLog = [
+                    'id' => null,
+                    'pengajuan_id' => $pengajuan['id'],
+                    'waktu' => null,
+                    'berita' => 'Laporan Akhir Dikirim'
+                ];
+                $this->db->insert('log', $dataLog);
+
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Laporan Akhir berhasil dikirim!</div>');
                 return true;
             }
         } else {

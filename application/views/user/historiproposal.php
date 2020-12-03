@@ -35,12 +35,9 @@
                     <?= $this->session->flashdata('message'); ?>
                     <div class="row">
                         <div class="col-md-9">
-                            <a class="small" href="<?= base_url($user['role'] . '/tambahpengajuan'); ?>">
-                                <button type="button" class="btn btn-primary btn-sm mb-2" href="#">Tambah Pengajuan</button>
-                            </a>
                         </div>
                         <div class="col-md-3">
-                            <form action="<?= base_url('mahasiswa/pengajuan'); ?>" method="POST">
+                            <form action="<?= base_url($user['role'] . '/historiproposal'); ?>" method="POST">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" name="search" placeholder="Judul Pengajuan" autocomplete="off">
                                     <div class="input-group-append">
@@ -104,18 +101,7 @@
                                             <?php endswitch; ?>
                                         </td>
                                         <td class="align-middle">
-                                            <?php if ($pengajuan['tahap_id'] == 1) : ?>
-                                                <a type="button" class="btn btn-primary btn-sm mb-1" href="<?= base_url('mahasiswa/editpengajuan') . '?id=' . $pengajuan['pengajuan_id']; ?>">&nbspUbah&nbsp</a>
-                                            <?php else : ?>
-                                                <a type="button" class="btn btn-primary btn-sm mb-1" href="<?= base_url('mahasiswa/detailpengajuan') . '?id=' . $pengajuan['pengajuan_id']; ?>">Detail</a>
-                                            <?php endif; ?>
-                                            <?php if ($pengajuan['tahap_id'] == 6) : ?>
-                                                <button type="button" class="btn btn-danger btn-sm mb-1 disabled" href="#">Hapus</button>
-                                            <?php else : ?>
-                                                <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['pengajuan_id']; ?>">Hapus</button>
-                                            <?php endif; ?>
-                                            <!-- hapusPengajuan Modal -->
-                                            <?php $this->load->view("user/mahasiswa/_hapusPengajuanModal.php", $pengajuan) ?>
+                                            <a type="button" class="btn btn-primary btn-sm mb-1" href="<?= base_url($user['role'] . '/detailpengajuan') . '?id=' . $pengajuan['pengajuan_id']; ?>">Detail</a>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>

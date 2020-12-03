@@ -150,10 +150,13 @@
                                                 </div>
                                             </div>
                                             <div class="card-footer text-muted">
-                                                <form action="<?= base_url('mahasiswa/detailpengajuan'); ?>" method="post" enctype="multipart/form-data">
-                                                    <label for="userFile" class="col-form-label col-form-label-lg"><small><b>File Revisi</b></small></label>
+                                                <form action="<?= base_url('mahasiswa/unggahlaporan'); ?>" method="post" enctype="multipart/form-data">
+                                                    <label for="userFile" class="col-form-label col-form-label-lg"><small><b>Laporan Akhir</b></small></label>
                                                     <div class="form-group row">
                                                         <div class="input-group col-sm-12">
+                                                            <p>
+                                                                Setelah pelaksanaan program selesai, silahkan unggah file laporan akhir kegiatan. Program dianggap selesai setelah mengunggah file laporan akhir.
+                                                            </p>
                                                             <div class="input-group">
                                                                 <div class="custom-file">
                                                                     <input type="file" class="custom-file-input" id="userFile" name="userFile" accept=".doc, .docx" onchange="validateFileType(); changeText('fileLabel',this.value); hideError('userFile');">
@@ -169,10 +172,9 @@
                                         <?php else : ?>
                                             <div class="card-body">
                                                 <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-
                                             </div>
                                             <div class="card-footer text-muted">
-                                                <a class="btn btn-success btn-block text-left mt-2 disabled" href="#">Menunggu Akun Simbelmawa</a>
+                                                <a class="btn btn-primary btn-block text-left mt-2 disabled" href="#">Menunggu Akun Simbelmawa</a>
                                             </div>
                                         <?php endif; ?>
                                         <?php break; ?>
@@ -180,6 +182,9 @@
                                     case '6': ?>
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
+                                            <?php if ($pengajuan['file_laporan'] != null) : ?>
+                                                <a class="btn btn-info btn-block text-left mt-2" href="<?= base_url('upload/laporan/') . $pengajuan['file_laporan']; ?>"><i class=" fas fa-fw fa-file-alt"></i> Laporan Akhir</a>
+                                            <?php endif; ?>
                                         </div>
                                         <?php break; ?>
                                 <?php endswitch; ?>

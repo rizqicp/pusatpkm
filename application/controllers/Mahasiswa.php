@@ -102,4 +102,32 @@ class Mahasiswa extends CI_Controller
             $this->load->view('user/mahasiswa/detailpengajuan', $data);
         }
     }
+
+    public function unggahLaporan()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('detailpengajuanid' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
+
+        if ($this->pengajuan_model->unggahLaporan($data['pengajuan']) == true) {
+            redirect('mahasiswa/detailpengajuan');
+        } else {
+            redirect('mahasiswa/detailpengajuan');
+        }
+    }
+
+    public function historiProposal()
+    {
+        $config['base_url'] = base_url('mahasiswa/historiproposal');
+        $config['total_rows'] = count($this->pengajuan_model->getFinishPengajuan());
+        $config['per_page'] = 10;
+        $this->pagination->initialize($config);
+
+        $data['user'] = $this->session->userdata();
+        $data['pengajuan'] = $this->pengajuan_model->getFinishPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getFinishPengajuan());
+        $this->load->view('user/historiproposal', $data);
+    }
 }

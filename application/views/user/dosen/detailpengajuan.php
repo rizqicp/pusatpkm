@@ -69,6 +69,12 @@
                             <div class="card bg-light mb-">
                                 <h5 class="card-header"><b>Status Pengajuan</b></h5>
                                 <?php switch ($pengajuan['tahap_id']):
+                                    case '1': ?>
+                                        <div class="card-body">
+                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
+                                        </div>
+                                        <?php break; ?>
+                                    <?php
                                     case '2': ?>
                                         <form action="<?= base_url('dosen/detailpengajuan'); ?>" method="post" enctype="multipart/form-data">
                                             <div class="card-body">
@@ -134,6 +140,9 @@
                                     case '6': ?>
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
+                                            <?php if ($pengajuan['file_laporan'] != null) : ?>
+                                                <a class="btn btn-info btn-block text-left mt-2" href="<?= base_url('upload/laporan/') . $pengajuan['file_laporan']; ?>"><i class=" fas fa-fw fa-file-alt"></i> Laporan Akhir</a>
+                                            <?php endif; ?>
                                         </div>
                                         <?php break; ?>
                                 <?php endswitch; ?>

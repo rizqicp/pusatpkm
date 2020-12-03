@@ -37,7 +37,7 @@
                         <div class="col-md-9">
                         </div>
                         <div class="col-md-3">
-                            <form action="<?= base_url('mahasiswa/pengajuan'); ?>" method="POST">
+                            <form action="<?= base_url('admin/kelolapengajuan'); ?>" method="POST">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" name="search" placeholder="Judul Pengajuan" autocomplete="off">
                                     <div class="input-group-append">
@@ -89,7 +89,11 @@
                                                     <span class="badge badge-danger"><?= $pengajuan['tahap_nama']; ?></span>
                                                 <?php break;
                                                 case 5: ?>
-                                                    <span class="badge badge-success"><?= $pengajuan['tahap_nama']; ?></span>
+                                                    <?php if ($pengajuan['belmawa_username'] != null && $pengajuan['belmawa_password'] != null) : ?>
+                                                        <span class="badge badge-success"><?= $pengajuan['tahap_nama']; ?></span>
+                                                    <?php else : ?>
+                                                        <span class="badge badge-info">Menunggu Akun</span>
+                                                    <?php endif; ?>
                                                 <?php break;
                                                 case 6: ?>
                                                     <span><?= $pengajuan['tahap_nama']; ?></span>

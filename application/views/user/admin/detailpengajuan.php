@@ -119,28 +119,42 @@
                                         <?php break; ?>
                                     <?php
                                     case '5': ?>
-                                        <div class="card-body">
-                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            <label for="username" class="col-form-label col-form-label-lg"><small><b>Username Simbelmawa</b></small></label>
-                                            <div class="input-group input-group-sm">
-                                                <input type="text" id="username" value="dhs87g" class="form-control" readonly>
+                                        <form action="<?= base_url('admin/detailpengajuan'); ?>" method="post">
+                                            <div class="card-body">
+                                                <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
+                                                <small><b>Oleh :</b></small>
+                                                <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
+                                                <div>
+                                                    <label for="username" class="col-form-label col-form-label-lg"><small><b>Username Simbelmawa</b></small></label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" id="username" name="username" value="<?= $pengajuan['belmawa_username']; ?>" class="form-control">
+                                                    </div>
+                                                    <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
+                                                </div>
+                                                <div>
+                                                    <label for="password" class="col-form-label col-form-label-lg"><small><b>Password Simbelmawa</b></small></label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" id="password" name="password" value="<?= $pengajuan['belmawa_password']; ?>" class="form-control">
+                                                    </div>
+                                                    <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
+                                                </div>
                                             </div>
-                                            <label for="password" class="col-form-label col-form-label-lg"><small><b>Password Simbelmawa</b></small></label>
-                                            <div class="input-group input-group-sm">
-                                                <input type="text" id="password" value="dhs87g" class="form-control" readonly>
+                                            <div class="card-footer text-muted">
+                                                <?php if ($pengajuan['belmawa_username'] != null && $pengajuan['belmawa_password'] != null) : ?>
+                                                    <button type="submit" class="btn btn-primary btn-block text-left mt-2" href="#">Perbarui Akun Simbelmawa</button>
+                                                <?php else : ?>
+                                                    <button type="submit" class="btn btn-primary btn-block text-left mt-2" href="#">Kirim Akun Simbelmawa</button>
+                                                <?php endif; ?>
                                             </div>
-                                        </div>
+                                        </form>
                                         <?php break; ?>
                                     <?php
                                     case '6': ?>
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
+                                            <?php if ($pengajuan['file_laporan'] != null) : ?>
+                                                <a class="btn btn-info btn-block text-left mt-2" href="<?= base_url('upload/laporan/') . $pengajuan['file_laporan']; ?>"><i class=" fas fa-fw fa-file-alt"></i> Laporan Akhir</a>
+                                            <?php endif; ?>
                                         </div>
                                         <?php break; ?>
                                 <?php endswitch; ?>

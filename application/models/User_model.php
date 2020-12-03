@@ -63,6 +63,7 @@ class User_model extends CI_Model
         if ($search != null) {
             $this->db->like('email', $search);
         }
+        $this->db->order_by('id', 'DESC');
         $users = $this->db->get('user', $limit, $start)->result_array();
         $data = array();
         foreach ($users as $user) {

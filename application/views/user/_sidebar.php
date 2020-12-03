@@ -62,9 +62,9 @@
         case 'dosen': ?>
             <!-- Nav Item - bimbingan -->
             <li class="nav-item <?= $this->uri->segment(2) == 'bimbingan' ? 'active' : '' ?>">
-                <a class="nav-link disabled" href="<?= base_url($user['role'] . '/bimbingan'); ?>">
+                <a class="nav-link" href="<?= base_url($user['role'] . '/bimbingan'); ?>">
                     <i class="fas fa-fw fa-users"></i>
-                    <span style="color: gray;">Bimbingan</span>
+                    <span>Bimbingan</span>
                 </a>
             </li>
             <!-- Nav Item - ulasan -->
@@ -79,9 +79,9 @@
 
     <!-- Nav Item - Profil Saya -->
     <li class="nav-item <?= $this->uri->segment(2) == 'historiproposal' ? 'active' : '' ?>">
-        <a class="nav-link disabled" href="#">
+        <a class="nav-link" href="<?= base_url($user['role'] . '/historiproposal'); ?>">
             <i class=" fas fa-fw fa-folder-open"></i>
-            <span style="color: gray;">Histori Proposal</span>
+            <span>Histori Proposal</span>
         </a>
     </li>
 

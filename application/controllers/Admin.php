@@ -48,7 +48,11 @@ class Admin extends CI_Controller
         if ($data['pengajuan']['tahap_id'] >= 2) {
             $data['pengulas'] = $this->pengajuan_model->getPengulas($this->session->userdata('detailpengajuanid'));
         }
-        $this->load->view('user/admin/detailpengajuan', $data);
+        if ($this->pengajuan_model->kirimAkun($this->session->userdata('detailpengajuanid')) == true) {
+            redirect('admin/detailPengajuan');
+        } else {
+            $this->load->view('user/admin/detailpengajuan', $data);
+        }
     }
 
     public function tugaskanPengajuan()
@@ -179,5 +183,18 @@ class Admin extends CI_Controller
         } else {
             redirect('admin/kelolauser');
         }
+    }
+
+    public function historiProposal()
+    {
+        $config['base_url'] = base_url('admin/historiproposal');
+        $config['total_rows'] = count($this->pengajuan_model->getFinishPengajuan());
+        $config['per_page'] = 10;
+        $this->pagination->initialize($config);
+
+        $data['user'] = $this->session->userdata();
+        $data['pengajuan'] = $this->pengajuan_model->getFinishPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getFinishPengajuan());
+        $this->load->view('user/historiproposal', $data);
     }
 }

@@ -8,6 +8,7 @@ class Mahasiswa extends CI_Controller
         parent::__construct();
         isLoginHelper();
         $this->load->model('pengajuan_model');
+        $this->load->model('user_model');
     }
 
     public function index()
@@ -31,7 +32,7 @@ class Mahasiswa extends CI_Controller
         $this->pagination->initialize($config);
 
         $data['user'] = $this->session->userdata();
-        $data['pengajuan'] = $this->pengajuan_model->getPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['pengajuan'] = $this->pengajuan_model->getUserPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
         $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getUserPengajuan());
         $this->load->view('user/mahasiswa/pengajuan', $data);
     }
@@ -78,6 +79,27 @@ class Mahasiswa extends CI_Controller
             redirect('mahasiswa/pengajuan');
         } else {
             redirect('mahasiswa/pengajuan');
+        }
+    }
+
+    public function detailPengajuan()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('detailpengajuanid' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
+        $data['kelompok'] = $this->user_model->getKelompok($data['pengajuan']);
+        $data['keterangan'] = $this->pengajuan_model->getKeterangan($data['pengajuan']);
+        if ($data['pengajuan']['tahap_id'] >= 2) {
+            $data['pengulas'] = $this->pengajuan_model->getPengulas($this->session->userdata('detailpengajuanid'));
+            $data['ulasan'] = $this->db->get_where('ulasan', array('dosen_nidn' => $data['pengulas']['nidn']))->row_array();
+        }
+
+        if ($this->pengajuan_model->kirimRevisi($data['pengajuan']) == true) {
+            redirect('mahasiswa/detailpengajuan');
+        } else {
+            $this->load->view('user/mahasiswa/detailpengajuan', $data);
         }
     }
 }

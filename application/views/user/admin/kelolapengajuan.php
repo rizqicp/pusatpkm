@@ -74,12 +74,33 @@
                                         <td class="align-middle"><?= $pengajuan['pengajuan_judul']; ?></td>
                                         <td class="align-middle"><?= $pengajuan['dosen_nama']; ?></td>
                                         <td class="align-middle"><?= $pengajuan['periode_tahun']; ?></td>
-                                        <td class="align-middle"><?= $pengajuan['tahap_nama']; ?></td>
+                                        <td class="align-middle">
+                                            <?php switch ($pengajuan['tahap_id']):
+                                                case 1: ?>
+                                                    <span class="badge badge-secondary"><?= $pengajuan['tahap_nama']; ?></span>
+                                                <?php break;
+                                                case 2: ?>
+                                                    <span class="badge badge-primary"><?= $pengajuan['tahap_nama']; ?></span>
+                                                <?php break;
+                                                case 3: ?>
+                                                    <span class="badge badge-warning"><?= $pengajuan['tahap_nama']; ?></span>
+                                                <?php break;
+                                                case 4: ?>
+                                                    <span class="badge badge-danger"><?= $pengajuan['tahap_nama']; ?></span>
+                                                <?php break;
+                                                case 5: ?>
+                                                    <span class="badge badge-success"><?= $pengajuan['tahap_nama']; ?></span>
+                                                <?php break;
+                                                case 6: ?>
+                                                    <span><?= $pengajuan['tahap_nama']; ?></span>
+                                                    <?php break; ?>
+                                            <?php endswitch; ?>
+                                        </td>
                                         <td class="align-middle">
                                             <a type="button" class="btn btn-primary btn-sm mb-1" href="<?= base_url('admin/detailpengajuan') . '?id=' . $pengajuan['pengajuan_id']; ?>">Detail</a>
                                             <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['pengajuan_id']; ?>">Hapus</button>
                                             <!-- hapusPengajuan Modal -->
-                                            <?php $this->load->view("user/mahasiswa/_hapusPengajuanModal.php", $pengajuan) ?>
+                                            <?php $this->load->view("user/admin/_hapusPengajuanModal.php", $pengajuan) ?>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>

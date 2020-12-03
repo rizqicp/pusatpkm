@@ -35,7 +35,7 @@
                     <?= $this->session->flashdata('message'); ?>
                     <div class="row">
 
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <div class="card bg-light mb-4">
                                 <div class="card-body">
                                     <h2 class="card-title"><b><?= $pengajuan['judul']; ?></b></h2>
@@ -54,7 +54,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <div class="card bg-light mb-4">
                                 <h5 class="card-header"><b>Anggota Kelompok</b></h5>
                                 <div class="card-body">
@@ -66,81 +66,74 @@
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            <div class="card bg-light mb-4">
+                            <div class="card bg-light mb-">
                                 <h5 class="card-header"><b>Status Pengajuan</b></h5>
                                 <?php switch ($pengajuan['tahap_id']):
-                                    case '1': ?>
-                                        <div class="card-body">
-                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('admin/tugaskanpengajuan') . '?id=' . $pengajuan['id']; ?>">Tugaskan</a>
-                                        </div>
-                                        <?php break; ?>
-                                    <?php
                                     case '2': ?>
-                                        <div class="card-body">
-                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('admin/tugaskanpengajuan') . '?id=' . $pengajuan['id']; ?>">Ganti pengulas</a>
-                                        </div>
+                                        <form action="<?= base_url('dosen/detailpengajuan'); ?>" method="post" enctype="multipart/form-data">
+                                            <div class="card-body">
+                                                <p><b>Permintaan Ulasan</b></p>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12 pt-1">
+                                                        <select class="custom-select form-control" id="tahap" name="tahap">
+                                                            <option value="" readonly <?= !set_value('tahap') ? "selected" : ""; ?> hidden>Hasil Ulasan</option>
+                                                            <?php for ($i = 2; $i < (count($tahap) - 1); $i++) : ?>
+                                                                <option value=<?= $tahap[$i]['id']; ?> <?= set_value('tahap') == $tahap[$i]['id'] ? "selected" : ""; ?>><?= $tahap[$i]['nama']; ?></option>
+                                                            <?php endfor; ?>
+                                                        </select>
+                                                        <?= form_error('tahap', '<small class="text-danger pl-3">', '</small>'); ?>
+                                                    </div>
+                                                </div>
+                                                <label for="komentar" class="col-form-label col-form-label-lg"><small><b>Komentar</b> (opsional)</small></label>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12 pt-1">
+                                                        <textarea class="form-control" name="komentar" id="komentar" rows="3" onchange="hideError('komentarError');"><?= set_value('komentar'); ?></textarea>
+                                                        <?= form_error('komentar', '<small id="komentarError" class="text-danger pl-3">', '</small>'); ?>
+                                                    </div>
+                                                </div>
+                                                <label for="userFile" class="col-form-label col-form-label-lg"><small><b>File Ulasan</b> (opsional)</small></label>
+                                                <div class="form-group row">
+                                                    <div class="input-group col-sm-12">
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="userFile" name="userFile" accept=".doc, .docx" onchange="validateFileType(); changeText('fileLabel',this.value); hideError('userFile');">
+                                                                <label class="custom-file-label" for="userFile" id="fileLabel" style="color: #999;">Pilih file</label>
+                                                            </div>
+                                                        </div>
+                                                        <?= form_error('userFile', '<small id="userFile" class="text-danger pl-3">', '</small>'); ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <button type="submit" class="btn btn-primary btn-block text-left mt-2" href="#">Kirim Ulasan</button>
+                                            </div>
+                                        </form>
                                         <?php break; ?>
                                     <?php
                                     case '3': ?>
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
                                         </div>
                                         <div class="card-footer text-muted">
-                                            <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('admin/tugaskanpengajuan') . '?id=' . $pengajuan['id']; ?>">Ganti pengulas</a>
+                                            <a class="btn btn-primary btn-block text-left mt-2 disabled" href="#">Menunggu Revisi</a>
                                         </div>
                                         <?php break; ?>
                                     <?php
                                     case '4': ?>
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['id']; ?>">Hapus</button>
-                                            <?php $hapusPengajuan = [
-                                                'pengajuan_id' => $pengajuan['id'],
-                                                'pengajuan_judul' => $pengajuan['judul'],
-                                                'pengajuan_file' => $pengajuan['file'],
-                                            ] ?>
-                                            <!-- hapusPengajuan Modal -->
-                                            <?php $this->load->view("user/admin/_hapusPengajuanModal.php", $hapusPengajuan) ?>
                                         </div>
                                         <?php break; ?>
                                     <?php
                                     case '5': ?>
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            <label for="username" class="col-form-label col-form-label-lg"><small><b>Username Simbelmawa</b></small></label>
-                                            <div class="input-group input-group-sm">
-                                                <input type="text" id="username" value="dhs87g" class="form-control" readonly>
-                                            </div>
-                                            <label for="password" class="col-form-label col-form-label-lg"><small><b>Password Simbelmawa</b></small></label>
-                                            <div class="input-group input-group-sm">
-                                                <input type="text" id="password" value="dhs87g" class="form-control" readonly>
-                                            </div>
                                         </div>
                                         <?php break; ?>
                                     <?php
                                     case '6': ?>
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
                                         </div>
                                         <?php break; ?>
                                 <?php endswitch; ?>
@@ -170,10 +163,32 @@
     <!-- Logout Modal-->
     <?php $this->load->view("user/_logoutModal.php") ?>
 
+    <script>
+        function changeText(id, value) {
+            document.getElementById(id).innerHTML = value.split('\\').pop();
+        }
+
+        function validateFileType() {
+            var fileName = document.getElementById("userFile").value;
+            var idxDot = fileName.lastIndexOf(".") + 1;
+            var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+            if (extFile == "doc" || extFile == "docx") {
+                //accept file
+            } else {
+                alert("Hanya Dokumen Word yang diperbolehkan!");
+                document.getElementById("userFile").value = null;
+            }
+        }
+
+        function hideError(error) {
+            document.getElementById(error).style.display = "none";
+        }
+    </script>
+
     <!-- Core Script Data -->
     <?php $this->load->view("partial/_script.php") ?>
     <!-- Custom scripts for sb-admin -->
-    <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
+    < src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></>
 
 </body>
 

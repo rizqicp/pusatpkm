@@ -45,7 +45,7 @@ class Admin extends CI_Controller
         $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
         $data['kelompok'] = $this->user_model->getKelompok($data['pengajuan']);
         $data['keterangan'] = $this->pengajuan_model->getKeterangan($data['pengajuan']);
-        if ($data['pengajuan']['tahap_id'] == 2) {
+        if ($data['pengajuan']['tahap_id'] >= 2) {
             $data['pengulas'] = $this->pengajuan_model->getPengulas($this->session->userdata('detailpengajuanid'));
         }
         $this->load->view('user/admin/detailpengajuan', $data);
@@ -67,6 +67,15 @@ class Admin extends CI_Controller
             redirect('admin/detailPengajuan');
         } else {
             $this->load->view('user/admin/tugaskanpengajuan', $data);
+        }
+    }
+
+    public function hapusPengajuan()
+    {
+        if ($this->pengajuan_model->hapusPengajuan() == true) {
+            redirect('admin/kelolapengajuan');
+        } else {
+            redirect('admin/kelolapengajuan');
         }
     }
 

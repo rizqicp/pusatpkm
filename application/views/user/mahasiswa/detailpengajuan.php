@@ -49,7 +49,7 @@
                                     <p><?= $keterangan['periode']['tahun']; ?></p>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('upload/pengajuan/') . $pengajuan['file']; ?>"><i class=" fas fa-fw fa-file-alt"></i> File Proposal</a>
+                                    <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('upload/pengajuan/') . $pengajuan['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Proposal</a>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                                             <p><?= $ulasan['komentar'] ? $ulasan['komentar'] : 'tidak ada komentar'; ?></p>
                                             <small><b>File ulasan :</b></small>
                                             <?php if ($ulasan['file']) : ?>
-                                                <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('upload/ulasan/') . $ulasan['file']; ?>"><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
+                                                <a class="btn btn-warning btn-block text-left mt-2" href="<?= base_url('upload/ulasan/') . $ulasan['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
                                             <?php else : ?>
                                                 <p>tidak ada file</p>
                                             <?php endif; ?>
@@ -185,7 +185,7 @@
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
                                             <?php if ($pengajuan['file_laporan'] != null) : ?>
-                                                <a class="btn btn-info btn-block text-left mt-2" href="<?= base_url('upload/laporan/') . $pengajuan['file_laporan']; ?>"><i class=" fas fa-fw fa-file-alt"></i> Laporan Akhir</a>
+                                                <a class="btn btn-info btn-block text-left mt-2" href="<?= base_url('upload/laporan/') . $pengajuan['file_laporan']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> Laporan Akhir</a>
                                             <?php endif; ?>
                                         </div>
                                         <?php break; ?>

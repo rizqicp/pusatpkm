@@ -40,7 +40,16 @@ class User_model extends CI_Model
         $i = 0;
         while ($i < count($dosen)) {
             $dosen[$i]['prodi_nama'] = $this->db->get_where('prodi', array('id' => $dosen[$i]['prodi_id']))->row_array()['nama'];
-            $dosen[$i]['ulasan'] = $this->db->get_where('ulasan', array('dosen_nidn' => $dosen[$i]['nidn']))->num_rows();
+            $dosen[$i]['ulasan'] = $this->db->get_where('ulasan', array('dosen_nidn' => $dosen[$i]['nidn']))->result_array();
+            $tahap = 0;
+            $ulasanaktif = 0;
+            while ($tahap < count($dosen[$i]['ulasan'])) {
+                if ($this->db->get_where('pengajuan', array('id' => $dosen[$i]['ulasan'][$tahap]['pengajuan_id'], 'tahap_id <=' => 3))->row_array()) {
+                    $ulasanaktif++;
+                }
+                $tahap++;
+            }
+            $dosen[$i]['ulasan'] = $ulasanaktif;
             $i++;
         }
         return $dosen;

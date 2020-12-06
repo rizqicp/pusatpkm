@@ -3,7 +3,6 @@
     "license.txt": true,
     "contributing.md": true,
     "composer.json": true,
-    ".gitignore": true,
     ".editorconfig": true,
     "user_guide": true,
     "application\\**/*.html": true,

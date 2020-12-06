@@ -9,9 +9,6 @@
                 <li class="nav-item <?= $this->uri->segment(2) == 'index' ? 'active' : ($this->uri->segment(2) == '' ? 'active' : '') ?>">
                     <a class="nav-link mr-3 mt-1" href="<?= base_url('home/index'); ?>">Beranda</a>
                 </li>
-                <!-- <li class="nav-item <?= $this->uri->segment(2) == 'panduan' ? 'active' : '' ?> mr-3 mt-1">
-                    <a class="nav-link disabled" href="<?= base_url('home/panduan'); ?>">Panduan</a>
-                </li> -->
                 <li class="nav-item <?= $this->uri->segment(2) == 'profil' ? 'active' : '' ?> mr-3 mt-1">
                     <a class="nav-link" href="<?= base_url('home/profil'); ?>">Profil</a>
                 </li>

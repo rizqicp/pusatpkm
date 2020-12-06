@@ -22,19 +22,19 @@
         <div class="card-body">
             <ul class="list-unstyled mb-0">
                 <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format PKM-AI.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Artikel Ilmiah</a>
+                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-AI.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Artikel Ilmiah</a>
                 </li>
                 <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format PKM-KC.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Karsa Cipta</a>
+                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-KC.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Karsa Cipta</a>
                 </li>
                 <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format PKM-M.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Pengabdian Kepada Masyarakat</a>
+                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-M.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Pengabdian Kepada Masyarakat</a>
                 </li>
                 <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format PKM-P.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Penelitian</a>
+                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-P.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Penelitian</a>
                 </li>
                 <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format PKM-T.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Penerapan Teknologi</a>
+                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-T.docx'); ?>"><i class=" fas fa-fw fa-file-alt"></i>PKM Penerapan Teknologi</a>
                 </li>
             </ul>
         </div>

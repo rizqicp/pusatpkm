@@ -19,14 +19,13 @@ class PHPMailer_Lib
         require_once APPPATH . 'third_party/PHPMailer/SMTP.php';
 
         $mail = new PHPMailer(true);
-        $mail->SMTPDebug = 0; //SMTP::DEBUG_SERVER
         $mail->isSMTP();
-        $mail->Host       = 'smtp.googlemail.com';
+        $mail->SMTPDebug = 0;
+        $mail->Host       = 'smtp.hostinger.co.id';
+        $mail->Port       = 587;
         $mail->SMTPAuth   = true;
-        $mail->Username   = '1634010056@student.upnjatim.ac.id';
-        $mail->Password   = 'alfairuz7294';
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port       = 465;
+        $mail->Username   = 'admin@pusatpkm.online';
+        $mail->Password   = 'Admin123456';
         return $mail;
     }
 }

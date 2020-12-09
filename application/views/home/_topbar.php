@@ -13,7 +13,7 @@
                     <a class="nav-link" href="<?= base_url('home/profil'); ?>">Profil</a>
                 </li>
                 <li class="nav-item mt-1">
-                    <?php if (isset($user['role'])) : ?>
+                    <?php if ($this->session->userdata('email')) : ?>
                         <a class="nav-link btn btn-outline-secondary" href="<?= base_url('auth/index'); ?>">Dasbor</a>
                     <?php else : ?>
                         <a class="nav-link btn btn-outline-secondary" href="<?= base_url('auth/login'); ?>">Masuk</a>

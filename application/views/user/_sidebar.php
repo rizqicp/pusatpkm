@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="transition: 0.3s;">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url($user['role'] . '/profilsaya'); ?>">
         <div class="sidebar-brand-icon">
             <i class="fas fa-university"></i>
         </div>

@@ -7,6 +7,7 @@ class Home extends CI_Controller
     {
         parent::__construct();
         $this->load->model('home_model');
+        $this->load->model('pengajuan_model');
     }
 
     public function index()
@@ -32,15 +33,34 @@ class Home extends CI_Controller
         $this->load->view('home/pengumuman', $data);
     }
 
-    public function panduan()
-    {
-        $data['user'] = $this->session->userdata();
-        $this->load->view('home/panduan', $data);
-    }
-
     public function profil()
     {
         $data['user'] = $this->session->userdata();
         $this->load->view('home/profil', $data);
+    }
+
+    public function pengajuanBarcode()
+    {
+        if ($this->home_model->pengajuanBarcode() == true) {
+            redirect('home/cekpengajuan');
+        } else {
+            redirect('home');
+        }
+    }
+
+    public function cekPengajuan()
+    {
+        if ($this->session->userdata['npm'] != null) {
+            $config['base_url'] = base_url('home/cekpengajuan');
+            $config['total_rows'] = count($this->pengajuan_model->getUserPengajuan());
+            $config['per_page'] = 10;
+            $this->pagination->initialize($config);
+
+            $data['pengajuan'] = $this->pengajuan_model->getUserPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+            $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getUserPengajuan());
+            $this->load->view('home/pengajuan', $data);
+        } else {
+            redirect('home');
+        }
     }
 }

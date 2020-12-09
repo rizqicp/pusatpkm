@@ -8,6 +8,15 @@ class Pengumuman_model extends CI_Model
         return $this->db->get('pengumuman')->result_array();
     }
 
+    public function getPengumumanLimit($limit, $start, $search = null)
+    {
+        if ($search != null) {
+            $this->db->like('judul', $search);
+        }
+        $this->db->order_by('waktu', 'DESC');
+        return $this->db->get('pengumuman', $limit, $start)->result_array();
+    }
+
     public function getPengumumanById($id)
     {
         $this->db->where('id', $id);
@@ -24,15 +33,6 @@ class Pengumuman_model extends CI_Model
             'lastData' => $lastData,
             'totalData' => $totalData
         );
-    }
-
-    public function getPengumumanLimit($limit, $start, $search = null)
-    {
-        if ($search != null) {
-            $this->db->like('judul', $search);
-        }
-        $this->db->order_by('waktu', 'DESC');
-        return $this->db->get('pengumuman', $limit, $start)->result_array();
     }
 
     public function tambahPengumuman()

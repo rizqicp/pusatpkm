@@ -35,4 +35,35 @@ class Home_model extends CI_Model
             'totalData' => $totalData
         );
     }
+
+    public function pengajuanBarcode()
+    {
+        // validasi form
+        foreach ($this->db->get('mahasiswa')->result_array() as $mahasiswa) {
+            $mahasiswaNpm[] = $mahasiswa['npm'];
+        }
+        $this->form_validation->set_rules('userBarcode', 'Barcode', 'required|in_list[' . implode(',', $mahasiswaNpm) . ']', [
+            'required' => 'Mohon pindai ulang Barcode!',
+            'in_list' => 'Mahasiswa tidak terdaftar!'
+        ]);
+        // ambil data user
+        if ($this->form_validation->run() == true) {
+            $this->db->select('*');
+            $this->db->from('user');
+            $this->db->join('mahasiswa', 'user.id = mahasiswa.user_id');
+            $this->db->where('npm', $this->input->post('userBarcode'));
+            $user['npm'] = $this->db->get()->row_array()['npm'];
+
+            // set session
+            if ($user) {
+                $this->session->set_userdata($user);
+                return true;
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Mahasiswa tidak terdaftar!</div>');
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

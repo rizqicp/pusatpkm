@@ -1,8 +1,22 @@
 <!-- <div class="col-md-3" style="background-color: gray; opacity: 0.1;"> -->
 <div class="col-md-4">
 
-    <!-- Search Widget -->
+    <!-- Pengajuan Widget -->
     <div class="card my-4">
+        <h5 class="card-header">Pengajuan</h5>
+        <div class="card-body">
+            <a class="btn btn-primary btn-block text-center mb-2" href="<?= base_url('mahasiswa/tambahpengajuan'); ?>"><b>BUAT PENGAJUAN</b></a>
+            <button id="scanbarcode" type="button" class="btn btn-secondary btn-block text-center mt-2" href="#" data-toggle="modal" data-target="#barcodeModal"><i class="fas fa-fw fa-barcode"></i> <b>CEK PENGAJUAN SAYA</b></button>
+            <!-- Barcode Modal -->
+            <?php $this->load->view("home/_barcodeModal.php") ?>
+            <!-- Include the QuaggaJS library -->
+            <script src="<?= base_url('assets/'); ?>js/quagga/dist/quagga.min.js"></script>
+            <script src="<?= base_url('assets/'); ?>js/barcodeScanner.js"></script>
+        </div>
+    </div>
+
+    <!-- Search Widget -->
+    <!-- <div class="card my-4">
         <h5 class="card-header">Cari Pengumuman</h5>
         <div class="card-body">
             <form action="<?= base_url('home/index'); ?>" method="POST">
@@ -14,7 +28,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
 
     <!-- Categories Widget -->
     <div class="card my-4">

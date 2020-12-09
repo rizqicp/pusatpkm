@@ -53,6 +53,21 @@ class Pengajuan_model extends CI_Model
         return $this->db->get('pengajuan', $limit, $start)->result_array();
     }
 
+    public function getPengajuanById($id)
+    {
+        $this->db->where('id', $id);
+        $pengajuan = $this->db->get('pengajuan')->row_array();
+
+        $this->db->where('pengajuan_id', $id);
+        $pengusul = $this->db->get('pengusul')->result_array();
+
+        for ($i = 0; $i < count($pengusul); $i++) {
+            $anggota['anggota' . ($i + 1)] = $pengusul[$i]['mahasiswa_npm'];
+        }
+
+        return array_merge($pengajuan, $anggota);
+    }
+
     public function getFinishPengajuan()
     {
         $this->db->select('
@@ -104,21 +119,6 @@ class Pengajuan_model extends CI_Model
         $this->db->where('pengajuan.tahap_id', 6);
         $this->db->order_by('pengajuan.id', 'DESC');
         return $this->db->get('pengajuan', $limit, $start)->result_array();
-    }
-
-    public function getPengajuanById($id)
-    {
-        $this->db->where('id', $id);
-        $pengajuan = $this->db->get('pengajuan')->row_array();
-
-        $this->db->where('pengajuan_id', $id);
-        $pengusul = $this->db->get('pengusul')->result_array();
-
-        for ($i = 0; $i < count($pengusul); $i++) {
-            $anggota['anggota' . ($i + 1)] = $pengusul[$i]['mahasiswa_npm'];
-        }
-
-        return array_merge($pengajuan, $anggota);
     }
 
     public function getUserPengajuan()

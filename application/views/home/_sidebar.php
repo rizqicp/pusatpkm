@@ -59,7 +59,7 @@
         <h5 class="card-header">Bantuan</h5>
         <div class="card-body">
             Hubungi Administrator apabila anda membutuhkan bantuan atau mengalami masalah pada sistem Pusat PKM.
-            <a class="btn btn-primary btn-block text-center mt-2" href="mailto:1634010056@student.upnjatim.ac.id"><i class=" fas fa-fw fa-question"></i> Hubungi Administrator</a>
+            <a class="btn btn-primary btn-block text-center mt-2" href="mailto:admin@pusatpkm.online"><i class=" fas fa-fw fa-question"></i> Hubungi Administrator</a>
         </div>
     </div>
 

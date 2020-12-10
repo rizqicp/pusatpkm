@@ -95,7 +95,6 @@ function startScanner(form, input) {
         }
     });
 
-
     Quagga.onDetected(function(result) {
         console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
         console.log(result.codeResult.code);
@@ -103,7 +102,6 @@ function startScanner(form, input) {
         jQuery(form).submit();
     });
 }
-
 
 // Start/stop scanner
 document.getElementById("scanbarcode").addEventListener("click", function() {

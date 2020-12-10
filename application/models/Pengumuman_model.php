@@ -79,8 +79,6 @@ class Pengumuman_model extends CI_Model
                 'waktu' => null,
                 'status' => $this->input->post('statusPengumuman')
             ];
-            // var_dump($_FILES);
-            // die;
 
             $pengumumanId = create('pengumuman', $dataPengumuman);
 

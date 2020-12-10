@@ -191,7 +191,7 @@ class Auth_model extends CI_Model
             // send email
             $this->load->library('phpmailer_lib');
             $mail = $this->phpmailer_lib->load();
-            $mail->setFrom('1634010056@student.upnjatim.ac.id', 'Pusat PKM');
+            $mail->setFrom($mail->Username, 'Pusat PKM');
             $mail->addAddress($userData['email']);
             $mail->Subject = 'Verifikasi Pendaftaran';
             $mail->isHTML(true);

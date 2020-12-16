@@ -204,7 +204,7 @@ class Auth_model extends CI_Model
             ----------------------------------
             </p>
             <p>Silahkan klik link dibawah untuk verifikasi akun: <br>
-            <a>" . base_url('auth/verifikasi') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . "</a></p>
+            <a href=" . base_url('auth/verifikasi') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . " >" . base_url('auth/verifikasi') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . "</a></p>
             ";
             $mail->Body = $mailContent;
             try {
@@ -276,7 +276,7 @@ class Auth_model extends CI_Model
             ----------------------------------
             </p>
             <p>Silahkan klik link dibawah untuk atur ulang kata sandi: <br>
-            <a>" . base_url('auth/recovery') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . "</a></p>
+            <a href=" . base_url('auth/recovery') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . " >" . base_url('auth/recovery') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . "</a></p>
             ";
             $mail->Body = $mailContent;
             try {

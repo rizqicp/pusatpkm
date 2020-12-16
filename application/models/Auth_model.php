@@ -192,7 +192,7 @@ class Auth_model extends CI_Model
             $this->load->library('phpmailer_lib');
             $mail = $this->phpmailer_lib->load();
             $mail->setFrom($mail->Username, 'Pusat PKM');
-            $mail->addAddress($userData['email']);
+            $mail->addAddress($this->input->post('userEmail'));
             $mail->Subject = 'Verifikasi Pendaftaran';
             $mail->isHTML(true);
             $mailContent = "
@@ -201,7 +201,6 @@ class Auth_model extends CI_Model
             <p>    
             ----------------------------------<br>
             Email       : " . $userData['email'] . "<br>
-            Password    : " . str_repeat('*', strlen($this->input->post('userPassword')) - 4) . substr($this->input->post('userPassword'), -4) . "<br>
             ----------------------------------
             </p>
             <p>Silahkan klik link dibawah untuk verifikasi akun: <br>

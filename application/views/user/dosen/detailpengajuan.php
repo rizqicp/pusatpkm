@@ -165,11 +165,11 @@
                                                 <?php if ($user['nidn'] == $kelompok['dosen']['nidn']) : ?>
                                                     <label for="username" class="col-form-label col-form-label-lg"><small><b>Username Simbelmawa</b></small></label>
                                                     <div class="input-group input-group-sm">
-                                                        <input type="text" id="username" value="dhs87g" class="form-control" readonly>
+                                                        <input type="text" id="username" value="<?= $pengajuan['belmawa_username']; ?>" class="form-control" readonly>
                                                     </div>
                                                     <label for="password" class="col-form-label col-form-label-lg"><small><b>Password Simbelmawa</b></small></label>
                                                     <div class="input-group input-group-sm">
-                                                        <input type="text" id="password" value="dhs87g" class="form-control" readonly>
+                                                        <input type="text" id="password" value="<?= $pengajuan['belmawa_password']; ?>" class="form-control" readonly>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>

@@ -14,13 +14,13 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->order_by('pengajuan.id', 'DESC');
@@ -39,13 +39,13 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->like('pengajuan.judul', $search);
@@ -80,13 +80,13 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->where('pengajuan.tahap_id', 6);
@@ -106,13 +106,13 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->like('pengajuan.judul', $search);
@@ -135,14 +135,14 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('pengajuan', 'pengusul.pengajuan_id = pengajuan.id');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->where('pengusul.mahasiswa_npm', $this->session->userdata('npm'));
@@ -164,14 +164,14 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('pengajuan', 'pengusul.pengajuan_id = pengajuan.id');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->like('pengajuan.judul', $search);
@@ -192,13 +192,13 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->where('pengajuan.dosen_nidn', $this->session->userdata('nidn'));
@@ -218,13 +218,13 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->like('pengajuan.judul', $search);
@@ -249,14 +249,14 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('pengajuan', 'ulasan.pengajuan_id = pengajuan.id');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->where('ulasan.dosen_nidn', $this->session->userdata('nidn'));
@@ -280,14 +280,14 @@ class Pengajuan_model extends CI_Model
         pengajuan.belmawa_username,
         pengajuan.belmawa_password,
         periode.tahun AS periode_tahun,
-        kategori.nama AS kategori_nama,
+        hibah.nama AS hibah_nama,
         tahap.nama AS tahap_nama,
         tahap.id AS tahap_id,
         dosen.nama AS dosen_nama
         ');
         $this->db->join('pengajuan', 'ulasan.pengajuan_id = pengajuan.id');
         $this->db->join('periode', 'pengajuan.periode_id = periode.id');
-        $this->db->join('kategori', 'pengajuan.kategori_id = kategori.id');
+        $this->db->join('hibah', 'pengajuan.hibah_id = hibah.id');
         $this->db->join('tahap', 'pengajuan.tahap_id = tahap.id');
         $this->db->join('dosen', 'pengajuan.dosen_nidn = dosen.nidn');
         $this->db->like('pengajuan.judul', $search);
@@ -321,8 +321,8 @@ class Pengajuan_model extends CI_Model
         foreach ($this->db->get('periode')->result_array() as $periode) {
             $periodeId[] = $periode['id'];
         }
-        foreach ($this->db->get('kategori')->result_array() as $kategori) {
-            $kategoriId[] = $kategori['id'];
+        foreach ($this->db->get('hibah')->result_array() as $hibah) {
+            $hibahId[] = $hibah['id'];
         }
         foreach ($this->db->get('mahasiswa')->result_array() as $mahasiswa) {
             $mahasiswaNpm[] = $mahasiswa['npm'];
@@ -331,7 +331,7 @@ class Pengajuan_model extends CI_Model
             $dosenNidn[] = $dosen['nidn'];
         }
         $this->form_validation->set_rules('periode', 'Periode', 'required|in_list[' . implode(',', $periodeId) . ']');
-        $this->form_validation->set_rules('kategori', 'Periode', 'required|in_list[' . implode(',', $kategoriId) . ']');
+        $this->form_validation->set_rules('hibah', 'Periode', 'required|in_list[' . implode(',', $hibahId) . ']');
         $this->form_validation->set_rules('judul', 'Judul', 'required|trim', ['required' => 'Judul harus diisi!']);
         $this->form_validation->set_rules('abstraksi', 'Abstraksi', 'required|trim', ['required' => 'Abstraksi harus diisi!']);
         $this->form_validation->set_rules('dana', 'Dana', 'trim|numeric', ['numeric' => 'Dana harus berupa angka!']);
@@ -403,7 +403,7 @@ class Pengajuan_model extends CI_Model
         function _uploadFile($id)
         {
             $current = get_instance();
-            $config['upload_path']          = './upload/pengajuan/';
+            $config['upload_path']          = './uploads/pengajuan/';
             $config['allowed_types']        = 'doc|docx';
             $config['file_name']            = 'pengajuan_' . $id;
             $config['overwrite']            = true;
@@ -425,7 +425,7 @@ class Pengajuan_model extends CI_Model
             $dataPengajuan = [
                 'id' => null,
                 'periode_id' => $this->input->post('periode'),
-                'kategori_id' => $this->input->post('kategori'),
+                'hibah_id' => $this->input->post('hibah'),
                 'tahap_id' => 1,
                 'dosen_nidn' => $this->input->post('dosen'),
                 'judul' => $this->input->post('judul'),
@@ -481,7 +481,7 @@ class Pengajuan_model extends CI_Model
         function _updateFile($id)
         {
             $current = get_instance();
-            $config['upload_path']          = './upload/pengajuan/';
+            $config['upload_path']          = './uploads/pengajuan/';
             $config['allowed_types']        = 'doc|docx';
             $config['file_name']            = 'pengajuan_' . $id;
             $config['overwrite']            = true;
@@ -502,8 +502,8 @@ class Pengajuan_model extends CI_Model
         foreach ($this->db->get('periode')->result_array() as $periode) {
             $periodeId[] = $periode['id'];
         }
-        foreach ($this->db->get('kategori')->result_array() as $kategori) {
-            $kategoriId[] = $kategori['id'];
+        foreach ($this->db->get('hibah')->result_array() as $hibah) {
+            $hibahId[] = $hibah['id'];
         }
         foreach ($this->db->get('mahasiswa')->result_array() as $mahasiswa) {
             $mahasiswaNpm[] = $mahasiswa['npm'];
@@ -514,8 +514,8 @@ class Pengajuan_model extends CI_Model
         if ($this->input->post('periode') != $pengajuan['periode_id']) {
             $this->form_validation->set_rules('periode', 'Periode', 'required|in_list[' . implode(',', $periodeId) . ']');
         }
-        if ($this->input->post('kategori') != $pengajuan['kategori_id']) {
-            $this->form_validation->set_rules('kategori', 'Periode', 'required|in_list[' . implode(',', $kategoriId) . ']');
+        if ($this->input->post('hibah') != $pengajuan['hibah_id']) {
+            $this->form_validation->set_rules('hibah', 'Periode', 'required|in_list[' . implode(',', $hibahId) . ']');
         }
         if ($this->input->post('judul') != $pengajuan['judul']) {
             $this->form_validation->set_rules('judul', 'Judul', 'required|trim', ['required' => 'Judul harus diisi!']);
@@ -606,8 +606,8 @@ class Pengajuan_model extends CI_Model
                 $this->db->where('id', $pengajuan['id']);
                 $this->db->update('pengajuan');
             }
-            if ($this->input->post('kategori') != null && $this->input->post('kategori') != $pengajuan['kategori_id']) {
-                $this->db->set('kategori_id', $this->input->post('kategori'));
+            if ($this->input->post('hibah') != null && $this->input->post('hibah') != $pengajuan['hibah_id']) {
+                $this->db->set('hibah_id', $this->input->post('hibah'));
                 $this->db->where('id', $pengajuan['id']);
                 $this->db->update('pengajuan');
             }
@@ -632,7 +632,7 @@ class Pengajuan_model extends CI_Model
                 $this->db->update('pengajuan');
             }
             if ($_FILES['userFile']['error'] != 4) {
-                unlink('./upload/pengajuan/' . $pengajuan['file']);
+                unlink('./uploads/pengajuan/' . $pengajuan['file']);
                 $this->db->set('file', _updateFile($pengajuan['id']));
                 $this->db->where('id', $pengajuan['id']);
                 $this->db->update('pengajuan');
@@ -672,7 +672,7 @@ class Pengajuan_model extends CI_Model
     {
         if (isset($_POST['hapusid'])) {
             if ($_POST['hapusfile'] != null) {
-                unlink('./upload/pengajuan/' . $_POST['hapusfile']);
+                unlink('./uploads/pengajuan/' . $_POST['hapusfile']);
             }
             $this->db->delete('pengajuan', array('id' => $_POST['hapusid']));
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan "' . $_POST['hapusjudul'] . '" berhasil dihapus!</div>');
@@ -686,11 +686,11 @@ class Pengajuan_model extends CI_Model
     public function getKeterangan($data)
     {
         $periode = $this->db->get_where('periode', array('id' => $data['periode_id']))->row_array();
-        $kategori = $this->db->get_where('kategori', array('id' => $data['kategori_id']))->row_array();
+        $hibah = $this->db->get_where('hibah', array('id' => $data['hibah_id']))->row_array();
         $tahap = $this->db->get_where('tahap', array('id' => $data['tahap_id']))->row_array();
 
         $keterangan['periode'] = $periode;
-        $keterangan['kategori'] = $kategori;
+        $keterangan['hibah'] = $hibah;
         $keterangan['tahap'] = $tahap;
 
         return $keterangan;
@@ -749,7 +749,7 @@ class Pengajuan_model extends CI_Model
         function _uploadUlasan($id)
         {
             $current = get_instance();
-            $config['upload_path']          = './upload/ulasan/';
+            $config['upload_path']          = './uploads/ulasan/';
             $config['allowed_types']        = 'doc|docx';
             $config['file_name']            = 'ulasan_' . $id;
             $config['overwrite']            = true;
@@ -774,7 +774,7 @@ class Pengajuan_model extends CI_Model
             if ($_FILES != null) {
                 if ($_FILES['userFile']['error'] != 4) {
                     if ($ulasan['file'] != null) {
-                        unlink('./upload/pengajuan/' . $ulasan['file']);
+                        unlink('./uploads/pengajuan/' . $ulasan['file']);
                     }
                     $this->db->set('file', _uploadUlasan($ulasan['id']));
                 }
@@ -806,7 +806,7 @@ class Pengajuan_model extends CI_Model
         function _uploadRevisi($id)
         {
             $current = get_instance();
-            $config['upload_path']          = './upload/pengajuan/';
+            $config['upload_path']          = './uploads/pengajuan/';
             $config['allowed_types']        = 'doc|docx';
             $config['file_name']            = 'pengajuan_' . $id;
             $config['overwrite']            = true;
@@ -840,7 +840,7 @@ class Pengajuan_model extends CI_Model
 
         if ($this->form_validation->run() == true || $uploadFile == true) {
             if ($_FILES['userFile']['error'] != 4) {
-                unlink('./upload/pengajuan/' . $pengajuan['file']);
+                unlink('./uploads/pengajuan/' . $pengajuan['file']);
                 $this->db->set('file', _uploadRevisi($pengajuan['id']));
                 $this->db->set('tahap_id', '2');
                 $this->db->where('id', $pengajuan['id']);
@@ -893,7 +893,7 @@ class Pengajuan_model extends CI_Model
         function _uploadLaporan($id)
         {
             $current = get_instance();
-            $config['upload_path']          = './upload/laporan/';
+            $config['upload_path']          = './uploads/laporan/';
             $config['allowed_types']        = 'doc|docx';
             $config['file_name']            = 'laporan_' . $id;
             $config['overwrite']            = true;
@@ -928,7 +928,7 @@ class Pengajuan_model extends CI_Model
         if ($this->form_validation->run() == true || $uploadFile == true) {
             if ($_FILES['userFile']['error'] != 4) {
                 if ($pengajuan['file_laporan'] != null) {
-                    unlink('./upload/laporan/' . $pengajuan['file']);
+                    unlink('./uploads/laporan/' . $pengajuan['file']);
                 }
                 $this->db->set('file_laporan', _uploadLaporan($pengajuan['id']));
                 $this->db->set('tahap_id', '6');

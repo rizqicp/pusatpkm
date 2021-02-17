@@ -1,20 +1,19 @@
 {
   "files.exclude": {
-    "license.txt": true,
-    "contributing.md": true,
-    "composer.json": true,
-    ".editorconfig": true,
-    "user_guide": true,
-    "application\\**/*.html": true,
-    "application\\index.html": true,
-    "application\\language\\english\\index.html": true,
-    "application\\views\\errors\\cli\\index.html": true,
-    "application\\views\\errors\\html\\index.html": true,
-    "application\\views\\errors\\index.html": true,
-    "README.md": true,
-    "LAPORAN": true,
     "application\\views\\errors": true,
+    "application\\views\\index.html": true,
     "application\\.htaccess": true,
-    ".htaccess": true
+    "application\\index.html": true,
+    ".editorconfig": true,
+    ".htaccess": true,
+    ".vscode": true,
+    "system": true,
+    "application\\cache": true,
+    "application\\core": true,
+    "application\\hooks": true,
+    "application\\logs": true,
+    "index.php": true,
+    "application\\controllers\\index.html": true,
+    "application\\models\\index.html": true
   }
 }

@@ -40,8 +40,8 @@ class Mahasiswa extends CI_Controller
     public function tambahPengajuan()
     {
         $data['user'] = $this->session->userdata();
-        $data['periode'] = $this->db->get_where('periode', array('status' => 'aktif'))->result_array();
-        $data['kategori'] = $this->db->get_where('kategori', array('status' => 'aktif'))->result_array();
+        $data['periode'] = $this->db->get_where('periode', array('status' => 'aktif'))->row_array();
+        $data['hibah'] = $this->db->get_where('hibah', array('status' => 'aktif'))->result_array();
         $data['mahasiswa'] = $this->db->get('mahasiswa')->result_array();
         $data['dosen'] = $this->db->get('dosen')->result_array();
 
@@ -59,8 +59,8 @@ class Mahasiswa extends CI_Controller
         }
         $data['user'] = $this->session->userdata();
         $this->db->where('status', 'aktif');
-        $data['periode'] = $this->db->get('periode')->result_array();
-        $data['kategori'] = $this->db->get('kategori')->result_array();
+        $data['periode'] = $this->db->get('periode')->row_array();
+        $data['hibah'] = $this->db->get('hibah')->result_array();
         $data['mahasiswa'] = $this->db->get('mahasiswa')->result_array();
         $data['dosen'] = $this->db->get('dosen')->result_array();
         $data['editpengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('editpengajuanid'));

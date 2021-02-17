@@ -3,7 +3,7 @@
 
 <head>
     <!-- Core Meta Data -->
-    <?php $this->load->view("partial/_meta.php") ?>
+    <?php $this->load->view("_partials/meta") ?>
     <!-- Custom styles for sb-admin -->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 </head>
@@ -71,13 +71,13 @@
     </script>
 
     <!-- Barcode Modal -->
-    <?php $this->load->view("auth/_barcodeModal.php") ?>
+    <?php $this->load->view("auth/_barcodeModal") ?>
     <!-- Include the QuaggaJS library -->
-    <script src="<?= base_url('assets/'); ?>js/quagga/dist/quagga.min.js"></script>
-    <script src="<?= base_url('assets/'); ?>js/barcodeScanner.js"></script>
+    <script src="<?= base_url('assets/'); ?>quaggajs/dist/quagga.min.js"></script>
+    <script src="<?= base_url('assets/'); ?>quaggajs/barcodeScanner.js"></script>
 
     <!-- Core Script Data -->
-    <?php $this->load->view("partial/_script.php") ?>
+    <?php $this->load->view("_partials/script") ?>
     <!-- Custom scripts for sb-admin -->
     <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 

@@ -3,7 +3,7 @@
 
 <head>
     <!-- Core Meta Data -->
-    <?php $this->load->view("partial/_meta.php") ?>
+    <?php $this->load->view("_partials/meta") ?>
     <!-- Custom styles for sb-admin -->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 </head>
@@ -14,7 +14,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php $this->load->view("user/_sidebar.php") ?>
+        <?php $this->load->view("_partials/sidebar") ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -24,7 +24,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <?php $this->load->view("user/_topbar.php") ?>
+                <?php $this->load->view("_partials/topbar") ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -38,27 +38,22 @@
                         <div class="form-group row">
                             <label for="periode" class="col-sm-2 col-form-label col-form-label-lg"><b>Periode</b></label>
                             <div class="col-sm-10 pt-1">
-                                <select class="custom-select form-control" id="periode" name="periode">
-                                    <?php foreach ($periode as $periode) : ?>
-                                        <option value="<?= $periode['id']; ?>" <?= $editpengajuan['periode_id'] == $periode['id'] ? "selected" : "" ?>>
-                                            <?= $periode['tahun']; ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <input type="text" class="form-control" id="periode" name="periode" value="<?= $periode['id']; ?>" hidden>
+                                <input type="text" class="form-control" placeholder="<?= $periode['tahun']; ?>" disabled>
                                 <?= form_error('periode', '<small class="text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kategori" class="col-sm-2 col-form-label col-form-label-lg"><b>Kategori</b></label>
+                            <label for="hibah" class="col-sm-2 col-form-label col-form-label-lg"><b>Hibah</b></label>
                             <div class="col-sm-10 pt-1">
-                                <select class="custom-select form-control" id="kategori" name="kategori">
-                                    <?php foreach ($kategori as $kategori) : ?>
-                                        <option value="<?= $kategori['id']; ?>" <?= $editpengajuan['kategori_id'] == $kategori['id'] ? "selected" : "" ?>>
-                                            <?= $kategori['nama']; ?>
+                                <select class="custom-select form-control" id="hibah" name="hibah">
+                                    <?php foreach ($hibah as $hibah) : ?>
+                                        <option value="<?= $hibah['id']; ?>" <?= $editpengajuan['hibah_id'] == $hibah['id'] ? "selected" : "" ?>>
+                                            <?= $hibah['nama']; ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
-                                <?= form_error('kategori', '<small class="text-danger pl-3">', '</small>'); ?>
+                                <?= form_error('hibah', '<small class="text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
                         <div class="form-group row mt-5">
@@ -167,7 +162,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php $this->load->view("user/_footer.php") ?>
+            <?php $this->load->view("_partials/footer") ?>
             <!-- End of Footer -->
 
         </div>
@@ -177,9 +172,9 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <?php $this->load->view("user/_scrollTop.php") ?>
+    <?php $this->load->view("_partials/scrollTop") ?>
     <!-- Logout Modal-->
-    <?php $this->load->view("user/_logoutModal.php") ?>
+    <?php $this->load->view("_partials/logoutModal") ?>
 
     <script>
         function changeText(id, value) {
@@ -237,7 +232,7 @@
     </script>
 
     <!-- Core Script Data -->
-    <?php $this->load->view("partial/_script.php") ?>
+    <?php $this->load->view("_partials/script") ?>
     <!-- Custom scripts for sb-admin -->
     <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 

@@ -66,4 +66,14 @@ class Home_model extends CI_Model
             return false;
         }
     }
+
+    public function getPanduan()
+    {
+        $kategori = $this->db->get('kategori')->result_array();
+        foreach($kategori AS $kategori){
+            $kategori['hibah'] = $this->db->get_where('hibah', array('kategori_id' => $kategori['id']))->result_array();
+            $panduan['kategori'][] = $kategori;
+        }
+        return $panduan;
+    }
 }

@@ -3,7 +3,7 @@
 
 <head>
     <!-- Core Meta Data -->
-    <?php $this->load->view("partial/_meta.php") ?>
+    <?php $this->load->view("_partials/meta") ?>
     <!-- Custom styles for sb-admin -->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 </head>
@@ -14,7 +14,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php $this->load->view("user/_sidebar.php") ?>
+        <?php $this->load->view("_partials/sidebar") ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -24,7 +24,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <?php $this->load->view("user/_topbar.php") ?>
+                <?php $this->load->view("_partials/topbar") ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -43,8 +43,8 @@
                                     <p class="card-text"><?= $pengajuan['abstraksi']; ?></p>
                                     <small><b>Dana ajuan :</b></small>
                                     <p>Rp <?= number_format($pengajuan['dana'], 0, ',', '.'); ?></p>
-                                    <small><b>Kategori :</b></small>
-                                    <p><?= $keterangan['kategori']['nama']; ?></p>
+                                    <small><b>Hibah :</b></small>
+                                    <p><?= $keterangan['hibah']['nama']; ?></p>
                                     <small><b>Periode :</b></small>
                                     <p><?= $keterangan['periode']['tahun']; ?></p>
                                 </div>
@@ -207,7 +207,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php $this->load->view("user/_footer.php") ?>
+            <?php $this->load->view("_partials/footer") ?>
             <!-- End of Footer -->
 
         </div>
@@ -217,9 +217,9 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <?php $this->load->view("user/_scrollTop.php") ?>
+    <?php $this->load->view("_partials/scrollTop") ?>
     <!-- Logout Modal-->
-    <?php $this->load->view("user/_logoutModal.php") ?>
+    <?php $this->load->view("_partials/logoutModal") ?>
 
     <script>
         function changeText(id, value) {
@@ -244,7 +244,7 @@
     </script>
 
     <!-- Core Script Data -->
-    <?php $this->load->view("partial/_script.php") ?>
+    <?php $this->load->view("_partials/script") ?>
     <!-- Custom scripts for sb-admin -->
     < src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></>
 

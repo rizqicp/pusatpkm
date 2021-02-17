@@ -3,14 +3,12 @@
 
 <head>
     <!-- Core Meta Data -->
-    <?php $this->load->view("partial/_meta.php") ?>
-    <!-- Custom styles for blog-home -->
-    <link href="<?= base_url('assets/'); ?>css/blog-home.css" rel="stylesheet" type="text/css">
+    <?php $this->load->view("home/_partials/meta") ?>
 </head>
 
 <body>
     <!-- Navigation -->
-    <?php $this->load->view("home/_topbar.php") ?>
+    <?php $this->load->view("home/_partials/topbar") ?>
 
     <!-- Page Content -->
     <div class="container">
@@ -101,10 +99,10 @@
     <!-- /.container -->
 
     <!-- Footer -->
-    <?php $this->load->view("home/_footer.php") ?>
+    <?php $this->load->view("home/_partials/footer") ?>
 
     <!-- Core Script Data -->
-    <?php $this->load->view("partial/_script.php") ?>
+    <?php $this->load->view("_partials/script") ?>
 </body>
 
 </html>

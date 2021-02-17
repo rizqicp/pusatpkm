@@ -53,7 +53,7 @@ class Pengumuman_model extends CI_Model
         function _uploadFile($id)
         {
             $current = get_instance();
-            $config['upload_path']          = './assets/img/pengumuman/';
+            $config['upload_path']          = './uploads/img/pengumuman/';
             $config['allowed_types']        = 'jpg|jpeg|png';
             $config['file_name']            = 'pengumuman_' . $id;
             $config['overwrite']            = true;
@@ -99,7 +99,7 @@ class Pengumuman_model extends CI_Model
     {
         if (isset($_POST['hapusid'])) {
             if ($_POST['hapusgambar'] != null) {
-                unlink('./assets/img/pengumuman/' . $_POST['hapusgambar']);
+                unlink('./uploads/img/pengumuman/' . $_POST['hapusgambar']);
             }
             $this->db->delete('pengumuman', array('id' => $_POST['hapusid']));
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengumuman "' . $_POST['hapusjudul'] . '" berhasil dihapus</div>');
@@ -115,7 +115,7 @@ class Pengumuman_model extends CI_Model
         function _updateFile($id)
         {
             $current = get_instance();
-            $config['upload_path']          = './assets/img/pengumuman/';
+            $config['upload_path']          = './uploads/img/pengumuman/';
             $config['allowed_types']        = 'jpg|jpeg|png';
             $config['file_name']            = 'pengumuman_' . $id;
             $config['overwrite']            = true;
@@ -165,11 +165,11 @@ class Pengumuman_model extends CI_Model
                 $this->db->set('status', $this->input->post('statusPengumuman'));
             }
             if ($this->input->post('hapusGambar') == 'delete') {
-                unlink('./assets/img/pengumuman/' . $pengumuman['gambar']);
+                unlink('./uploads/img/pengumuman/' . $pengumuman['gambar']);
                 $this->db->set('gambar', null);
             }
             if ($_FILES['gambarPengumuman']['error'] != 4) {
-                unlink('./assets/img/pengumuman/' . $pengumuman['gambar']);
+                unlink('./uploads/img/pengumuman/' . $pengumuman['gambar']);
                 $this->db->set('gambar', _updateFile($pengumuman['id']));
             }
             $this->db->where('id', $pengumuman['id']);

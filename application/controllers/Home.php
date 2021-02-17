@@ -20,8 +20,45 @@ class Home extends CI_Controller
         $data['user'] = $this->session->userdata();
         $data['pengumuman'] = $this->home_model->getPengumumanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
         $data['caption'] = $this->home_model->getCaptionData(count($data['pengumuman']), $this->uri->segment(3), $this->home_model->getAllPengumuman());
-
+        $data['kategori'] = $this->home_model->getPanduan();
         $this->load->view('home/index', $data);
+    }
+
+    public function profil()
+    {
+        $data['user'] = $this->session->userdata();
+        $data['kategori'] = $this->home_model->getPanduan();
+        $this->load->view('home/profil', $data);
+    }
+
+
+    public function kewirausahaan()
+    {
+        $data['user'] = $this->session->userdata();
+        $data['kategori'] = $this->home_model->getPanduan();
+        $this->load->view('home/kewirausahaan', $data);
+    }
+
+    public function karir()
+    {
+        $data['user'] = $this->session->userdata();
+        $data['kategori'] = $this->home_model->getPanduan();
+        $this->load->view('home/karir', $data);
+    }
+
+    public function panduan()
+    {
+        $data['user'] = $this->session->userdata();
+        $data['kategori'] = $this->home_model->getPanduan();
+        $data['panduan'] = $data['kategori']['kategori'];
+        $this->load->view('home/panduan', $data);
+    }
+
+    public function contact()
+    {
+        $data['user'] = $this->session->userdata();
+        $data['kategori'] = $this->home_model->getPanduan();
+        $this->load->view('home/contact', $data);
     }
 
     public function pengumuman()
@@ -29,15 +66,10 @@ class Home extends CI_Controller
         $this->load->model('home_model');
         $data['pengumuman'] = $this->home_model->getPengumumanById(intval($_GET['id']));
         $data['user'] = $this->session->userdata();
-
+        $data['kategori'] = $this->home_model->getPanduan();
         $this->load->view('home/pengumuman', $data);
     }
 
-    public function profil()
-    {
-        $data['user'] = $this->session->userdata();
-        $this->load->view('home/profil', $data);
-    }
 
     public function pengajuanBarcode()
     {
@@ -58,6 +90,7 @@ class Home extends CI_Controller
 
             $data['pengajuan'] = $this->pengajuan_model->getUserPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
             $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getUserPengajuan());
+            $data['kategori'] = $this->home_model->getPanduan();
             $this->load->view('home/pengajuan', $data);
         } else {
             redirect('home');

@@ -3,14 +3,12 @@
 
 <head>
     <!-- Core Meta Data -->
-    <?php $this->load->view("partial/_meta.php") ?>
-    <!-- Custom styles for blog-home -->
-    <link href="<?= base_url('assets/'); ?>css/blog-home.css" rel="stylesheet" type="text/css">
+    <?php $this->load->view("home/_partials/meta") ?>
 </head>
 
 <body>
     <!-- Navigation -->
-    <?php $this->load->view("home/_topbar.php") ?>
+    <?php $this->load->view("home/_partials/topbar") ?>
 
     <!-- Page Content -->
     <div class="container">
@@ -23,7 +21,7 @@
                 <h1 class="my-4">Profil</h1>
                 <!-- isi -->
                 <div class="card bg-light mb-4">
-                    <img class="card-img-top" src="<?= base_url('assets/img/profile/profilPusatPKM.jpg'); ?>" alt="Gambar Profil">
+                    <img class="card-img-top" src="<?= base_url('uploads/img/profile/profilPusatPKM.jpg'); ?>" alt="Gambar Profil">
 
                     <div class="card-body">
                         <h2 class="card-title">Tentang Pusat PKM</h2>
@@ -39,7 +37,7 @@
             </div>
 
             <!-- Sidebar Widgets Column -->
-            <?php $this->load->view("home/_sidebar.php") ?>
+            <?php $this->load->view("home/_partials/sidebar", $kategori) ?>
 
         </div>
         <!-- /.row -->
@@ -48,10 +46,10 @@
     <!-- /.container -->
 
     <!-- Footer -->
-    <?php $this->load->view("home/_footer.php") ?>
+    <?php $this->load->view("home/_partials/footer") ?>
 
     <!-- Core Script Data -->
-    <?php $this->load->view("partial/_script.php") ?>
+    <?php $this->load->view("_partials/script") ?>
 </body>
 
 </html>

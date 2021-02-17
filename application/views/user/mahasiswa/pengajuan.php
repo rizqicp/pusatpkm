@@ -3,7 +3,7 @@
 
 <head>
     <!-- Core Meta Data -->
-    <?php $this->load->view("partial/_meta.php") ?>
+    <?php $this->load->view("_partials/meta") ?>
     <!-- Custom styles for sb-admin -->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 </head>
@@ -14,7 +14,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php $this->load->view("user/_sidebar.php") ?>
+        <?php $this->load->view("_partials/sidebar") ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -24,7 +24,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <?php $this->load->view("user/_topbar.php") ?>
+                <?php $this->load->view("_partials/topbar") ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -115,7 +115,7 @@
                                                 <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['pengajuan_id']; ?>">Hapus</button>
                                             <?php endif; ?>
                                             <!-- hapusPengajuan Modal -->
-                                            <?php $this->load->view("user/mahasiswa/_hapusPengajuanModal.php", $pengajuan) ?>
+                                            <?php $this->load->view("user/mahasiswa/_hapusPengajuanModal", $pengajuan) ?>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>
@@ -133,7 +133,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?php $this->load->view("user/_footer.php") ?>
+            <?php $this->load->view("_partials/footer") ?>
             <!-- End of Footer -->
 
         </div>
@@ -143,12 +143,12 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <?php $this->load->view("user/_scrollTop.php") ?>
+    <?php $this->load->view("_partials/scrollTop") ?>
     <!-- Logout Modal-->
-    <?php $this->load->view("user/_logoutModal.php") ?>
+    <?php $this->load->view("_partials/logoutModal") ?>
 
     <!-- Core Script Data -->
-    <?php $this->load->view("partial/_script.php") ?>
+    <?php $this->load->view("_partials/script") ?>
     <!-- Custom scripts for sb-admin -->
     <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 

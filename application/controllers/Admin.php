@@ -10,6 +10,10 @@ class Admin extends CI_Controller
         $this->load->model('user_model');
         $this->load->model('pengumuman_model');
         $this->load->model('pengajuan_model');
+        $this->load->model('kategori_model', 'kategori');
+        $this->load->model('hibah_model', 'hibah');
+        $this->load->model('periode_model', 'periode');
+        $this->load->library('datatables');
     }
 
     public function index()
@@ -196,5 +200,150 @@ class Admin extends CI_Controller
         $data['pengajuan'] = $this->pengajuan_model->getFinishPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
         $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getFinishPengajuan());
         $this->load->view('user/historiproposal', $data);
+    }
+
+    // method kategori
+    public function kelolaKategori()
+    {
+        $data['user'] = $this->session->userdata();
+        $this->load->view('user/admin/kelola_kategori', $data);
+    }
+
+    public function getKategori()
+    {
+        return ($this->kategori->dataTables());
+    }
+
+    public function tambahKategori()
+    {
+        $data['user'] = $this->session->userdata();
+
+        if ($this->kategori->tambahKategori() == true) {
+            redirect('admin/kelolakategori');
+        } else {
+            $this->load->view('user/admin/tambah_kategori', $data);
+        }
+    }
+
+    public function ubahKategori()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('kategoriId' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['kategori'] = $this->kategori->getById($this->session->userdata('kategoriId'));
+
+        if ($this->kategori->ubahKategori($data['kategori']) == TRUE || $data['kategori']==NULL) {
+            redirect('admin/kelolakategori');
+        } else {
+            $this->load->view('user/admin/ubah_kategori', $data);
+        }
+    }
+
+    public function hapusKategori($idKategori)
+    {
+        if ($this->kategori->hapusKategori($idKategori) == true) {
+            redirect('admin/kelolakategori');
+        } else {
+            redirect('admin/kelolakategori');
+        }
+    }
+
+    // method hibah
+    public function kelolaHibah()
+    {
+        $data['user'] = $this->session->userdata();
+        $this->load->view('user/admin/kelola_hibah', $data);
+    }
+
+    public function getHibah()
+    {
+        return ($this->hibah->dataTables());
+    }
+
+    public function tambahHibah()
+    {
+        $data['user'] = $this->session->userdata();
+        $data['kategori'] = $this->kategori->getAll();
+
+        if ($this->hibah->tambahhibah() == true) {
+            redirect('admin/kelolahibah');
+        } else {
+            $this->load->view('user/admin/tambah_hibah', $data);
+        }
+    }
+
+    public function ubahHibah()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('hibahId' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['kategori'] = $this->kategori->getAll();
+        $data['hibah'] = $this->hibah->getById($this->session->userdata('hibahId'));
+
+        if ($this->hibah->ubahHibah($data['hibah']) == TRUE || $data['hibah']==NULL) {
+            redirect('admin/kelolahibah');
+        } else {
+            $this->load->view('user/admin/ubah_hibah', $data);
+        }
+    }
+
+    public function hapushibah($id)
+    {
+        $data = $this->hibah->getById($id);
+        if ($this->hibah->hapushibah($data) == true) {
+            redirect('admin/kelolahibah');
+        } else {
+            redirect('admin/kelolahibah');
+        }
+    }
+
+    // method periode
+    public function kelolaPeriode()
+    {
+        $data['user'] = $this->session->userdata();
+        $this->load->view('user/admin/kelola_periode', $data);
+    }
+
+    public function getPeriode()
+    {
+        return ($this->periode->dataTables());
+    }
+
+    public function tambahPeriode()
+    {
+        $data['user'] = $this->session->userdata();
+
+        if ($this->periode->tambahPeriode() == true) {
+            redirect('admin/kelolaperiode');
+        } else {
+            $this->load->view('user/admin/tambah_periode', $data);
+        }
+    }
+
+    public function ubahPeriode()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('periodeId' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['periode'] = $this->periode->getById($this->session->userdata('periodeId'));
+
+        if ($this->periode->ubahPeriode($data['periode']) == TRUE || $data['periode']==NULL) {
+            redirect('admin/kelolaperiode');
+        } else {
+            $this->load->view('user/admin/ubah_periode', $data);
+        }
+    }
+
+    public function hapusPeriode($id)
+    {
+        $data = $this->periode->getById($id);
+        if ($this->periode->hapusPeriode($data) == true) {
+            redirect('admin/kelolaperiode');
+        } else {
+            redirect('admin/kelolaperiode');
+        }
     }
 }

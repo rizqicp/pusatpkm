@@ -61,37 +61,13 @@
         </div>
     </div>
 
-    <!-- Categories Widget -->
-    <!-- <div class="card my-4">
-        <h5 class="card-header">Skema Hibah</h5>
-        <div class="card-body">
-            <ul class="list-unstyled mb-0">
-                <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-AI.docx'); ?>" download><i class=" fas fa-fw fa-file-alt"></i>PKM Artikel Ilmiah</a>
-                </li>
-                <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-KC.docx'); ?>" download><i class=" fas fa-fw fa-file-alt"></i>PKM Karsa Cipta</a>
-                </li>
-                <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-M.docx'); ?>" download><i class=" fas fa-fw fa-file-alt"></i>PKM Pengabdian Kepada Masyarakat</a>
-                </li>
-                <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-P.docx'); ?>" download><i class=" fas fa-fw fa-file-alt"></i>PKM Penelitian</a>
-                </li>
-                <li>
-                    <a class="btn btn-light btn-block text-left mt-2" href="<?= base_url('upload/templates/Format-PKM-T.docx'); ?>" download><i class=" fas fa-fw fa-file-alt"></i>PKM Penerapan Teknologi</a>
-                </li>
-            </ul>
-        </div>
-    </div> -->
-
     <!-- Side Widget -->
-    <!-- <div class="card my-4">
+    <div class="card my-4">
         <h5 class="card-header">Bantuan</h5>
         <div class="card-body">
-            Hubungi Administrator apabila anda membutuhkan bantuan atau mengalami masalah pada sistem Pusat PKM.
-            <a class="btn btn-primary btn-block text-center mt-2" href="mailto:admin@pusatpkm.online"><i class=" fas fa-fw fa-question"></i> Hubungi Administrator</a>
+            Hubungi Administrator apabila anda membutuhkan bantuan atau mengalami masalah pada sistem UPT Pengembangan Karir & Kewirausahaan.
+            <a class="btn btn-primary btn-block text-center mt-2" href="mailto:uptkwu@upnjatim.ac.id"><i class=" fas fa-fw fa-question"></i> Hubungi Administrator</a>
         </div>
-    </div> -->
+    </div>
 
 </div>

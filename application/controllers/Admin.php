@@ -27,114 +27,7 @@ class Admin extends CI_Controller
         $this->load->view('user/profilsaya', $data);
     }
 
-    public function kelolaPengajuan()
-    {
-        $config['base_url'] = base_url('admin/kelolapengajuan');
-        $config['total_rows'] = count($this->pengajuan_model->getAllPengajuan());
-        $config['per_page'] = 10;
-        $this->pagination->initialize($config);
-
-        $data['user'] = $this->session->userdata();
-        $data['pengajuan'] = $this->pengajuan_model->getAllPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
-        $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getAllPengajuan());
-        $this->load->view('user/admin/kelolapengajuan', $data);
-    }
-
-    public function detailPengajuan()
-    {
-        if (isset($_GET['id'])) {
-            $this->session->set_userdata(array('detailpengajuanid' => $_GET['id']));
-        }
-        $data['user'] = $this->session->userdata();
-        $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
-        $data['kelompok'] = $this->user_model->getKelompok($data['pengajuan']);
-        $data['keterangan'] = $this->pengajuan_model->getKeterangan($data['pengajuan']);
-        if ($data['pengajuan']['tahap_id'] >= 2) {
-            $data['pengulas'] = $this->pengajuan_model->getPengulas($this->session->userdata('detailpengajuanid'));
-        }
-        if ($this->pengajuan_model->kirimAkun($this->session->userdata('detailpengajuanid')) == true) {
-            redirect('admin/detailPengajuan');
-        } else {
-            $this->load->view('user/admin/detailpengajuan', $data);
-        }
-    }
-
-    public function tugaskanPengajuan()
-    {
-        $config['base_url'] = base_url('admin/tugaskanpengajuan');
-        $config['total_rows'] = $this->db->get('dosen')->num_rows();
-        $config['per_page'] = 10;
-        $this->pagination->initialize($config);
-
-        $data['user'] = $this->session->userdata();
-        $data['dosen'] = $this->user_model->getDosenLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
-        $data['caption'] = $this->user_model->getCaptionData(count($data['dosen']), $this->uri->segment(3), $this->user_model->getAllDosen());
-        $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
-
-        if ($this->pengajuan_model->tugaskanPengajuan() == true) {
-            redirect('admin/detailPengajuan');
-        } else {
-            $this->load->view('user/admin/tugaskanpengajuan', $data);
-        }
-    }
-
-    public function hapusPengajuan()
-    {
-        if ($this->pengajuan_model->hapusPengajuan() == true) {
-            redirect('admin/kelolapengajuan');
-        } else {
-            redirect('admin/kelolapengajuan');
-        }
-    }
-
-    public function kelolaPengumuman()
-    {
-        $config['base_url'] = base_url('admin/kelolapengumuman');
-        $config['total_rows'] = $this->db->get('pengumuman')->num_rows();
-        $config['per_page'] = 10;
-        $this->pagination->initialize($config);
-
-        $data['user'] = $this->session->userdata();
-        $data['pengumuman'] = $this->pengumuman_model->getPengumumanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
-        $data['caption'] = $this->user_model->getCaptionData(count($data['pengumuman']), $this->uri->segment(3), $this->pengumuman_model->getAllPengumuman());
-        $this->load->view('user/admin/kelolapengumuman', $data);
-    }
-
-    public function tambahPengumuman()
-    {
-        $data['user'] = $this->session->userdata();
-
-        if ($this->pengumuman_model->tambahPengumuman() == true) {
-            redirect('admin/kelolapengumuman');
-        } else {
-            $this->load->view('user/admin/tambahpengumuman', $data);
-        }
-    }
-
-    public function hapusPengumuman()
-    {
-        if ($this->pengumuman_model->hapusPengumuman() == true) {
-            redirect('admin/kelolapengumuman');
-        } else {
-            redirect('admin/kelolapengumuman');
-        }
-    }
-
-    public function editPengumuman()
-    {
-        if (isset($_GET['id'])) {
-            $this->session->set_userdata(array('editpengumumanid' => $_GET['id']));
-        }
-        $data['user'] = $this->session->userdata();
-        $data['editpengumuman'] = $this->pengumuman_model->getPengumumanById($this->session->userdata('editpengumumanid'));
-
-        if ($this->pengumuman_model->editPengumuman($data['editpengumuman']) == true) {
-            redirect('admin/kelolapengumuman');
-        } else {
-            $this->load->view('user/admin/editpengumuman', $data);
-        }
-    }
-
+    // method User
     public function kelolaUser()
     {
         $config['base_url'] = base_url('admin/kelolauser');
@@ -189,6 +82,76 @@ class Admin extends CI_Controller
         }
     }
 
+    // method pengajuan
+    public function kelolaPengajuan()
+    {
+        $config['base_url'] = base_url('admin/kelolapengajuan');
+        $config['total_rows'] = count($this->pengajuan_model->getAllPengajuan());
+        $config['per_page'] = 10;
+        $this->pagination->initialize($config);
+
+        $data['user'] = $this->session->userdata();
+        $data['pengajuan'] = $this->pengajuan_model->getAllPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getAllPengajuan());
+        $this->load->view('user/admin/kelolapengajuan', $data);
+    }
+
+    public function detailPengajuan()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('detailpengajuanid' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
+        $data['kelompok'] = $this->user_model->getKelompok($data['pengajuan']);
+        $data['keterangan'] = $this->pengajuan_model->getKeterangan($data['pengajuan']);
+        if ($data['pengajuan']['tahap_id'] >= 2) {
+            $data['pengulas'] = $this->pengajuan_model->getPengulas($this->session->userdata('detailpengajuanid'));
+        }
+        if ($this->pengajuan_model->kirimAkun($this->session->userdata('detailpengajuanid')) == true) {
+            redirect('admin/detailPengajuan');
+        } else {
+            $this->load->view('user/admin/detailpengajuan', $data);
+        }
+    }
+
+    public function tugaskanPengajuan()
+    {
+        $config['base_url'] = base_url('admin/tugaskanpengajuan');
+        $config['total_rows'] = $this->db->get('dosen')->num_rows();
+        $config['per_page'] = 10;
+        $this->pagination->initialize($config);
+
+        $data['user'] = $this->session->userdata();
+        $data['dosen'] = $this->user_model->getDosenLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['caption'] = $this->user_model->getCaptionData(count($data['dosen']), $this->uri->segment(3), $this->user_model->getAllDosen());
+        $data['pengajuan'] = $this->pengajuan_model->getPengajuanById($this->session->userdata('detailpengajuanid'));
+
+        if ($this->pengajuan_model->tugaskanPengajuan() == true) {
+            redirect('admin/detailPengajuan');
+        } else {
+            $this->load->view('user/admin/tugaskanpengajuan', $data);
+        }
+    }
+
+    public function ubahStatusPengajuan()
+    {
+        if($this->pengajuan_model->ubahStatusPengajuan()){
+            redirect('admin/detailPengajuan');
+        }else {
+            redirect('admin/detailPengajuan');
+        }
+    }
+
+    public function hapusPengajuan()
+    {
+        if ($this->pengajuan_model->hapusPengajuan() == true) {
+            redirect('admin/kelolapengajuan');
+        } else {
+            redirect('admin/kelolapengajuan');
+        }
+    }
+
     public function historiProposal()
     {
         $config['base_url'] = base_url('admin/historiproposal');
@@ -200,6 +163,55 @@ class Admin extends CI_Controller
         $data['pengajuan'] = $this->pengajuan_model->getFinishPengajuanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
         $data['caption'] = $this->pengajuan_model->getCaptionData(count($data['pengajuan']), $this->uri->segment(3), $this->pengajuan_model->getFinishPengajuan());
         $this->load->view('user/historiproposal', $data);
+    }
+
+    // method pengumuman
+    public function kelolaPengumuman()
+    {
+        $config['base_url'] = base_url('admin/kelolapengumuman');
+        $config['total_rows'] = $this->db->get('pengumuman')->num_rows();
+        $config['per_page'] = 10;
+        $this->pagination->initialize($config);
+
+        $data['user'] = $this->session->userdata();
+        $data['pengumuman'] = $this->pengumuman_model->getPengumumanLimit($config['per_page'], $this->uri->segment(3), $this->input->post('search'));
+        $data['caption'] = $this->user_model->getCaptionData(count($data['pengumuman']), $this->uri->segment(3), $this->pengumuman_model->getAllPengumuman());
+        $this->load->view('user/admin/kelolapengumuman', $data);
+    }
+
+    public function tambahPengumuman()
+    {
+        $data['user'] = $this->session->userdata();
+
+        if ($this->pengumuman_model->tambahPengumuman() == true) {
+            redirect('admin/kelolapengumuman');
+        } else {
+            $this->load->view('user/admin/tambahpengumuman', $data);
+        }
+    }
+
+    public function hapusPengumuman()
+    {
+        if ($this->pengumuman_model->hapusPengumuman() == true) {
+            redirect('admin/kelolapengumuman');
+        } else {
+            redirect('admin/kelolapengumuman');
+        }
+    }
+
+    public function editPengumuman()
+    {
+        if (isset($_GET['id'])) {
+            $this->session->set_userdata(array('editpengumumanid' => $_GET['id']));
+        }
+        $data['user'] = $this->session->userdata();
+        $data['editpengumuman'] = $this->pengumuman_model->getPengumumanById($this->session->userdata('editpengumumanid'));
+
+        if ($this->pengumuman_model->editPengumuman($data['editpengumuman']) == true) {
+            redirect('admin/kelolapengumuman');
+        } else {
+            $this->load->view('user/admin/editpengumuman', $data);
+        }
     }
 
     // method kategori

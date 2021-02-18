@@ -57,13 +57,10 @@ class Periode_model extends CI_Model
                 $this->db->where('status','aktif');
                 $this->db->update('periode');
             }
-            $data = array(
-                'id' => $Periode['id'],
-                'tahun' => $this->input->post('periodeTahun', TRUE),
-                'status' => $this->input->post('periodeStatus', TRUE)
-            );
+            $this->db->set('tahun', $this->input->post('periodeTahun', TRUE));
+            $this->db->set('status', $this->input->post('periodeStatus', TRUE));
             $this->db->where('id', $Periode['id']);
-            $this->db->replace('Periode', $data);
+            $this->db->update('Periode');
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Periode berhasil diperbarui</div>');
             return TRUE;
         } else {

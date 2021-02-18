@@ -35,7 +35,7 @@
                     <?= $this->session->flashdata('message'); ?>
                     <div class="row">
 
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <div class="card bg-light mb-4">
                                 <div class="card-body">
                                     <h2 class="card-title"><b><?= $pengajuan['judul']; ?></b></h2>
@@ -49,12 +49,12 @@
                                     <p><?= $keterangan['periode']['tahun']; ?></p>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('upload/pengajuan/') . $pengajuan['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Proposal</a>
+                                    <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('uploads/pengajuan/') . $pengajuan['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Proposal</a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="card bg-light mb-4">
                                 <h5 class="card-header"><b>Anggota Kelompok</b></h5>
                                 <div class="card-body">
@@ -80,45 +80,151 @@
                                     <?php
                                     case '2': ?>
                                         <div class="card-body">
-                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
+                                            <p class="d-flex justify-content-between">
+                                                <b><?= $keterangan['tahap']['nama']; ?> </b>
+                                                <?php if (count($pengulas) == 1) : ?>
+                                                    <a class="btn btn-primary btn-sm" href="<?= base_url('admin/tugaskanpengajuan') . '?id=' . $pengajuan['id']; ?>">Tambah pengulas</a>
+                                                <?php else : ?>
+                                                    <a class="btn btn-secondary btn-sm" href="<?= base_url('admin/tugaskanpengajuan') . '?id=' . $pengajuan['id']; ?>">Ganti pengulas</a>
+                                                <?php endif; ?>
+                                            </p>
+                                            <?php foreach ($pengulas as $dsn) : ?>
+                                                <div class="card card-body <?= $dsn['tahap_id'] <= 3 ? 'bg-white' : 'bg-light' ?> ">
+                                                    <small><b>Oleh :</b></small>
+                                                    <p><?= $dsn['nama']; ?> (<?= $dsn['nidn']; ?>)</p>
+                                                    <small><b>Usulan :</b></small>
+                                                    <p>
+                                                        <?php switch ($dsn['tahap_id']):
+                                                                    case '2': ?>
+                                                                <span class="badge badge-secondary">Sedang diulas</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '3': ?>
+                                                                <span class="badge badge-warning">Permintaan revisi</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '4': ?>
+                                                                <span class="badge badge-danger">Permintaan ditolak</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '5': ?>
+                                                                <span class="badge badge-success">Permintaan diterima</span>
+                                                                <?php break; ?>
+                                                            <?php endswitch; ?>
+                                                    </p>
+                                                </div>
+                                            <?php endforeach; ?>
                                         </div>
                                         <div class="card-footer text-muted">
-                                            <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('admin/tugaskanpengajuan') . '?id=' . $pengajuan['id']; ?>">Ganti pengulas</a>
+                                            <form action="<?= base_url('admin/ubahstatuspengajuan'); ?>" method="post">
+                                                <p>
+                                                    Setelah pengulas mengirim usulan hasil ulasan, silahkan merubah status pengajuan ke tahap sesuai usulan.
+                                                </p>
+                                                <div class="input-group">
+                                                    <select class="custom-select form-control" id="statusPengajuan" name="statusPengajuan">
+                                                        <option value="3">Permintaan Revisi</option>
+                                                        <option value="4">Pengajuan Ditolak</option>
+                                                        <option value="5">Pengajuan Diterima</option>
+                                                    </select>
+                                                </div>
+                                                <input type="text" name="idPengajuan" id="idPengajuan" value="<?= $pengajuan["id"]; ?>" hidden>
+                                                <button type="submit" class="btn btn-primary btn-block text-left mt-2">Ubah status pengajuan</button>
+                                            </form>
                                         </div>
                                         <?php break; ?>
                                     <?php
                                     case '3': ?>
                                         <div class="card-body">
-                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Komentar pengulas :</b></small>
-                                            <p><?= $ulasan['komentar'] ? $ulasan['komentar'] : 'tidak ada komentar'; ?></p>
-                                            <small><b>File ulasan :</b></small>
-                                            <?php if ($ulasan['file']) : ?>
-                                                <a class="btn btn-warning btn-block text-left mt-2" href="<?= base_url('upload/ulasan/') . $ulasan['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
-                                            <?php else : ?>
-                                                <p>tidak ada file</p>
-                                            <?php endif; ?>
+                                            <p class="d-flex justify-content-between">
+                                                <b><?= $keterangan['tahap']['nama']; ?> </b>
+                                            </p>
+                                            <?php foreach ($pengulas as $dsn) : ?>
+                                                <div class="card card-body bg-light">
+                                                    <small><b>Oleh :</b></small>
+                                                    <p><?= $dsn['nama']; ?> (<?= $dsn['nidn']; ?>)</p>
+                                                    <small><b>Usulan :</b></small>
+                                                    <p>
+                                                        <?php switch ($dsn['tahap_id']):
+                                                                    case '2': ?>
+                                                                <span class="badge badge-secondary">Sedang diulas</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '3': ?>
+                                                                <span class="badge badge-warning">Permintaan revisi</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '4': ?>
+                                                                <span class="badge badge-danger">Permintaan ditolak</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '5': ?>
+                                                                <span class="badge badge-success">Permintaan diterima</span>
+                                                                <?php break; ?>
+                                                            <?php endswitch; ?>
+                                                    </p>
+                                                </div>
+                                            <?php endforeach; ?>
                                         </div>
                                         <div class="card-footer text-muted">
-                                            <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('admin/tugaskanpengajuan') . '?id=' . $pengajuan['id']; ?>">Ganti pengulas</a>
+                                            <form action="<?= base_url('admin/ubahstatuspengajuan'); ?>" method="post">
+                                                <p>
+                                                    Setelah pengulas mengirim usulan hasil ulasan, silahkan merubah status pengajuan ke tahap sesuai usulan.
+                                                </p>
+                                                <div class="input-group">
+                                                    <select class="custom-select form-control" id="statusPengajuan" name="statusPengajuan" disabled>
+                                                        <option value="3">Permintaan Revisi</option>
+                                                        <option value="4">Pengajuan Ditolak</option>
+                                                        <option value="5">Pengajuan Diterima</option>
+                                                    </select>
+                                                </div>
+                                                <input type="text" name="idPengajuan" id="idPengajuan" value="<?= $pengajuan["id"]; ?>" hidden>
+                                                <button type="submit" class="btn btn-secondary btn-block text-left mt-2" disabled>Menunggu Revisi</button>
+                                            </form>
                                         </div>
                                         <?php break; ?>
                                     <?php
                                     case '4': ?>
                                         <div class="card-body">
-                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
+                                            <p class="d-flex justify-content-between">
+                                                <b><?= $keterangan['tahap']['nama']; ?> </b>
+                                            </p>
+                                            <?php foreach ($pengulas as $dsn) : ?>
+                                                <div class="card card-body bg-light">
+                                                    <small><b>Oleh :</b></small>
+                                                    <p><?= $dsn['nama']; ?> (<?= $dsn['nidn']; ?>)</p>
+                                                    <small><b>Usulan :</b></small>
+                                                    <p>
+                                                        <?php switch ($dsn['tahap_id']):
+                                                                    case '2': ?>
+                                                                <span class="badge badge-secondary">Sedang diulas</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '3': ?>
+                                                                <span class="badge badge-warning">Permintaan revisi</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '4': ?>
+                                                                <span class="badge badge-danger">Permintaan ditolak</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '5': ?>
+                                                                <span class="badge badge-success">Permintaan diterima</span>
+                                                                <?php break; ?>
+                                                            <?php endswitch; ?>
+                                                    </p>
+                                                </div>
+                                            <?php endforeach; ?>
                                         </div>
                                         <div class="card-footer text-muted">
-                                            <button type="button" class="btn btn-danger btn-sm mb-1" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['id']; ?>">Hapus</button>
+                                            <p>
+                                                Pengajuan ditolak, silahkan hapus pengajuan.
+                                            </p>
+                                            <button type="button" class="btn btn-danger btn-block text-left mt-2" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['id']; ?>">Hapus</button>
                                             <?php $hapusPengajuan = [
-                                                'pengajuan_id' => $pengajuan['id'],
-                                                'pengajuan_judul' => $pengajuan['judul'],
-                                                'pengajuan_file' => $pengajuan['file'],
-                                            ] ?>
+                                                    'pengajuan_id' => $pengajuan['id'],
+                                                    'pengajuan_judul' => $pengajuan['judul'],
+                                                    'pengajuan_file' => $pengajuan['file'],
+                                                ] ?>
                                             <!-- hapusPengajuan Modal -->
                                             <?php $this->load->view("user/admin/_hapusPengajuanModal", $hapusPengajuan) ?>
                                         </div>
@@ -128,8 +234,8 @@
                                         <form action="<?= base_url('admin/detailpengajuan'); ?>" method="post">
                                             <div class="card-body">
                                                 <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                                <small><b>Oleh :</b></small>
-                                                <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
+                                                <p>Setelah pengajuan diterima, silahkan kirimkan informasi akun simbelmawa.</p>
+                                                <p>( isikan nilai apa saja apabila tidak ada akun )</p>
                                                 <div>
                                                     <label for="username" class="col-form-label col-form-label-lg"><small><b>Username Simbelmawa</b></small></label>
                                                     <div class="input-group input-group-sm">
@@ -159,11 +265,11 @@
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
                                             <?php if ($pengajuan['file_laporan'] != null) : ?>
-                                                <a class="btn btn-info btn-block text-left mt-2" href="<?= base_url('upload/laporan/') . $pengajuan['file_laporan']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> Laporan Akhir</a>
+                                                <a class="btn btn-info btn-block text-left mt-2" href="<?= base_url('uploads/laporan/') . $pengajuan['file_laporan']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> Laporan Akhir</a>
                                             <?php endif; ?>
                                         </div>
                                         <?php break; ?>
-                                <?php endswitch; ?>
+                                    <?php endswitch; ?>
                             </div>
                         </div>
                     </div>

@@ -75,26 +75,11 @@
                                         <td class="align-middle"><?= $pengajuan['dosen_nama']; ?></td>
                                         <td class="align-middle"><?= $pengajuan['periode_tahun']; ?></td>
                                         <td class="align-middle">
-                                            <?php switch ($pengajuan['tahap_id']):
-                                                case 1: ?>
-                                                    <span class="badge badge-secondary"><?= $pengajuan['tahap_nama']; ?></span>
-                                                <?php break;
-                                                case 2: ?>
-                                                    <span class="badge badge-warning">Permintaan Ulasan</span>
-                                                <?php break;
-                                                case 3: ?>
-                                                    <span class="badge badge-primary">Permintaan Revisi Dikirim</span>
-                                                <?php break;
-                                                case 4: ?>
-                                                    <span><?= $pengajuan['tahap_nama']; ?></span>
-                                                <?php break;
-                                                case 5: ?>
-                                                    <span><?= $pengajuan['tahap_nama']; ?></span>
-                                                <?php break;
-                                                case 6: ?>
-                                                    <span><?= $pengajuan['tahap_nama']; ?></span>
-                                                    <?php break; ?>
-                                            <?php endswitch; ?>
+                                            <?php if ($pengajuan['ulasan_tahap'] == 2): ?>
+                                                <span class="badge badge-warning">Permintaan Ulasan</span>
+                                                <?php else: ?>
+                                                    <span class="badge badge-secondary">Ulasan dikirim</span>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="align-middle">
                                             <a type="button" class="btn btn-primary btn-sm mb-1" href="<?= base_url('dosen/detailPengajuan') . '?id=' . $pengajuan['pengajuan_id']; ?>">Detail</a>

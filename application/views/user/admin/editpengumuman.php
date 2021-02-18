@@ -5,7 +5,9 @@
     <!-- Core Meta Data -->
     <?php $this->load->view("_partials/meta") ?>
     <!-- Custom styles for sb-admin -->
-    <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/css/sb-admin-2.min.css'); ?>" rel="stylesheet" type="text/css">
+    <!-- include summernote css-->
+    <link href="<?= base_url('assets/summernote/summernote-bs4.css')?>" rel="stylesheet" type="text/css">
 </head>
 
 <body id="page-top">
@@ -59,9 +61,9 @@
                             <input type="text" class="form-control " id="hapusGambar" name="hapusGambar" value="" style="display: none;">
                         </div>
                         <div class="form-group row">
-                            <label for="isiPengumuman" class="col-sm-2 col-form-label col-form-label-lg"><b>Isi</b></label>
+                            <label for="summernote" class="col-sm-2 col-form-label col-form-label-lg"><b>Isi</b></label>
                             <div class="col-sm-10 pt-1">
-                                <textarea class="form-control" name="isiPengumuman" id="isiPengumuman" rows="5" onchange="hideError('isiPengumumanError');"><?= set_value('isiPengumuman') != null ? set_value('isiPengumuman') : $editpengumuman['isi']; ?></textarea>
+                                <textarea class="form-control" name="isiPengumuman" id="summernote" rows="5" onchange="hideError('isiPengumumanError');"><?= set_value('isiPengumuman') != null ? set_value('isiPengumuman') : $editpengumuman['isi']; ?></textarea>
                                 <?= form_error('isiPengumuman', '<small id="isiPengumumanError" class="text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
@@ -103,7 +105,28 @@
     <!-- Logout Modal-->
     <?php $this->load->view("_partials/logoutModal") ?>
 
+    <!-- Core Script Data -->
+    <?php $this->load->view("_partials/script") ?>
+    <!-- Custom scripts for sb-admin -->
+    <script src="<?= base_url('assets/js/sb-admin-2.min.js'); ?>"></script>
+    <!-- include summernote js -->
+    <script src="<?= base_url('assets/summernote/summernote-bs4.js'); ?>"></script>
+
     <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+        });
+
         function changeText(id, value) {
             document.getElementById(id).innerHTML = value.split('\\').pop();
         }
@@ -136,11 +159,6 @@
             document.getElementById(error).style.display = "none";
         }
     </script>
-
-    <!-- Core Script Data -->
-    <?php $this->load->view("_partials/script") ?>
-    <!-- Custom scripts for sb-admin -->
-    <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
 </body>
 

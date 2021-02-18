@@ -28,7 +28,9 @@
                             <?php endif; ?>
                             <div class="card-body">
                                 <h2 class="card-title"><?= $pengumuman['judul']; ?></h2>
-                                <p class="card-text"><?= mb_strimwidth($pengumuman['isi'], 0, 256, "..."); ?></p>
+                                <div class="card-text">
+                                    <?= htmlspecialchars_decode($pengumuman['isi']); ?>
+                                </div>
                                 <a href="<?= base_url('home/pengumuman') . '?id=' . $pengumuman['id']; ?>" class="btn btn-primary">Lebih Banyak &rarr;</a>
                             </div>
                             <div class="card-footer text-muted">

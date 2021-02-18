@@ -92,7 +92,6 @@ class Mahasiswa extends CI_Controller
         $data['keterangan'] = $this->pengajuan_model->getKeterangan($data['pengajuan']);
         if ($data['pengajuan']['tahap_id'] >= 2) {
             $data['pengulas'] = $this->pengajuan_model->getPengulas($this->session->userdata('detailpengajuanid'));
-            $data['ulasan'] = $this->db->get_where('ulasan', array('dosen_nidn' => $data['pengulas']['nidn']))->row_array();
         }
 
         if ($this->pengajuan_model->kirimRevisi($data['pengajuan']) == true) {

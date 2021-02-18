@@ -270,6 +270,7 @@ class Pengajuan_model extends CI_Model
         ulasan.id AS ulasan_id,
         ulasan.dosen_nidn AS ulasan_dosen,
         ulasan.komentar AS ulasan_komentar,
+        ulasan.tahap_id AS ulasan_tahap,
         ulasan.file AS ulasan_file,
         pengajuan.id AS pengajuan_id,
         pengajuan.judul AS pengajuan_judul,
@@ -296,11 +297,13 @@ class Pengajuan_model extends CI_Model
         return $this->db->get('ulasan', $limit, $start)->result_array();
     }
 
-    public function getPengulas($nidn)
+    public function getPengulas($pengajuanId)
     {
-        $ulasan = $this->db->get_where('ulasan', array('pengajuan_id' => $nidn))->row_array();
-        $dosen = $this->db->get_where('dosen', array('nidn' => $ulasan['dosen_nidn']))->row_array();
-        return array_merge($ulasan, $dosen);
+        foreach ($this->db->get_where('ulasan', array('pengajuan_id' => $pengajuanId))->result_array() as $ulasan) {
+            $dosen = $this->db->get_where('dosen', array('nidn' => $ulasan['dosen_nidn']))->row_array();
+            $pengulas[] = array_merge($ulasan, $dosen);
+        }
+        return $pengulas;
     }
 
     public function getCaptionData($limit, $start, $count)
@@ -671,8 +674,14 @@ class Pengajuan_model extends CI_Model
     public function hapusPengajuan()
     {
         if (isset($_POST['hapusid'])) {
-            if ($_POST['hapusfile'] != null) {
-                unlink('./uploads/pengajuan/' . $_POST['hapusfile']);
+            if ($this->db->get_where('pengajuan',['id'=>$_POST['hapusid']])->row_array()['file'] != null) {
+                unlink('./uploads/pengajuan/' . $this->db->get_where('pengajuan',['id'=>$_POST['hapusid']])->row_array()['file']);
+            }
+            if ($this->db->get_where('pengajuan',['id'=>$_POST['hapusid']])->row_array()['file_laporan'] != null) {
+                unlink('./uploads/laporan/' . $this->db->get_where('pengajuan',['id'=>$_POST['hapusid']])->row_array()['file_laporan']);
+            }
+            if ($this->db->get_where('ulasan',['pengajuan_id'=>$_POST['hapusid']])->row_array()['file'] != null) {
+                unlink('./uploads/ulasan/' . $this->db->get_where('ulasan',['pengajuan_id'=>$_POST['hapusid']])->row_array()['file']);
             }
             $this->db->delete('pengajuan', array('id' => $_POST['hapusid']));
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan "' . $_POST['hapusjudul'] . '" berhasil dihapus!</div>');
@@ -699,34 +708,36 @@ class Pengajuan_model extends CI_Model
     public function tugaskanPengajuan()
     {
         if (isset($_POST['pengajuan_id']) && isset($_POST['dosen_nidn'])) {
-            if ($this->db->get_where('ulasan', array('pengajuan_id' => $this->input->post('pengajuan_id')))->row_array()) {
-                $this->db->set('dosen_nidn', $this->input->post('dosen_nidn'));
+            if (count($this->db->get_where('ulasan', array('pengajuan_id' => $this->input->post('pengajuan_id')))->result_array()) >= 2) {
                 $this->db->where('pengajuan_id', $this->input->post('pengajuan_id'));
-                $this->db->update('ulasan');
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengulas berhasil diperbarui!</div>');
-                return true;
-            } else {
-                $ulasan = [
-                    'id' => null,
-                    'pengajuan_id' => $this->input->post('pengajuan_id'),
-                    'dosen_nidn' => $this->input->post('dosen_nidn'),
-                    'komentar' => null,
-                    'file' => null
-                ];
-                $this->db->insert('ulasan', $ulasan);
-                $this->db->set('tahap_id', 2);
+                $this->db->delete('ulasan');
+                $this->db->reset_query();
+                $this->db->set('tahap_id', 1);
                 $this->db->where('id', $this->input->post('pengajuan_id'));
                 $this->db->update('pengajuan');
             }
-
+            $ulasan = [
+                'id' => null,
+                'pengajuan_id' => $this->input->post('pengajuan_id'),
+                'dosen_nidn' => $this->input->post('dosen_nidn'),
+                'tahap_id' => 2,
+                'komentar' => null,
+                'file' => null
+            ];
+            $this->db->insert('ulasan', $ulasan);
+            $this->db->set('tahap_id', 2);
+            $this->db->where('id', $this->input->post('pengajuan_id'));
+            $this->db->update('pengajuan');
+            $this->db->reset_query();
             // insert log pengajuan
             $dataLog = [
                 'id' => null,
                 'pengajuan_id' => $this->input->post('pengajuan_id'),
                 'waktu' => null,
-                'berita' => 'Pengajuan Ditugaskan'
+                'berita' => 'Pengulas Ditugaskan'
             ];
             $this->db->insert('log', $dataLog);
+
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan berhasil ditugaskan!</div>');
             return true;
@@ -735,8 +746,9 @@ class Pengajuan_model extends CI_Model
         }
     }
 
-    public function kirimUlasan($id, $ulasan)
+    public function kirimUlasan($id, $nidn)
     {
+        $ulasan = $this->db->get_where('ulasan', ['dosen_nidn' => $nidn])->row_array();
         // Validasi
         foreach ($this->db->get('tahap')->result_array() as $tahap) {
             $tahapId[] = $tahap['id'];
@@ -767,15 +779,18 @@ class Pengajuan_model extends CI_Model
         }
 
         if ($this->form_validation->run() == true) {
+            if ($ulasan['file'] != null) {
+            unlink('./uploads/ulasan/' . $ulasan['file']);
+            }
             $this->db->set('tahap_id', $this->input->post('tahap'));
-            $this->db->where('id', $id);
-            $this->db->update('pengajuan');
+            $this->db->set('komentar', '');
+            $this->db->set('file', '');
+            $this->db->where('id', $ulasan['id']);
+            $this->db->update('ulasan');
+            $this->db->reset_query();
 
             if ($_FILES != null) {
                 if ($_FILES['userFile']['error'] != 4) {
-                    if ($ulasan['file'] != null) {
-                        unlink('./uploads/pengajuan/' . $ulasan['file']);
-                    }
                     $this->db->set('file', _uploadUlasan($ulasan['id']));
                 }
             }
@@ -845,6 +860,12 @@ class Pengajuan_model extends CI_Model
                 $this->db->set('tahap_id', '2');
                 $this->db->where('id', $pengajuan['id']);
                 $this->db->update('pengajuan');
+        
+                $this->db->reset_query();
+
+                $this->db->set('tahap_id', '2');
+                $this->db->where(['pengajuan_id'=>$pengajuan['id'], 'tahap_id'=>'3']);
+                $this->db->update('ulasan');
 
                 $dataLog = [
                     'id' => null,
@@ -949,5 +970,14 @@ class Pengajuan_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+    public function ubahStatusPengajuan()
+    {
+        $this->db->set('tahap_id', $this->input->post('statusPengajuan'));
+        $this->db->where('id', $this->input->post('idPengajuan'));
+        $this->db->update('pengajuan');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Status pengajuan diubah!</div>');
+        return TRUE;
     }
 }

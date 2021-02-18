@@ -26,7 +26,9 @@
                     <?php endif; ?>
                     <div class="card-body">
                         <h2 class="card-title"><?= $pengumuman['judul']; ?></h2>
-                        <p class="card-text"><?= $pengumuman['isi']; ?></p>
+                        <div class="card-text">
+                            <?= htmlspecialchars_decode($pengumuman['isi']); ?>
+                        </div>
                     </div>
                     <div class="card-footer text-muted">
                         Ditulis <?= date("d-F-Y", strtotime($pengumuman['waktu'])); ?> oleh Admin

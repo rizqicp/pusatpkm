@@ -78,18 +78,18 @@
             <?php break; ?>
         <?php
         case 'dosen': ?>
-            <!-- Nav Item - bimbingan -->
-            <li class="nav-item <?= $this->uri->segment(2) == 'bimbingan' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= base_url($user['role'] . '/bimbingan'); ?>">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Bimbingan</span>
-                </a>
-            </li>
             <!-- Nav Item - ulasan -->
             <li class="nav-item <?= $this->uri->segment(2) == 'ulasan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= base_url($user['role'] . '/ulasan'); ?>">
                     <i class="fas fa-fw fa-file-alt"></i>
                     <span>Ulasan</span>
+                </a>
+            </li>
+            <!-- Nav Item - bimbingan -->
+            <li class="nav-item <?= $this->uri->segment(2) == 'bimbingan' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url($user['role'] . '/bimbingan'); ?>">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Bimbingan</span>
                 </a>
             </li>
             <?php break; ?>

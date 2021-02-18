@@ -49,7 +49,7 @@
                                     <p><?= $keterangan['periode']['tahun']; ?></p>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('upload/pengajuan/') . $pengajuan['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Proposal</a>
+                                    <a class="btn btn-primary btn-block text-left mt-2" href="<?= base_url('uploads/pengajuan/') . $pengajuan['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Proposal</a>
                                 </div>
                             </div>
                         </div>
@@ -80,9 +80,15 @@
                                     <?php
                                     case '2': ?>
                                         <div class="card-body">
-                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Oleh :</b></small>
-                                            <p><?= $pengulas['nama']; ?> (<?= $pengulas['nidn']; ?>)</p>
+                                            <p>
+                                                <b><?= $keterangan['tahap']['nama']; ?> </b>
+                                            </p>
+                                            <?php foreach ($pengulas as $dsn) : ?>
+                                                <div class="card card-body bg-light">
+                                                    <small><b>Oleh :</b></small>
+                                                    <p><?= $dsn['nama']; ?> (<?= $dsn['nidn']; ?>)</p>
+                                                </div>
+                                            <?php endforeach; ?>
                                         </div>
                                         <div class="card-footer text-muted">
                                             <a class="btn btn-primary btn-block text-left mt-2 disabled" href="#">Menunggu ulasan</a>
@@ -91,15 +97,47 @@
                                     <?php
                                     case '3': ?>
                                         <div class="card-body">
-                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Komentar pengulas :</b></small>
-                                            <p><?= $ulasan['komentar'] ? $ulasan['komentar'] : 'tidak ada komentar'; ?></p>
-                                            <small><b>File ulasan :</b></small>
-                                            <?php if ($ulasan['file']) : ?>
-                                                <a class="btn btn-warning btn-block text-left mt-2" href="<?= base_url('upload/ulasan/') . $ulasan['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
-                                            <?php else : ?>
-                                                <p>tidak ada file</p>
-                                            <?php endif; ?>
+                                            <p class="d-flex justify-content-between">
+                                                <b><?= $keterangan['tahap']['nama']; ?> </b>
+                                            </p>
+                                            <?php foreach ($pengulas as $dsn) : ?>
+                                                <div class="card card-body bg-light">
+                                                    <small><b>Oleh :</b></small>
+                                                    <p><?= $dsn['nama']; ?> (<?= $dsn['nidn']; ?>)</p>
+                                                    <small><b>Usulan :</b></small>
+                                                    <p>
+                                                        <?php switch ($dsn['tahap_id']):
+                                                                    case '2': ?>
+                                                                <span class="badge badge-secondary">Sedang diulas</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '3': ?>
+                                                                <span class="badge badge-warning">Permintaan revisi</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '4': ?>
+                                                                <span class="badge badge-danger">Permintaan ditolak</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '5': ?>
+                                                                <span class="badge badge-success">Permintaan diterima</span>
+                                                                <?php break; ?>
+                                                            <?php endswitch; ?>
+                                                    </p>
+                                                    <small><b>Komentar :</b></small>
+                                                    <?php if ($dsn['komentar'] != NULL) : ?>
+                                                        <textarea class="form-control" rows="3" readonly><?= $dsn['komentar']; ?></textarea>
+                                                    <?php else : ?>
+                                                        <p>Tidak ada komentar</p>
+                                                    <?php endif; ?>
+                                                    <small><b>File :</b></small>
+                                                    <?php if ($dsn['file'] != NULL) : ?>
+                                                        <a class="btn btn-warning btn-block text-left mt-2" href="<?= base_url('uploads/ulasan/') . $dsn['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
+                                                    <?php else : ?>
+                                                        <p>Tidak ada file</p>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endforeach; ?>
                                         </div>
                                         <div class="card-footer text-muted">
                                             <form action="<?= base_url('mahasiswa/detailpengajuan'); ?>" method="post" enctype="multipart/form-data">
@@ -122,17 +160,58 @@
                                     <?php
                                     case '4': ?>
                                         <div class="card-body">
-                                            <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
-                                            <small><b>Komentar pengulas :</b></small>
-                                            <p><?= $ulasan['komentar']; ?></p>
+                                            <p class="d-flex justify-content-between">
+                                                <b><?= $keterangan['tahap']['nama']; ?> </b>
+                                            </p>
+                                            <?php foreach ($pengulas as $dsn) : ?>
+                                                <div class="card card-body bg-light">
+                                                    <small><b>Oleh :</b></small>
+                                                    <p><?= $dsn['nama']; ?> (<?= $dsn['nidn']; ?>)</p>
+                                                    <small><b>Usulan :</b></small>
+                                                    <p>
+                                                        <?php switch ($dsn['tahap_id']):
+                                                                    case '2': ?>
+                                                                <span class="badge badge-secondary">Sedang diulas</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '3': ?>
+                                                                <span class="badge badge-warning">Permintaan revisi</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '4': ?>
+                                                                <span class="badge badge-danger">Permintaan ditolak</span>
+                                                                <?php break; ?>
+                                                            <?php
+                                                                    case '5': ?>
+                                                                <span class="badge badge-success">Permintaan diterima</span>
+                                                                <?php break; ?>
+                                                            <?php endswitch; ?>
+                                                    </p>
+                                                    <small><b>Komentar :</b></small>
+                                                    <?php if ($dsn['komentar'] != NULL) : ?>
+                                                        <textarea class="form-control" rows="3" readonly><?= $dsn['komentar']; ?></textarea>
+                                                    <?php else : ?>
+                                                        <p>Tidak ada komentar</p>
+                                                    <?php endif; ?>
+                                                    <small><b>File :</b></small>
+                                                    <?php if ($dsn['file'] != NULL) : ?>
+                                                        <a class="btn btn-warning btn-block text-left mt-2" href="<?= base_url('uploads/ulasan/') . $dsn['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
+                                                    <?php else : ?>
+                                                        <p>Tidak ada file</p>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endforeach; ?>
                                         </div>
                                         <div class="card-footer text-muted">
+                                            <p>
+                                                Pengajuan ditolak, silahkan hapus pengajuan.
+                                            </p>
                                             <button class="btn btn-danger btn-block text-left mt-2" href="#" data-toggle="modal" data-target="#hapusPengajuanModal<?= $pengajuan['id']; ?>">Hapus pengajuan</button>
                                             <?php $hapusPengajuan = [
-                                                'pengajuan_id' => $pengajuan['id'],
-                                                'pengajuan_judul' => $pengajuan['judul'],
-                                                'pengajuan_file' => $pengajuan['file'],
-                                            ] ?>
+                                                    'pengajuan_id' => $pengajuan['id'],
+                                                    'pengajuan_judul' => $pengajuan['judul'],
+                                                    'pengajuan_file' => $pengajuan['file'],
+                                                ] ?>
                                             <!-- hapusPengajuan Modal -->
                                             <?php $this->load->view("user/mahasiswa/_hapusPengajuanModal", $hapusPengajuan) ?>
                                         </div>
@@ -185,11 +264,11 @@
                                         <div class="card-body">
                                             <p><b><?= $keterangan['tahap']['nama']; ?></b></p>
                                             <?php if ($pengajuan['file_laporan'] != null) : ?>
-                                                <a class="btn btn-info btn-block text-left mt-2" href="<?= base_url('upload/laporan/') . $pengajuan['file_laporan']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> Laporan Akhir</a>
+                                                <a class="btn btn-info btn-block text-left mt-2" href="<?= base_url('uploads/laporan/') . $pengajuan['file_laporan']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> Laporan Akhir</a>
                                             <?php endif; ?>
                                         </div>
                                         <?php break; ?>
-                                <?php endswitch; ?>
+                                    <?php endswitch; ?>
                             </div>
                         </div>
                     </div>

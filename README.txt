@@ -4,6 +4,9 @@ konfigurasi database
 konfigurasi email
 /application/libraries/phpmailer_lib
 
+konfigurasi basepath
+/application/config/constants.php
+
 
 login admin
 : admin@gmail.com

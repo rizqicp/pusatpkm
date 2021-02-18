@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2021 at 01:05 AM
+-- Generation Time: Feb 18, 2021 at 11:45 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -162,27 +162,15 @@ CREATE TABLE `log` (
 --
 
 INSERT INTO `log` (`id`, `pengajuan_id`, `waktu`, `berita`) VALUES
-(22, 19, '2020-12-03 08:03:37', 'Pengajuan Dibuat'),
-(23, 20, '2020-12-03 08:08:30', 'Pengajuan Dibuat'),
-(24, 21, '2020-12-03 08:11:11', 'Pengajuan Dibuat'),
-(25, 22, '2020-12-03 08:15:33', 'Pengajuan Dibuat'),
-(26, 23, '2020-12-03 08:18:29', 'Pengajuan Dibuat'),
-(27, 24, '2020-12-03 08:20:14', 'Pengajuan Dibuat'),
-(28, 19, '2020-12-03 08:21:32', 'Pengajuan Ditugaskan'),
-(29, 20, '2020-12-03 08:21:49', 'Pengajuan Ditugaskan'),
-(30, 21, '2020-12-03 08:22:05', 'Pengajuan Ditugaskan'),
-(31, 22, '2020-12-03 08:22:14', 'Pengajuan Ditugaskan'),
-(32, 23, '2020-12-03 08:22:30', 'Pengajuan Ditugaskan'),
-(33, 19, '2020-12-03 08:23:31', 'Pengajuan Diterima'),
-(34, 20, '2020-12-03 08:23:50', 'Pengajuan Diterima'),
-(35, 21, '2020-12-03 08:24:39', 'Pengajuan Ditolak'),
-(36, 22, '2020-12-03 08:26:36', 'Permintaan Revisi'),
-(37, 19, '2020-12-03 08:28:12', 'Akun Simbelmawa Dikirim'),
-(38, 19, '2020-12-03 08:36:38', 'Laporan Akhir Dikirim'),
-(39, 20, '2020-12-04 09:47:03', 'Akun Simbelmawa Dikirim'),
-(47, 24, '2020-12-10 05:31:12', 'Pengajuan Ditugaskan'),
-(48, 20, '2020-12-10 05:32:13', 'Akun Simbelmawa Dikirim'),
-(50, 24, '2020-12-10 08:19:21', 'Pengajuan Diterima');
+(103, 40, '2021-02-18 07:52:16', 'Pengajuan Dibuat'),
+(104, 40, '2021-02-18 07:52:22', 'Pengajuan Diedit'),
+(105, 40, '2021-02-18 07:52:59', 'Pengulas Ditugaskan'),
+(106, 40, '2021-02-18 07:53:03', 'Pengulas Ditugaskan'),
+(107, 40, '2021-02-18 07:53:32', 'Revisi Dikirim'),
+(108, 40, '2021-02-18 07:54:22', 'Pengajuan Ditolak'),
+(109, 40, '2021-02-18 07:54:41', 'Pengajuan Diterima'),
+(110, 40, '2021-02-18 07:55:49', 'Akun Simbelmawa Dikirim'),
+(111, 40, '2021-02-18 07:56:07', 'Laporan Akhir Dikirim');
 
 -- --------------------------------------------------------
 
@@ -243,12 +231,7 @@ CREATE TABLE `pengajuan` (
 --
 
 INSERT INTO `pengajuan` (`id`, `periode_id`, `hibah_id`, `tahap_id`, `dosen_nidn`, `judul`, `abstraksi`, `dana`, `file`, `belmawa_username`, `belmawa_password`, `file_laporan`) VALUES
-(19, 2, 5, 6, '9937000068', 'Perencanaan Sistem Evaluasi Usulan Kegiatan Mahasiswa Dengan Menggunakan Teknologi Barcode Scanner', 'Program Kreativitas Mahasiswa (PKM) merupakan kegiatan yang dibentuk oleh Kementerian Riset dan Teknologi Republik Indonesia. Kegiatan ini dibentuk untuk memfasilitasi berbagai potensi yang dimiliki mahasiswa untuk mengaplikasikan dan mengembangkan ilmu yang diperoleh dalam perkuliahan kepada masyarakat luas. PKM Center adalah lembaga yang mengelola proposal program kreativitas mahasiswa di lingkungan Universitas Pembangunan Nasional “Veteran” Jawa Timur. Namun pengelolaan data proposal mahasiswa yang dilakukan oleh PKM Pusat masih dilakukan secara manual. Sehingga sulit untuk mengevaluasi sejarah proposal siswa. Karena permasalahan tersebut, sistem informasi perlu dikembangkan untuk memastikan bahwa permasalahan tersebut dapat diselesaikan. Sehingga pengelolaan data proposal siswa dapat terlaksana dengan baik. Pembuatan sistem evaluasi proposal mahasiswa memiliki beberapa tahapan yang dilakukan, diantaranya studi pustaka untuk mendapatkan referensi fitur-fitur yang digunakan dalam sistem evaluasi proposal. Setelah itu dilanjutkan dengan desain proses bisnis hingga desain aplikasi. Pemindai kode batang sebagai teknologi pendukung digunakan dalam sistem untuk meningkatkan akurasi data. Hasil akhir dari penelitian ini adalah sistem evaluasi proposal yang telah diajukan oleh mahasiswa pengusul berbasis web, sehingga data proposal dapat digunakan oleh pusat dalam menentukan proposal mana yang dapat lolos ke tahap selanjutnya.', 15000000, 'pengajuan_19.doc', 'qwerty123', 'asdfgh456', 'laporan_19.doc'),
-(20, 2, 4, 5, '9937000068', 'Perancangan Dan Bangunan Aplikasi Peminjaman Fasilitas Kamar Berbasis Android', 'Android merupakan platform yang saat ini banyak digunakan oleh banyak pengguna, sehingga hampir setiap aplikasi yang dibuat menggunakan platform Android karena mudah digunakan dan juga efektif. Fakultas Ilmu Komputer UPN “Veteran” Jawa Timur memiliki 2 gedung dan banyak ruangan serta fasilitas lainnya seperti laboratorium, ruang seminar, dan terdapat pinjaman peralatan yang dapat membantu jalannya acara baik perkuliahan maupun non akademik. Hingga saat ini proses peminjaman ruangan dan fasilitas di Fakultas Ilmu Komputer masih dilakukan secara manual, seperti menggunakan surat dan beberapa proses lainnya. Hal ini juga menyebabkan pemborosan kertas dan waktu karena belum tentu ruang atau peralatan tersebut akan dipinjam terlebih dahulu oleh orang lain. Tujuan perancangan dan pembangunan aplikasi pinjaman fasilitas kamar adalah untuk meningkatkan atau mengoptimalkan layanan TU (Administrasi) kepada peminjam kamar. Metodologi penelitian dilakukan dengan pengumpulan data berupa wawancara, studi pustaka, observasi dan perancangan sistem dengan menggunakan model waterfall. Hasil penelitian ini adalah memudahkan pelayanan, nyaman dan aman dalam meminjam ruang', 8500000, 'pengajuan_20.docx', '123456', '123456', NULL),
-(21, 2, 1, 4, '0714028703', 'Sistem Penerimaan Penyewa Inkubator Bisnis Berbasis Pencocokan Profil', 'Inkubator bisnis merupakan salah satu institusi yang saat ini lebih dibutuhkan untuk meningkatkan semua jenis wirausaha dan startup. Tenant adalah nama mitra binaan dalam Inkubator Bisnis, kinerja Inkubator Bisnis ditingkatkan, sehingga tenant yang masuk pendaftaran di Inkubator Bisnis juga meningkat. Kriteria menjadi tenant memiliki banyak variabel, sehingga membutuhkan waktu yang lama dalam proses perhitungannya, dengan adanya matching profile yang dapat disesuaikan dengan beberapa variabel yang dibutuhkan dalam inkubator bisnis ini, prosesnya menjadi lebih singkat dan memberikan nilai rekomendasi untuk direktur inkubator bisnis dalam memutuskan apakah penyewa diterima atau ditolak. Pada tabel 2 pada makalah ini dijelaskan bahwa nilai uji validitas sistem informasi pendaftaran tenant menggunakan algoritma profile matching mendapatkan nilai diatas 0,6 sebesar 1, sehingga pencocokan profil yang sesuai dengan pendaftaran studi kasus dapat diterapkan untuk penentuan inkubator bisnis technopark binaan tenant.', 25000000, 'pengajuan_21.doc', NULL, NULL, NULL),
-(22, 2, 1, 3, '0714028703', 'Perencanaan Pembangkit Listrik Tenaga Surya Dengan Sistem On-Grid Di Gedung Keempat Universitas PGRI Semarang', 'Sistem on-grid adalah sistem yang digunakan oleh PLTS yang terhubung langsung ke jaringan listrik yang ada (PLN). Oleh karena itu, sistem on-grid tidak menggunakan sistem penyimpanan baterai atau superkapasitor. Dengan menggunakan sistem on-grid ini, masyarakat telah membantu pemerintah dalam mengurangi beban listrik PLN. Tujuan utama dalam penelitian ini adalah merencanakan sistem on-grid menggunakan fotovoltaik pada empat gedung Universitas PGRI Semarang. Metode penelitian yang dilakukan dalam penelitian ini adalah pengumpulan data sebagai penunjang penelitian meliputi data identifikasi beban listrik per jam dan sistem inverter on grid serta spesifikasi fotovoltaik yang digunakan, penentuan besarnya daya yang akan dibangkitkan pada sistem on grid, menghitung jumlah panel surya yang akan digunakan, tentukan susunan panel surya. Berdasarkan data beban Gedung 4 direncanakan memiliki panel surya monokristalin berkapasitas 200 Wp modul PV sebanyak 166 unit. Dalam pemasangan modul PV ada yang dihubungkan secara seri atau paralel dan tergantung besar kecilnya tegangan input inverter on grid yang digunakan. Berdasarkan spesifikasi inverter Sunny Tripower 60, tegangan input inverter adalah 685 V hingga 800 V DC. Berdasarkan hasil perhitungan luas PV diperoleh nilai 254,19 m2. Jika dawai disusun maka total daya yang dihasilkan oleh area PV adalah 33,15 KWP. Pemilihan lokasi didasarkan pada pertimbangan bahwa panel surya menghadap ke utara dengan sudut kemiringan 17,45⁰ dan dekat dengan ruang instalasi gedung.', 200000000, 'pengajuan_22.doc', NULL, NULL, NULL),
-(23, 2, 1, 2, '0019067008', 'Sistem Parkir Cerdas menggunakan Android dan QR Code untuk Universitas Widyatama', 'With so many vehicle users, a new problem arises, namely the unorganized parking lot with the lack of a proper parking management system. These create various problems for vehicle users who want to park their vehicles, such as losing much time to find an empty parking space, besides that a manual parking payment system can result in long queues at payment counters and this happened at Widyatama University because it needs the right solution to overcome these problems. With the concept of a smart parking system that uses the QR Code for user convenience. This system can run on cellular platforms with a visual display that makes it easy for users. Besides, users can reserve a parking space before parking their vehicle. With additional features of the automatic payment system (E-money). This system can streamline time and efficiency. The research method was carried out using a prototype method in the method of making the system a structured process and has several stages that must be passed. Therefore this method aims to design cellular applications, \"Parkirin Aja!\".', 17500000, 'pengajuan_23.doc', NULL, NULL, NULL),
-(24, 2, 2, 5, '0019067008', 'Aplikasi Rumus Matematika Untuk Siswa Sekolah Dasar Menggunakan Framework Codeigniter', 'Matematika merupakan salah satu ilmu yang banyak dimanfaatkan dalam kehidupan sehari-hari. Baik secara umum maupun khusus. Dengan menggunakan rumus matematika dasar, disini penulis mencoba mereview rumus-rumus yang telah dipelajari oleh siswa dari sekolah dasar sampai dengan sekolah menengah atas. Aplikasi berbasis web ini menggunakan codeigniter yang berisi 30 rumus matematika dasar.', 2500000, 'pengajuan_24.doc', NULL, NULL, NULL);
+(40, 3, 16, 6, '9937000068', 'krti', 'abstraks', 0, 'pengajuan_40.docx', 'tes', 'tes', 'laporan_40.docx');
 
 -- --------------------------------------------------------
 
@@ -274,8 +257,7 @@ INSERT INTO `pengumuman` (`id`, `judul`, `isi`, `gambar`, `waktu`, `status`) VAL
 (22, 'Pembukaan Proposal PKM Periode 2021', 'Dalam rangka memandu mahasiswa untuk menjadi pribadi yang tahu aturan, taat aturan, kreatif, inovatif, dan objektif kooperatif dalam membangun keragaman intelektual, Direktorat Pembelajaran dan Kemahasiswaan menyelenggarakan Program Kreativitas Mahasiswa (PKM) Tahun 2021.  Untuk itu, Direktorat Pembelajaran dan Kemahasiswaan, Direktorat Jenderal Pendidikan Tinggi telah melaksanakan penilaian proposal PKM 5 Bidang Tahun 2020. Bersama ini kami sampaikan judul peraih pendanaan sebagaimana daftar terlampir. Mohon kesediaan Saudara untuk menginformasikan hal tersebut kepada mahasiswa di Perguruan Tinggi Saudara. Bagi mahasiswa yang judulnya meraih pendanaan dimohon untuk menyesuaikan kegiatan yang akan dilaksanakan dengan Addendum Pedoman PKM 5 (lima) Bidang yang dapat diunduh di <a href=\"https://simbelmawa.kemdikbud.go.id\">https://simbelmawa.kemdikbud.go.id.</a>', NULL, '2020-12-03 07:49:30', 'aktif'),
 (23, 'Tim Kompetisi Robot Terbang Indonesia 2020', 'Dalam Kontes Robot Terbang Indonesia (KRTI) 2020, Tim Codingers Universitas Pembangunan Nasional (UPN) \"Veteran\" Jawa Timur berhasil menjadi juara umum. Dalam kontes yang digelar di lapangan terbang TNI AL Grati, Pasuruan, Jawa Timur, 21-24 November itu pada gelaran KRTI, UPN berhasil mendominasi perolehan medali. Yaitu, 4 medali meliputi 2 medali emas, 1 perak, serta 1 perunggu.\r\n\r\nPengharhaan masih ditambah 1 penghargaan respons terbaik. KRTI 2020 mempertandingkan enam kategori lomba. Yakni, fixed wing, racing plane, vertikal take off landing, technology develepoment-airframe, technology development-flight controller, dan technology development-propulsion.', 'pengumuman_23.jpg', '2020-12-03 07:54:52', 'aktif'),
 (24, 'Tim PKM Pengabdian Kepada Masyarakat 2020', 'Sejumlah mahasiswa UPN \"Veteran\" Jawa Timur kembali mengharumkan nama kampus Bela Negara di kancah nasional melalui prestasinya di PKM (Pekan Kreativitas Mahasiswa) – PIMNAS ke-33 yang diselenggarakan pada (23-28/11/20) di Universitas Muslim Indonesia, Makassar. PKM merupakan salah satu program Direktorat Pendidikan Tinggi (Dikti) bersama Program Kerja Menteri Riset dan Teknologi Indonesia dalam mewujudkan generasi muda yang berinovasi dan berkarya dalam keberagaman untuk kesejahteraan berkelanjutan.', 'pengumuman_24.jpg', '2020-12-03 07:58:10', 'aktif'),
-(25, 'Uji Coba Pengumuman', 'Isi Dari Pengumuman Uji Coba Pengumuman', NULL, '2020-12-09 22:34:58', 'pasif'),
-(27, 'Pengetesan Pembuatan Pengumuman', 'ini adalah pengetesan pembuatan pengumuman', NULL, '2020-12-10 03:56:31', 'pasif');
+(25, 'Uji Coba Pengumuman', 'Isi Dari Pengumuman Uji Coba Pengumuman', NULL, '2020-12-09 22:34:58', 'pasif');
 
 -- --------------------------------------------------------
 
@@ -295,28 +277,7 @@ CREATE TABLE `pengusul` (
 --
 
 INSERT INTO `pengusul` (`id`, `pengajuan_id`, `mahasiswa_npm`, `anggota`) VALUES
-(59, 19, '1634010056', 1),
-(60, 19, '1634010058', 2),
-(61, 19, '1634010066', 3),
-(62, 20, '1634010056', 1),
-(63, 20, '1634010058', 2),
-(64, 20, '1634010066', 3),
-(65, 21, '1634010056', 1),
-(66, 21, '1634010085', 2),
-(67, 21, '1634010094', 3),
-(68, 22, '1634010056', 1),
-(69, 22, '1634010085', 2),
-(70, 22, '1634010094', 3),
-(71, 23, '1634010056', 1),
-(72, 23, '1634010058', 2),
-(73, 23, '1634010068', 3),
-(74, 23, '1634010069', 4),
-(75, 23, '1634010083', 5),
-(76, 24, '1634010056', 1),
-(77, 24, '1634010058', 2),
-(78, 24, '1634010068', 3),
-(79, 24, '1634010069', 4),
-(80, 24, '1634010083', 5);
+(98, 40, '1634010056', 1);
 
 -- --------------------------------------------------------
 
@@ -337,7 +298,8 @@ CREATE TABLE `periode` (
 INSERT INTO `periode` (`id`, `tahun`, `status`) VALUES
 (1, 2019, 'pasif'),
 (2, 2020, 'pasif'),
-(3, 2021, 'aktif');
+(3, 2021, 'aktif'),
+(13, 2022, 'pasif');
 
 -- --------------------------------------------------------
 
@@ -411,6 +373,7 @@ CREATE TABLE `ulasan` (
   `id` int(10) UNSIGNED NOT NULL,
   `pengajuan_id` int(10) UNSIGNED NOT NULL,
   `dosen_nidn` char(10) NOT NULL,
+  `tahap_id` int(10) UNSIGNED NOT NULL,
   `komentar` text DEFAULT NULL,
   `file` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -419,13 +382,9 @@ CREATE TABLE `ulasan` (
 -- Dumping data for table `ulasan`
 --
 
-INSERT INTO `ulasan` (`id`, `pengajuan_id`, `dosen_nidn`, `komentar`, `file`) VALUES
-(5, 19, '0023076907', 'Topik penelitian tidak sesuai dengan kategori PKM', NULL),
-(6, 20, '0023076907', NULL, NULL),
-(7, 21, '0023076907', NULL, NULL),
-(8, 22, '0702068002', 'diterima tanpa revisi', 'ulasan_8.docx'),
-(9, 23, '0702068002', NULL, NULL),
-(11, 24, '0702068002', NULL, NULL);
+INSERT INTO `ulasan` (`id`, `pengajuan_id`, `dosen_nidn`, `tahap_id`, `komentar`, `file`) VALUES
+(39, 40, '0019067008', 4, 'jelek', ''),
+(40, 40, '0023076907', 5, 'bagus', '');
 
 -- --------------------------------------------------------
 
@@ -571,7 +530,8 @@ ALTER TABLE `tahap`
 ALTER TABLE `ulasan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_ulasan_pengajuan` (`pengajuan_id`),
-  ADD KEY `fk_ulasan_dosen` (`dosen_nidn`);
+  ADD KEY `fk_ulasan_dosen` (`dosen_nidn`),
+  ADD KEY `fk_ulasan_tahap` (`tahap_id`);
 
 --
 -- Indexes for table `user`
@@ -599,37 +559,37 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `pengumuman`
 --
 ALTER TABLE `pengumuman`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `pengusul`
 --
 ALTER TABLE `pengusul`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `ulasan`
 --
 ALTER TABLE `ulasan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -696,7 +656,8 @@ ALTER TABLE `prodi`
 --
 ALTER TABLE `ulasan`
   ADD CONSTRAINT `fk_ulasan_dosen` FOREIGN KEY (`dosen_nidn`) REFERENCES `dosen` (`nidn`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_ulasan_pengajuan` FOREIGN KEY (`pengajuan_id`) REFERENCES `pengajuan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_ulasan_pengajuan` FOREIGN KEY (`pengajuan_id`) REFERENCES `pengajuan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_ulasan_tahap` FOREIGN KEY (`tahap_id`) REFERENCES `tahap` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

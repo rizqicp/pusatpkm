@@ -138,6 +138,9 @@ class User_model extends CI_Model
                 'exact_length' => 'NIDN harus 10 digit!',
                 'is_unique' => 'User dengan NIDN tersebut sudah ada!'
             ]);
+            $this->form_validation->set_rules('userFungsional', 'Jabatan', 'required', [
+                'required' => 'Jabatan harus diisi!'
+            ]);
         }
         $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
             'required' => 'Email harus diisi!',
@@ -186,6 +189,7 @@ class User_model extends CI_Model
                     $dosenData = [
                         'nidn' => $this->input->post('userNidn'),
                         'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
+                        'fungsional_id' => $this->input->post('userFungsional'),
                         'prodi_id' => $this->input->post('userProdi'),
                         'user_id' => $userId,
                     ];

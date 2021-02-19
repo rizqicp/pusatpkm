@@ -33,7 +33,7 @@ class Hibah_model extends CI_Model
     {
         $current = get_instance();
         $config['upload_path']          = './uploads/format/';
-        $config['allowed_types']        = 'doc|docx';
+        $config['allowed_types']        = 'doc|docx|pdf';
         $config['file_name']            =  $id . '_format' . '_' . str_replace(' ', '_', strtolower($nama));
         $config['overwrite']            = true;
         $config['max_size']             = 10240; // 10MB
@@ -43,7 +43,7 @@ class Hibah_model extends CI_Model
         if ($current->upload->do_upload('hibahFile')) {
             return $current->upload->data("file_name");
         } else {
-            echo "error upload file";
+            echo "error upload file ";
             var_dump($_FILES);
             die;
         }

@@ -65,7 +65,12 @@ class Pengajuan_model extends CI_Model
             $anggota['anggota' . ($i + 1)] = $pengusul[$i]['mahasiswa_npm'];
         }
 
-        return array_merge($pengajuan, $anggota);
+        if (isset($anggota)) {
+            return array_merge($pengajuan, $anggota);
+        } else {
+            echo "Data pengusul telah dihapus";
+            die;
+        }
     }
 
     public function getFinishPengajuan()
@@ -407,7 +412,7 @@ class Pengajuan_model extends CI_Model
         {
             $current = get_instance();
             $config['upload_path']          = './uploads/pengajuan/';
-            $config['allowed_types']        = 'doc|docx';
+            $config['allowed_types']        = 'doc|docx|pdf';
             $config['file_name']            = 'pengajuan_' . $id;
             $config['overwrite']            = true;
             $config['max_size']             = 10240; // 10MB
@@ -417,7 +422,7 @@ class Pengajuan_model extends CI_Model
             if ($current->upload->do_upload('userFile')) {
                 return $current->upload->data("file_name");
             } else {
-                echo "error upload file";
+                echo "error upload file ";
                 var_dump($_FILES);
                 die;
             }
@@ -485,7 +490,7 @@ class Pengajuan_model extends CI_Model
         {
             $current = get_instance();
             $config['upload_path']          = './uploads/pengajuan/';
-            $config['allowed_types']        = 'doc|docx';
+            $config['allowed_types']        = 'doc|docx|pdf';
             $config['file_name']            = 'pengajuan_' . $id;
             $config['overwrite']            = true;
             $config['max_size']             = 10240; // 10MB
@@ -495,7 +500,7 @@ class Pengajuan_model extends CI_Model
             if ($current->upload->do_upload('userFile')) {
                 return $current->upload->data("file_name");
             } else {
-                echo "error upload file";
+                echo "error upload file ";
                 var_dump($_FILES);
                 die;
             }
@@ -674,14 +679,14 @@ class Pengajuan_model extends CI_Model
     public function hapusPengajuan()
     {
         if (isset($_POST['hapusid'])) {
-            if ($this->db->get_where('pengajuan',['id'=>$_POST['hapusid']])->row_array()['file'] != null) {
-                unlink('./uploads/pengajuan/' . $this->db->get_where('pengajuan',['id'=>$_POST['hapusid']])->row_array()['file']);
+            if ($this->db->get_where('pengajuan', ['id' => $_POST['hapusid']])->row_array()['file'] != null) {
+                unlink('./uploads/pengajuan/' . $this->db->get_where('pengajuan', ['id' => $_POST['hapusid']])->row_array()['file']);
             }
-            if ($this->db->get_where('pengajuan',['id'=>$_POST['hapusid']])->row_array()['file_laporan'] != null) {
-                unlink('./uploads/laporan/' . $this->db->get_where('pengajuan',['id'=>$_POST['hapusid']])->row_array()['file_laporan']);
+            if ($this->db->get_where('pengajuan', ['id' => $_POST['hapusid']])->row_array()['file_laporan'] != null) {
+                unlink('./uploads/laporan/' . $this->db->get_where('pengajuan', ['id' => $_POST['hapusid']])->row_array()['file_laporan']);
             }
-            if ($this->db->get_where('ulasan',['pengajuan_id'=>$_POST['hapusid']])->row_array()['file'] != null) {
-                unlink('./uploads/ulasan/' . $this->db->get_where('ulasan',['pengajuan_id'=>$_POST['hapusid']])->row_array()['file']);
+            if ($this->db->get_where('ulasan', ['pengajuan_id' => $_POST['hapusid']])->row_array()['file'] != null) {
+                unlink('./uploads/ulasan/' . $this->db->get_where('ulasan', ['pengajuan_id' => $_POST['hapusid']])->row_array()['file']);
             }
             $this->db->delete('pengajuan', array('id' => $_POST['hapusid']));
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan "' . $_POST['hapusjudul'] . '" berhasil dihapus!</div>');
@@ -762,7 +767,7 @@ class Pengajuan_model extends CI_Model
         {
             $current = get_instance();
             $config['upload_path']          = './uploads/ulasan/';
-            $config['allowed_types']        = 'doc|docx';
+            $config['allowed_types']        = 'doc|docx|pdf';
             $config['file_name']            = 'ulasan_' . $id;
             $config['overwrite']            = true;
             $config['max_size']             = 10240; // 10MB
@@ -772,7 +777,7 @@ class Pengajuan_model extends CI_Model
             if ($current->upload->do_upload('userFile')) {
                 return $current->upload->data("file_name");
             } else {
-                echo "error upload file";
+                echo "error upload file ";
                 var_dump($_FILES);
                 die;
             }
@@ -780,7 +785,7 @@ class Pengajuan_model extends CI_Model
 
         if ($this->form_validation->run() == true) {
             if ($ulasan['file'] != null) {
-            unlink('./uploads/ulasan/' . $ulasan['file']);
+                unlink('./uploads/ulasan/' . $ulasan['file']);
             }
             $this->db->set('tahap_id', $this->input->post('tahap'));
             $this->db->set('komentar', '');
@@ -822,7 +827,7 @@ class Pengajuan_model extends CI_Model
         {
             $current = get_instance();
             $config['upload_path']          = './uploads/pengajuan/';
-            $config['allowed_types']        = 'doc|docx';
+            $config['allowed_types']        = 'doc|docx|pdf';
             $config['file_name']            = 'pengajuan_' . $id;
             $config['overwrite']            = true;
             $config['max_size']             = 10240; // 10MB
@@ -832,7 +837,7 @@ class Pengajuan_model extends CI_Model
             if ($current->upload->do_upload('userFile')) {
                 return $current->upload->data("file_name");
             } else {
-                echo "error upload file";
+                echo "error upload file ";
                 var_dump($_FILES);
                 die;
             }
@@ -860,11 +865,11 @@ class Pengajuan_model extends CI_Model
                 $this->db->set('tahap_id', '2');
                 $this->db->where('id', $pengajuan['id']);
                 $this->db->update('pengajuan');
-        
+
                 $this->db->reset_query();
 
                 $this->db->set('tahap_id', '2');
-                $this->db->where(['pengajuan_id'=>$pengajuan['id'], 'tahap_id'=>'3']);
+                $this->db->where(['pengajuan_id' => $pengajuan['id'], 'tahap_id' => '3']);
                 $this->db->update('ulasan');
 
                 $dataLog = [
@@ -915,7 +920,7 @@ class Pengajuan_model extends CI_Model
         {
             $current = get_instance();
             $config['upload_path']          = './uploads/laporan/';
-            $config['allowed_types']        = 'doc|docx';
+            $config['allowed_types']        = 'doc|docx|pdf';
             $config['file_name']            = 'laporan_' . $id;
             $config['overwrite']            = true;
             $config['max_size']             = 10240; // 10MB
@@ -925,7 +930,7 @@ class Pengajuan_model extends CI_Model
             if ($current->upload->do_upload('userFile')) {
                 return $current->upload->data("file_name");
             } else {
-                echo "error upload file";
+                echo "error upload file ";
                 var_dump($_FILES);
                 die;
             }

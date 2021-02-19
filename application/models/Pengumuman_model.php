@@ -64,7 +64,7 @@ class Pengumuman_model extends CI_Model
             if ($current->upload->do_upload('gambarPengumuman')) {
                 return $current->upload->data("file_name");
             } else {
-                echo "error upload file";
+                echo "error upload file ";
                 var_dump($_FILES);
                 die;
             }
@@ -126,7 +126,7 @@ class Pengumuman_model extends CI_Model
             if ($current->upload->do_upload('gambarPengumuman')) {
                 return $current->upload->data("file_name");
             } else {
-                echo "error upload file";
+                echo "error upload file ";
                 var_dump($_FILES);
                 die;
             }

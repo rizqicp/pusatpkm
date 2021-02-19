@@ -65,7 +65,7 @@
                                 <label for="hibah-file" class="col-sm-2 col-form-label col-form-label-lg"><b>File Format :</b></label>
                                 <div class="col-sm-10 pt-1">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="hibahFile" name="hibahFile" accept=".doc, .docx" onchange="validateFileType(); changeText('fileLabel',this.value); hideError('hibahFile');">
+                                            <input type="file" class="custom-file-input" id="hibahFile" name="hibahFile" accept=".doc, .docx, .pdf" onchange="validateFileType(); changeText('fileLabel',this.value); hideError('hibahFile');">
                                             <label class="custom-file-label" for="hibahFile" id="fileLabel" style="color: #999;">Pilih file</label>
                                         </div>
                                     <?= form_error('hibahFile', '<small id="hibahFile" class="text-danger pl-3">', '</small>'); ?>
@@ -132,7 +132,7 @@
             var fileName = document.getElementById("hibahFile").value;
             var idxDot = fileName.lastIndexOf(".") + 1;
             var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-            if (extFile == "doc" || extFile == "docx") {
+            if (extFile == "doc" || extFile == "docx" || extFile == "pdf") {
                 //accept file
             } else {
                 alert("Hanya Dokumen Word yang diperbolehkan!");

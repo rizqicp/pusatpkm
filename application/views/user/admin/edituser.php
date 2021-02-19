@@ -70,6 +70,14 @@
                                                 <?php endif; ?>
                                             </div>
                                         </div>
+                                        <?php if ($edituser['role'] == 'dosen') : ?>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="account-fn">Jabatan</label>
+                                                    <input class="form-control" type="text" id="userFungsional" value="<?= $fungsional['nama']; ?>" disabled>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="account-fn">Prodi</label>

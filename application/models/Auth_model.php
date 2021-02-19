@@ -129,6 +129,9 @@ class Auth_model extends CI_Model
                 'exact_length' => 'NIDN harus 10 digit!',
                 'is_unique' => 'User dengan NIDN tersebut sudah ada!'
             ]);
+            $this->form_validation->set_rules('userFungsional', 'Jabatan', 'required', [
+                'required' => 'Jabatan harus diisi!'
+            ]);
         }
         $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
             'required' => 'Email harus diisi!',
@@ -159,7 +162,7 @@ class Auth_model extends CI_Model
                 'email' => htmlspecialchars($this->input->post('userEmail', true)),
                 'password' => password_hash($this->input->post('userPassword'), PASSWORD_DEFAULT),
                 'role' => $this->input->post('userRole', true),
-                'status' => 'pasif'
+                'status' => 'aktif'
             ];
             $userId = create('user', $userData);
             switch ($this->input->post('userRole', true)) {
@@ -177,6 +180,7 @@ class Auth_model extends CI_Model
                     $dosenData = [
                         'nidn' => $this->input->post('userNidn'),
                         'nama' => ucwords(strtolower(htmlspecialchars($this->input->post('userNama', true)))),
+                        'fungsional_id' => $this->input->post('userFungsional'),
                         'prodi_id' => $this->input->post('userProdi'),
                         'user_id' => $userId,
                     ];
@@ -188,134 +192,137 @@ class Auth_model extends CI_Model
                     break;
             }
 
-            // send email
-            $this->load->library('phpmailer_lib');
-            $mail = $this->phpmailer_lib->load();
-            $mail->setFrom($mail->Username, 'Pusat PKM');
-            $mail->addAddress($this->input->post('userEmail'));
-            $mail->Subject = 'Verifikasi Pendaftaran';
-            $mail->isHTML(true);
-            $mailContent = "
-            <h4>Terima kasih sudah mendaftar di Pusat PKM!</h4>
-            <p>Akun anda telah berhasil dibuat, berikut informasi akun anda dan dapat digunakan setelah mengaktifkan akun menggunakan link dibawah.</p>
-            <p>    
-            ----------------------------------<br>
-            Email       : " . $userData['email'] . "<br>
-            ----------------------------------
-            </p>
-            <p>Silahkan klik link dibawah untuk verifikasi akun: <br>
-            <a href=" . base_url('auth/verifikasi') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . " >" . base_url('auth/verifikasi') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . "</a></p>
-            ";
-            $mail->Body = $mailContent;
-            try {
-                $mail->send();
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat, silahkan cek email untuk Verifikasi!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat, silahkan login!</div>');
                 return true;
-            } catch (Exception $e) {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email verifikasi gagal dikirim!</div>');
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    public function verifikasi()
-    {
-        $userEmail = $this->input->get('email');
-        $userHash = $this->input->get('hash');
-        $this->db->select('*');
-        $this->db->from('user');
-        $this->db->where('email', $userEmail);
-        $user = $this->db->get()->row_array();
-
-        if ($user['email'] == $userEmail && $user['password'] == $userHash) {
-            $this->db->set('status', 'aktif');
-            $this->db->where('email', $userEmail);
-            $this->db->update('user');
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Email berhasil diverifikasi, silahkan login!</div>');
-            return true;
-        } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Verifikasi email gagal!</div>');
-            return false;
-        }
-    }
-
-    public function forgot()
-    {
-        // validasi form
-        foreach ($this->db->get('user')->result_array() as $user) {
-            $userEmail[] = $user['email'];
-        }
-        $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email|in_list[' . implode(',', $userEmail) . ']', [
-            'required' => 'Silahkan masukkan Email!',
-            'valid_email' => 'Email tidak valid!',
-            'in_list' => 'Email tidak terdaftar!'
-        ]);
-        if ($this->form_validation->run() == true) {
-            // get user data
-            $this->db->select('*');
-            $this->db->from('user');
-            $this->db->where('email', $this->input->post('userEmail'));
-            $userData = $this->db->get()->row_array();
 
             // send email
-            $this->load->library('phpmailer_lib');
-            $mail = $this->phpmailer_lib->load();
-            $mail->setFrom($mail->Username, 'Pusat PKM');
-            $mail->addAddress($this->input->post('userEmail'));
-            $mail->Subject = 'Pemulihan Akun';
-            $mail->isHTML(true);
-            $mailContent = "
-            <h4>Terima kasih sudah menghubungi Pusat PKM!</h4>
-            <p>Kami menerima permintaan pemulihan akun dari anda, abaikan pesan ini jika anda tidak mengirim permintaan.<br>
-            berikut informasi akun anda.</p>
-            <p>    
-            ----------------------------------<br>
-            Email       : " . $userData['email'] . "<br>
-            ----------------------------------
-            </p>
-            <p>Silahkan klik link dibawah untuk atur ulang kata sandi: <br>
-            <a href=" . base_url('auth/recovery') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . " >" . base_url('auth/recovery') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . "</a></p>
-            ";
-            $mail->Body = $mailContent;
-            try {
-                $mail->send();
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Permintaan pemulihan berhasil, silahkan cek email untuk atur ulang kata sandi!</div>');
-                return true;
-            } catch (Exception $e) {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Permintaan pemulihan gagal!</div>');
-                return false;
-            }
+            // $this->load->library('phpmailer_lib');
+            // $mail = $this->phpmailer_lib->load();
+            // $mail->setFrom($mail->Username, 'Pusat PKM');
+            // $mail->addAddress($this->input->post('userEmail'));
+            // $mail->Subject = 'Verifikasi Pendaftaran';
+            // $mail->isHTML(true);
+            // $mailContent = "
+            // <h4>Terima kasih sudah mendaftar di Pusat PKM!</h4>
+            // <p>Akun anda telah berhasil dibuat, berikut informasi akun anda dan dapat digunakan setelah mengaktifkan akun menggunakan link dibawah.</p>
+            // <p>    
+            // ----------------------------------<br>
+            // Email       : " . $userData['email'] . "<br>
+            // ----------------------------------
+            // </p>
+            // <p>Silahkan klik link dibawah untuk verifikasi akun: <br>
+            // <a href=" . base_url('auth/verifikasi') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . " >" . base_url('auth/verifikasi') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . "</a></p>
+            // ";
+            // $mail->Body = $mailContent;
+            // try {
+            //     $mail->send();
+            //     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat, silahkan cek email untuk Verifikasi!</div>');
+            //     return true;
+            // } catch (Exception $e) {
+            //     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email verifikasi gagal dikirim!</div>');
+            //     return false;
+            // }
         } else {
             return false;
         }
     }
 
-    public function recovery()
-    {
-        $this->form_validation->set_rules('userPassword', 'Password', 'required|trim|min_length[6]|matches[repeatPassword]', [
-            'required' => 'Password harus diisi!',
-            'min_length' => 'Password terlalu pendek!',
-            'matches' => ''
-        ]);
-        $this->form_validation->set_rules('repeatPassword', 'Repeat', 'required|trim|matches[userPassword]', [
-            'required' => 'Ketik ulang Password!',
-            'matches' => 'Password tidak cocok!'
-        ]);
+    // public function verifikasi()
+    // {
+    //     $userEmail = $this->input->get('email');
+    //     $userHash = $this->input->get('hash');
+    //     $this->db->select('*');
+    //     $this->db->from('user');
+    //     $this->db->where('email', $userEmail);
+    //     $user = $this->db->get()->row_array();
 
-        if ($this->form_validation->run() == true) {
-            $this->db->set('password', password_hash($this->input->post('userPassword'), PASSWORD_DEFAULT));
-            $this->db->where('email', $this->session->userdata('recoverEmail'));
-            $this->db->update('user');
-            $this->session->unset_userdata('recoverEmail');
-            $this->session->unset_userdata('recoverHash');
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kata sandi berhasil di atur ulang, silahkan login!</div>');
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //     if ($user['email'] == $userEmail && $user['password'] == $userHash) {
+    //         $this->db->set('status', 'aktif');
+    //         $this->db->where('email', $userEmail);
+    //         $this->db->update('user');
+    //         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Email berhasil diverifikasi, silahkan login!</div>');
+    //         return true;
+    //     } else {
+    //         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Verifikasi email gagal!</div>');
+    //         return false;
+    //     }
+    // }
+
+    // public function forgot()
+    // {
+    //     // validasi form
+    //     foreach ($this->db->get('user')->result_array() as $user) {
+    //         $userEmail[] = $user['email'];
+    //     }
+    //     $this->form_validation->set_rules('userEmail', 'Email', 'required|trim|valid_email|in_list[' . implode(',', $userEmail) . ']', [
+    //         'required' => 'Silahkan masukkan Email!',
+    //         'valid_email' => 'Email tidak valid!',
+    //         'in_list' => 'Email tidak terdaftar!'
+    //     ]);
+    //     if ($this->form_validation->run() == true) {
+    //         // get user data
+    //         $this->db->select('*');
+    //         $this->db->from('user');
+    //         $this->db->where('email', $this->input->post('userEmail'));
+    //         $userData = $this->db->get()->row_array();
+
+    //         // send email
+    //         $this->load->library('phpmailer_lib');
+    //         $mail = $this->phpmailer_lib->load();
+    //         $mail->setFrom($mail->Username, 'Pusat PKM');
+    //         $mail->addAddress($this->input->post('userEmail'));
+    //         $mail->Subject = 'Pemulihan Akun';
+    //         $mail->isHTML(true);
+    //         $mailContent = "
+    //         <h4>Terima kasih sudah menghubungi Pusat PKM!</h4>
+    //         <p>Kami menerima permintaan pemulihan akun dari anda, abaikan pesan ini jika anda tidak mengirim permintaan.<br>
+    //         berikut informasi akun anda.</p>
+    //         <p>    
+    //         ----------------------------------<br>
+    //         Email       : " . $userData['email'] . "<br>
+    //         ----------------------------------
+    //         </p>
+    //         <p>Silahkan klik link dibawah untuk atur ulang kata sandi: <br>
+    //         <a href=" . base_url('auth/recovery') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . " >" . base_url('auth/recovery') . "?email=" . $userData['email'] . "&hash=" . $userData['password'] . "</a></p>
+    //         ";
+    //         $mail->Body = $mailContent;
+    //         try {
+    //             $mail->send();
+    //             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Permintaan pemulihan berhasil, silahkan cek email untuk atur ulang kata sandi!</div>');
+    //             return true;
+    //         } catch (Exception $e) {
+    //             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Permintaan pemulihan gagal!</div>');
+    //             return false;
+    //         }
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    // public function recovery()
+    // {
+    //     $this->form_validation->set_rules('userPassword', 'Password', 'required|trim|min_length[6]|matches[repeatPassword]', [
+    //         'required' => 'Password harus diisi!',
+    //         'min_length' => 'Password terlalu pendek!',
+    //         'matches' => ''
+    //     ]);
+    //     $this->form_validation->set_rules('repeatPassword', 'Repeat', 'required|trim|matches[userPassword]', [
+    //         'required' => 'Ketik ulang Password!',
+    //         'matches' => 'Password tidak cocok!'
+    //     ]);
+
+    //     if ($this->form_validation->run() == true) {
+    //         $this->db->set('password', password_hash($this->input->post('userPassword'), PASSWORD_DEFAULT));
+    //         $this->db->where('email', $this->session->userdata('recoverEmail'));
+    //         $this->db->update('user');
+    //         $this->session->unset_userdata('recoverEmail');
+    //         $this->session->unset_userdata('recoverHash');
+    //         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kata sandi berhasil di atur ulang, silahkan login!</div>');
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     public function changePassword()
     {

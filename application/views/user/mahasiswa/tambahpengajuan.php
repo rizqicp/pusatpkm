@@ -140,7 +140,7 @@
                             <div class="input-group mb-3 col-sm-10">
                                 <div class="input-group mb-3">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="userFile" name="userFile" accept=".doc, .docx" onchange="validateFileType(); changeText('fileLabel',this.value); hideError('userFile');">
+                                        <input type="file" class="custom-file-input" id="userFile" name="userFile" accept=".doc, .docx, .pdf" onchange="validateFileType(); changeText('fileLabel',this.value); hideError('userFile');">
                                         <label class="custom-file-label" for="userFile" id="fileLabel" style="color: #999;">Pilih file</label>
                                     </div>
                                 </div>
@@ -183,7 +183,7 @@
             var fileName = document.getElementById("userFile").value;
             var idxDot = fileName.lastIndexOf(".") + 1;
             var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-            if (extFile == "doc" || extFile == "docx") {
+            if (extFile == "doc" || extFile == "docx" || extFile == "pdf") {
                 //accept file
             } else {
                 alert("Hanya Dokumen Word yang diperbolehkan!");

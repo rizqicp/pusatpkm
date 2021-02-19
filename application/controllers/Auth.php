@@ -42,6 +42,7 @@ class Auth extends CI_Controller
     public function register()
     {
         $data['prodi'] = $this->db->get('prodi')->result_array();
+        $data['fungsional'] = $this->db->get('fungsional')->result_array();
 
         if ($this->auth_model->register() == true) {
             redirect('auth/login');
@@ -59,34 +60,34 @@ class Auth extends CI_Controller
         }
     }
 
-    public function forgot()
-    {
-        if ($this->auth_model->forgot() == true) {
-            redirect('auth/forgot');
-        } else {
-            $this->load->view('auth/forgot');
-        }
-    }
+    // public function forgot()
+    // {
+    //     if ($this->auth_model->forgot() == true) {
+    //         redirect('auth/forgot');
+    //     } else {
+    //         $this->load->view('auth/forgot');
+    //     }
+    // }
 
-    public function recovery()
-    {
-        if (($this->input->get('email')) != null) {
-            $this->session->set_userdata([
-                'recoverEmail' => $this->input->get('email'),
-                'recoverHash' => $this->input->get('hash')
-            ]);
-        }
+    // public function recovery()
+    // {
+    //     if (($this->input->get('email')) != null) {
+    //         $this->session->set_userdata([
+    //             'recoverEmail' => $this->input->get('email'),
+    //             'recoverHash' => $this->input->get('hash')
+    //         ]);
+    //     }
 
-        $data['user'] = $this->session->userdata();
+    //     $data['user'] = $this->session->userdata();
 
-        if ($this->auth_model->recovery() == true) {
-            redirect('auth/login');
-        } elseif (!$this->session->userdata('recoverEmail')) {
-            show_404();
-        } else {
-            $this->load->view('auth/recovery', $data);
-        }
-    }
+    //     if ($this->auth_model->recovery() == true) {
+    //         redirect('auth/login');
+    //     } elseif (!$this->session->userdata('recoverEmail')) {
+    //         show_404();
+    //     } else {
+    //         $this->load->view('auth/recovery', $data);
+    //     }
+    // }
 
     public function editProfil()
     {

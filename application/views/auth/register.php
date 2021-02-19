@@ -53,6 +53,15 @@
                                             <input type="text" class="form-control form-control-user" id="userNpm" name="userNpm" value="<?= set_value('userNpm'); ?>" placeholder="NPM" onchange="hideError('userNpmError');">
                                             <?= form_error('userNpm', '<small id="userNpmError" class="text-danger pl-3">', '</small>'); ?>
                                         </div>
+                                        <div class="form-group col-md-12">
+                                            <select class="custom-select" id="userFungsional" name="userFungsional" onchange="hideError('userFungsionalError');">
+                                                <option value="" disabled <?= !set_value('userFungsional') ? "selected" : ""; ?> hidden>Jabatan Fungsional</option>
+                                                <?php foreach ($fungsional as $fungsional) : ?>
+                                                    <option value=<?= $fungsional['id']; ?> <?= set_value('userFungsional') == $fungsional['id'] ? "selected" : ""; ?>><?= $fungsional['nama']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <?= form_error('userFungsional', '<small id="userFungsionalError" class="text-danger pl-3">', '</small>'); ?>
+                                        </div>
                                         <div class="form-group col-md-12" id="roleDosen" style="display: none;">
                                             <input type="text" class="form-control form-control-user" id="userNidn" name="userNidn" value="<?= set_value('userNidn'); ?>" placeholder="NIDN" onchange="hideError('userNidnError');">
                                             <?= form_error('userNidn', '<small id="userNidnError" class="text-danger pl-3">', '</small>'); ?>
@@ -75,9 +84,9 @@
                                         </button>
                                     </form>
                                     <hr>
-                                    <div class="text-center">
+                                    <!-- <div class="text-center">
                                         <a class="small" href="<?= base_url('auth/forgot'); ?>">Lupa Kata Sandi?</a>
-                                    </div>
+                                    </div> -->
                                     <div class="text-center mt-2">
                                         <a class="small" href="<?= base_url('auth/login'); ?>">Sudah Punya Akun? Masuk!</a>
                                     </div>
@@ -98,13 +107,16 @@
         function roleCheck(role) {
             if (role.value == "mahasiswa") {
                 document.getElementById("roleDosen").style.display = "none";
+                document.getElementById("userFungsional").style.display = "none";
                 document.getElementById("roleMahasiswa").style.display = "block";
             } else if (role.value == "dosen") {
                 document.getElementById("roleMahasiswa").style.display = "none";
                 document.getElementById("roleDosen").style.display = "block";
+                document.getElementById("userFungsional").style.display = "block";
             } else {
                 document.getElementById("roleMahasiswa").style.display = "none";
                 document.getElementById("roleDosen").style.display = "none";
+                document.getElementById("userFungsional").style.display = "none";
             }
         }
 

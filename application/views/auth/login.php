@@ -44,9 +44,9 @@
                                     </div>
                                     <?= form_error('userBarcode', '<div class="text-center mt-2 text-danger pl-3 small">', '</div>'); ?>
                                     <hr>
-                                    <div class="text-center">
+                                    <!-- <div class="text-center">
                                         <a class="small" href="<?= base_url('auth/forgot'); ?>">Lupa Kata Sandi?</a>
-                                    </div>
+                                    </div> -->
                                     <div class="text-center">
                                         <a class="small" href="<?= base_url('auth/register'); ?>">Belum Punya Akun? Daftar!</a>
                                     </div>

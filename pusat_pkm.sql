@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2021 at 11:45 AM
+-- Generation Time: Feb 22, 2021 at 03:42 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -47,6 +47,7 @@ INSERT INTO `dosen` (`nidn`, `nama`, `fungsional_id`, `prodi_id`, `user_id`) VAL
 ('0711028201', 'Fetty Tri Anggraeny S.kom, M.kom', '03', '081', 57),
 ('0714028703', 'Sugiarto S.kom, M.kom', '03', '081', 58),
 ('0718058401', 'Rizky Parlika S.kom, M.kom', '03', '081', 59),
+('1234567890', 'Dosen Uji Coba', '04', '011', 73),
 ('9937000068', 'Mohammad Idhom S.kom, M.t', '03', '081', 53);
 
 -- --------------------------------------------------------
@@ -162,15 +163,8 @@ CREATE TABLE `log` (
 --
 
 INSERT INTO `log` (`id`, `pengajuan_id`, `waktu`, `berita`) VALUES
-(103, 40, '2021-02-18 07:52:16', 'Pengajuan Dibuat'),
-(104, 40, '2021-02-18 07:52:22', 'Pengajuan Diedit'),
-(105, 40, '2021-02-18 07:52:59', 'Pengulas Ditugaskan'),
-(106, 40, '2021-02-18 07:53:03', 'Pengulas Ditugaskan'),
-(107, 40, '2021-02-18 07:53:32', 'Revisi Dikirim'),
-(108, 40, '2021-02-18 07:54:22', 'Pengajuan Ditolak'),
-(109, 40, '2021-02-18 07:54:41', 'Pengajuan Diterima'),
-(110, 40, '2021-02-18 07:55:49', 'Akun Simbelmawa Dikirim'),
-(111, 40, '2021-02-18 07:56:07', 'Laporan Akhir Dikirim');
+(115, 45, '2021-02-22 02:39:31', 'Pengajuan Dibuat'),
+(116, 45, '2021-02-22 02:39:46', 'Pengulas Ditugaskan');
 
 -- --------------------------------------------------------
 
@@ -231,7 +225,7 @@ CREATE TABLE `pengajuan` (
 --
 
 INSERT INTO `pengajuan` (`id`, `periode_id`, `hibah_id`, `tahap_id`, `dosen_nidn`, `judul`, `abstraksi`, `dana`, `file`, `belmawa_username`, `belmawa_password`, `file_laporan`) VALUES
-(40, 3, 16, 6, '9937000068', 'krti', 'abstraks', 0, 'pengajuan_40.docx', 'tes', 'tes', 'laporan_40.docx');
+(45, 3, 2, 2, '9937000068', 'tes', 'abstrak', 90000, 'pengajuan_45.docx', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -277,7 +271,8 @@ CREATE TABLE `pengusul` (
 --
 
 INSERT INTO `pengusul` (`id`, `pengajuan_id`, `mahasiswa_npm`, `anggota`) VALUES
-(98, 40, '1634010056', 1);
+(102, 45, '1634010056', 1),
+(103, 45, '1634010058', 2);
 
 -- --------------------------------------------------------
 
@@ -383,8 +378,7 @@ CREATE TABLE `ulasan` (
 --
 
 INSERT INTO `ulasan` (`id`, `pengajuan_id`, `dosen_nidn`, `tahap_id`, `komentar`, `file`) VALUES
-(39, 40, '0019067008', 4, 'jelek', ''),
-(40, 40, '0023076907', 5, 'bagus', '');
+(41, 45, '0019067008', 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -426,7 +420,8 @@ INSERT INTO `user` (`id`, `email`, `password`, `role`, `status`) VALUES
 (56, 'budi@gmail.com', '$2y$10$ArrtWwlnMeKYI3AL9taHo.hFZlOP5UfVulfnVGw7COjSLREJXogpi', 'dosen', 'aktif'),
 (57, 'fetty@gmail.com', '$2y$10$NW/KaX5m3KKuBYcoPgxMBurtf45TVLfFNyWIyfHuQVYaSojjclrLK', 'dosen', 'aktif'),
 (58, 'sugiarto@gmail.com', '$2y$10$81.RAL1k2WIgIZwrM9odd.HH92DB1NWkcoibSW1MI/4UIKTYajM7K', 'dosen', 'aktif'),
-(59, 'rizky@gmail.com', '$2y$10$1KzTXDHEOf0OQoafhXb1BOG904TOBS.Dm95O0hLNANdUBzcpcQOzm', 'dosen', 'aktif');
+(59, 'rizky@gmail.com', '$2y$10$1KzTXDHEOf0OQoafhXb1BOG904TOBS.Dm95O0hLNANdUBzcpcQOzm', 'dosen', 'aktif'),
+(73, 'lektor@gmail.com', '$2y$10$eGStvT5VEUJNGWWlbaxP0uagJz1WC5qHv1oqRIKoIhiKPp0Nig2su', 'dosen', 'aktif');
 
 --
 -- Indexes for dumped tables
@@ -547,7 +542,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `hibah`
 --
 ALTER TABLE `hibah`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -559,13 +554,13 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `pengumuman`
@@ -577,7 +572,7 @@ ALTER TABLE `pengumuman`
 -- AUTO_INCREMENT for table `pengusul`
 --
 ALTER TABLE `pengusul`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `periode`
@@ -589,13 +584,13 @@ ALTER TABLE `periode`
 -- AUTO_INCREMENT for table `ulasan`
 --
 ALTER TABLE `ulasan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- Constraints for dumped tables

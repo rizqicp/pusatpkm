@@ -200,6 +200,18 @@
                                                                 <?php break; ?>
                                                             <?php endswitch; ?>
                                                     </p>
+                                                    <small><b>Komentar :</b></small>
+                                                    <?php if ($dsn['komentar'] != NULL) : ?>
+                                                        <textarea class="form-control" rows="3" readonly><?= $dsn['komentar']; ?></textarea>
+                                                    <?php else : ?>
+                                                        <p>Tidak ada komentar</p>
+                                                    <?php endif; ?>
+                                                    <small><b>File :</b></small>
+                                                    <?php if ($dsn['file'] != NULL) : ?>
+                                                        <a class="btn btn-secondary btn-block text-left mt-2" href="<?= base_url('uploads/ulasan/') . $dsn['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
+                                                    <?php else : ?>
+                                                        <p>Tidak ada file</p>
+                                                    <?php endif; ?>
                                                 </div>
                                             <?php endforeach; ?>
                                         </div>
@@ -237,6 +249,18 @@
                                                                 <?php break; ?>
                                                             <?php endswitch; ?>
                                                     </p>
+                                                    <small><b>Komentar :</b></small>
+                                                    <?php if ($dsn['komentar'] != NULL) : ?>
+                                                        <textarea class="form-control" rows="3" readonly><?= $dsn['komentar']; ?></textarea>
+                                                    <?php else : ?>
+                                                        <p>Tidak ada komentar</p>
+                                                    <?php endif; ?>
+                                                    <small><b>File :</b></small>
+                                                    <?php if ($dsn['file'] != NULL) : ?>
+                                                        <a class="btn btn-secondary btn-block text-left mt-2" href="<?= base_url('uploads/ulasan/') . $dsn['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
+                                                    <?php else : ?>
+                                                        <p>Tidak ada file</p>
+                                                    <?php endif; ?>
                                                 </div>
                                             <?php endforeach; ?>
                                         </div>

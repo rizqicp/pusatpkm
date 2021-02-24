@@ -132,7 +132,7 @@
                                                     <?php endif; ?>
                                                     <small><b>File :</b></small>
                                                     <?php if ($dsn['file'] != NULL) : ?>
-                                                        <a class="btn btn-warning btn-block text-left mt-2" href="<?= base_url('uploads/ulasan/') . $dsn['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
+                                                        <a class="btn btn-secondary btn-block text-left mt-2" href="<?= base_url('uploads/ulasan/') . $dsn['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
                                                     <?php else : ?>
                                                         <p>Tidak ada file</p>
                                                     <?php endif; ?>
@@ -195,7 +195,7 @@
                                                     <?php endif; ?>
                                                     <small><b>File :</b></small>
                                                     <?php if ($dsn['file'] != NULL) : ?>
-                                                        <a class="btn btn-warning btn-block text-left mt-2" href="<?= base_url('uploads/ulasan/') . $dsn['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
+                                                        <a class="btn btn-secondary btn-block text-left mt-2" href="<?= base_url('uploads/ulasan/') . $dsn['file']; ?>" download><i class=" fas fa-fw fa-file-alt"></i> File Ulasan</a>
                                                     <?php else : ?>
                                                         <p>Tidak ada file</p>
                                                     <?php endif; ?>

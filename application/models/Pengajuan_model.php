@@ -688,7 +688,9 @@ class Pengajuan_model extends CI_Model
                 unlink('./uploads/laporan/' . $this->db->get_where('pengajuan', ['id' => $_POST['hapusid']])->row_array()['file_laporan']);
             }
             if ($this->db->get_where('ulasan', ['pengajuan_id' => $_POST['hapusid']])->row_array()['file'] != null) {
-                unlink('./uploads/ulasan/' . $this->db->get_where('ulasan', ['pengajuan_id' => $_POST['hapusid']])->row_array()['file']);
+                foreach($this->db->get_where('ulasan', ['pengajuan_id' => $_POST['hapusid']])->result_array() AS $ulas){
+                    unlink('./uploads/ulasan/' .$ulas['file']);
+                }
             }
             $this->db->delete('pengajuan', array('id' => $_POST['hapusid']));
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pengajuan "' . $_POST['hapusjudul'] . '" berhasil dihapus!</div>');
@@ -755,7 +757,7 @@ class Pengajuan_model extends CI_Model
 
     public function kirimUlasan($id, $nidn)
     {
-        $ulasan = $this->db->get_where('ulasan', ['dosen_nidn' => $nidn])->row_array();
+        $ulasan = $this->db->get_where('ulasan', ['pengajuan_id' => $id, 'dosen_nidn' => $nidn])->row_array();
         // Validasi
         foreach ($this->db->get('tahap')->result_array() as $tahap) {
             $tahapId[] = $tahap['id'];

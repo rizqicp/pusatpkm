@@ -65,7 +65,9 @@ class Admin extends CI_Controller
         $data['pengguna'] = $this->user_model->getAllUser();
         $data['edituser'] = $this->user_model->getUserById($this->session->userdata('edituserid'));
         $data['prodi'] = $this->db->get_where('prodi', array('id' => $data['edituser']['prodi_id']))->result_array()[0];
-        $data['fungsional'] = $this->db->get_where('fungsional', array('id' => $data['edituser']['fungsional_id']))->result_array()[0];
+        if($data['edituser']['role']=='dosen'){
+            $data['fungsional'] = $this->db->get_where('fungsional', array('id' => $data['edituser']['fungsional_id']))->result_array()[0];
+        }
         $data['fakultas'] = $this->db->get_where('fakultas', array('id' => $data['prodi']['fakultas_id']))->result_array()[0];
 
         if ($this->user_model->editUser($data['edituser']) == true) {
